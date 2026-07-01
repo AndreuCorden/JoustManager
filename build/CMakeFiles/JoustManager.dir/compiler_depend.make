@@ -160,7 +160,9 @@ JoustManager_autogen/timestamp: C:/Qt/6.11.1/mingw_64/include/QtCore/q17memory.h
   C:/Qt/6.11.1/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.11.1/mingw_64/include/QtGui/qwindowdefs_win.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/QLabel \
+  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QMainWindow \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/QPushButton \
+  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QStackedWidget \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/QTabWidget \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/QVBoxLayout \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/QWidget \
@@ -171,8 +173,10 @@ JoustManager_autogen/timestamp: C:/Qt/6.11.1/mingw_64/include/QtCore/q17memory.h
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qlabel.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qlayout.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qlayoutitem.h \
+  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qmainwindow.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qpushbutton.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qsizepolicy.h \
+  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qstackedwidget.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtabwidget.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtwidgets-config.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtwidgetsexports.h \
@@ -664,10 +668,16 @@ JoustManager_autogen/timestamp: C:/Qt/6.11.1/mingw_64/include/QtCore/q17memory.h
   CMakeFiles/3.30.5/CMakeSystem.cmake \
   JoustManager_autogen/moc_predefs.h \
   C:/Users/andre/Documents/Andreu/Game/JoustManager/main.cpp \
+  C:/Users/andre/Documents/Andreu/Game/JoustManager/src/GameWindow.cpp \
+  C:/Users/andre/Documents/Andreu/Game/JoustManager/src/GameWindow.h \
   C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/Knight.cpp \
   C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/Knight.h \
   C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.cpp \
-  C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.h
+  C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.h \
+  C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.cpp \
+  C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.h \
+  C:/Users/andre/Documents/Andreu/Game/JoustManager/src/ManagerInterface.cpp \
+  C:/Users/andre/Documents/Andreu/Game/JoustManager/src/ManagerInterface.h
 
 
 C:/Qt/6.11.1/mingw_64/include/QtCore/qcompare.h:
@@ -918,13 +928,13 @@ C:/Qt/6.11.1/mingw_64/include/QtCore/qobject.h:
 
 C:/Qt/6.11.1/mingw_64/include/QtCore/qobjectdefs.h:
 
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_set.h:
+C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Gui/Qt6QJpegPluginTargets.cmake:
 
-C:/Qt/6.11.1/mingw_64/include/QtCore/qobjectdefs_impl.h:
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_set.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_iterator_base_types.h:
 
-C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Gui/Qt6QJpegPluginTargets.cmake:
+C:/Qt/6.11.1/mingw_64/include/QtCore/qobjectdefs_impl.h:
 
 C:/Qt/6.11.1/mingw_64/include/QtCore/qpair.h:
 
@@ -993,6 +1003,8 @@ C:/Qt/6.11.1/mingw_64/include/QtCore/qstringbuilder.h:
 C:/Qt/6.11.1/mingw_64/include/QtCore/qtcore-config.h:
 
 C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/CMakeDetermineCompilerABI.cmake:
+
+C:/Users/andre/Documents/Andreu/Game/JoustManager/src/ManagerInterface.h:
 
 C:/Qt/6.11.1/mingw_64/include/QtCore/qstringconverter.h:
 
@@ -1214,9 +1226,13 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/tr1/hyper
 
 C:/Qt/6.11.1/mingw_64/include/QtWidgets/QLabel:
 
+C:/Qt/6.11.1/mingw_64/include/QtWidgets/QMainWindow:
+
 C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6/QtPublicCMakeVersionHelpers.cmake:
 
 C:/Qt/6.11.1/mingw_64/include/QtWidgets/QPushButton:
+
+C:/Qt/6.11.1/mingw_64/include/QtWidgets/QStackedWidget:
 
 C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Gui/Qt6QSvgPluginTargetsPrecheck.cmake:
 
@@ -1250,9 +1266,15 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w6
 
 C:/Qt/6.11.1/mingw_64/include/QtWidgets/qlayoutitem.h:
 
+C:/Qt/6.11.1/mingw_64/include/QtWidgets/qmainwindow.h:
+
 C:/Qt/6.11.1/mingw_64/include/QtWidgets/qsizepolicy.h:
 
 C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Core/Qt6CoreConfig.cmake:
+
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_classes.h:
+
+C:/Qt/6.11.1/mingw_64/include/QtWidgets/qstackedwidget.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/hashtable_policy.h:
 
@@ -1418,9 +1440,9 @@ C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Widgets/Qt6QModernWindowsStylePluginConfig.cm
 
 C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Core/Qt6CoreAdditionalTargetInfo.cmake:
 
-C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Core/Qt6CoreDependencies.cmake:
-
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_iterator.h:
+
+C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Core/Qt6CoreDependencies.cmake:
 
 C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Core/Qt6CoreTargetsPrecheck.cmake:
 
@@ -1519,6 +1541,8 @@ C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Gui/Qt6QMinimalIntegrationPluginTargetsPreche
 C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Gui/Qt6QOffscreenIntegrationPluginConfig.cmake:
 
 C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Widgets/Qt6WidgetsPlugins.cmake:
+
+C:/Users/andre/Documents/Andreu/Game/JoustManager/src/GameWindow.cpp:
 
 C:/Qt/6.11.1/mingw_64/lib/cmake/Qt6Gui/Qt6QTuioTouchPluginTargets.cmake:
 
@@ -1708,6 +1732,8 @@ C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/HP-CXX-DetermineCompiler.
 
 C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/IAR-DetermineCompiler.cmake:
 
+C:/Users/andre/Documents/Andreu/Game/JoustManager/src/ManagerInterface.cpp:
+
 C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/IBMCPP-CXX-DetermineVersionInternal.cmake:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/tr1/special_function_util.h:
@@ -1724,9 +1750,9 @@ C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/MSVC-DetermineCompiler.cm
 
 C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/NVHPC-DetermineCompiler.cmake:
 
-C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/Tasking-DetermineCompiler.cmake:
-
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_iterator_base_funcs.h:
+
+C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/Tasking-DetermineCompiler.cmake:
 
 C:/Qt/Tools/CMake_64/share/cmake-3.30/Modules/Compiler/OrangeC-DetermineCompiler.cmake:
 
@@ -1801,8 +1827,6 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/exce
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/functexcept.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/list.tcc:
-
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_classes.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_classes.tcc:
 
@@ -1998,8 +2022,14 @@ CMakeFiles/3.30.5/CMakeSystem.cmake:
 
 JoustManager_autogen/moc_predefs.h:
 
+C:/Users/andre/Documents/Andreu/Game/JoustManager/src/GameWindow.h:
+
 C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/Knight.h:
 
 C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.cpp:
 
 C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.h:
+
+C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.cpp:
+
+C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.h:

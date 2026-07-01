@@ -344,6 +344,12 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/andre/Documents/Andreu/Game/JoustManager/src/GameWindow.h",
+			"Mu",
+			"UVLADIE3JM/moc_GameWindow.cpp",
+			null
+		],
+		[
 			"C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/Knight.h",
 			"Mu",
 			"EIYZRIKKLW/moc_Knight.cpp",
@@ -353,6 +359,18 @@
 			"C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.h",
 			"Mu",
 			"EIYZRIKKLW/moc_KnightRosterTab.cpp",
+			null
+		],
+		[
+			"C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.h",
+			"Mu",
+			"UVLADIE3JM/moc_MainMenu.cpp",
+			null
+		],
+		[
+			"C:/Users/andre/Documents/Andreu/Game/JoustManager/src/ManagerInterface.h",
+			"Mu",
+			"UVLADIE3JM/moc_ManagerInterface.cpp",
 			null
 		]
 	],
@@ -434,12 +452,27 @@
 			null
 		],
 		[
+			"C:/Users/andre/Documents/Andreu/Game/JoustManager/src/GameWindow.cpp",
+			"Mu",
+			null
+		],
+		[
 			"C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/Knight.cpp",
 			"Mu",
 			null
 		],
 		[
 			"C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.cpp",
+			"Mu",
+			null
+		],
+		[
+			"C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.cpp",
+			"Mu",
+			null
+		],
+		[
+			"C:/Users/andre/Documents/Andreu/Game/JoustManager/src/ManagerInterface.cpp",
 			"Mu",
 			null
 		]

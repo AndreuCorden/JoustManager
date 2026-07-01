@@ -1,5 +1,5 @@
 #include "ManagerInterface.h"
-#include "KnightRosterTab.h"
+#include "Knights/KnightRosterTab.h"
 
 ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent) {
     // Main structural layout for this view

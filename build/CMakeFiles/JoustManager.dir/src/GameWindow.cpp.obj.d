@@ -1,8 +1,7 @@
-CMakeFiles/JoustManager.dir/JoustManager_autogen/mocs_compilation.cpp.obj: \
- C:\Users\andre\Documents\Andreu\Game\JoustManager\build\JoustManager_autogen\mocs_compilation.cpp \
- C:\Users\andre\Documents\Andreu\Game\JoustManager\build\JoustManager_autogen\UVLADIE3JM/moc_GameWindow.cpp \
- C:/Users/andre/Documents/Andreu/Game/JoustManager/src/GameWindow.h \
- C:/Users/andre/Documents/Andreu/Game/JoustManager/src/ManagerInterface.h \
+CMakeFiles/JoustManager.dir/src/GameWindow.cpp.obj: \
+ C:\Users\andre\Documents\Andreu\Game\JoustManager\src\GameWindow.cpp \
+ C:\Users\andre\Documents\Andreu\Game\JoustManager\src\GameWindow.h \
+ C:\Users\andre\Documents\Andreu\Game\JoustManager\src\ManagerInterface.h \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qwidget.h \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -407,16 +406,4 @@ CMakeFiles/JoustManager.dir/JoustManager_autogen/mocs_compilation.cpp.obj: \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qmainwindow.h \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QStackedWidget \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qstackedwidget.h \
- C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.h \
- C:/Qt/6.11.1/mingw_64/include/QtGui/qtextcursor.h \
- C:/Qt/6.11.1/mingw_64/include/QtGui/qtextformat.h \
- C:/Qt/6.11.1/mingw_64/include/QtGui/qpen.h \
- C:/Qt/6.11.1/mingw_64/include/QtGui/qtextoption.h \
- C:/Qt/6.11.1/mingw_64/include/QtCore/qtmochelpers.h \
- C:/Qt/6.11.1/mingw_64/include/QtCore/qtmocconstants.h \
- C:/Qt/6.11.1/mingw_64/include/QtCore/q20algorithm.h \
- C:\Users\andre\Documents\Andreu\Game\JoustManager\build\JoustManager_autogen\EIYZRIKKLW/moc_KnightRosterTab.cpp \
- C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.h \
- C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/Knight.h \
- C:\Users\andre\Documents\Andreu\Game\JoustManager\build\JoustManager_autogen\UVLADIE3JM/moc_MainMenu.cpp \
- C:\Users\andre\Documents\Andreu\Game\JoustManager\build\JoustManager_autogen\UVLADIE3JM/moc_ManagerInterface.cpp
+ C:\Users\andre\Documents\Andreu\Game\JoustManager\src\MainMenu.h
