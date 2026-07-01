@@ -1,5 +1,0 @@
-C:/Users/andre/Documents/Andreu/Game/JoustManager/build/CMakeFiles/JoustManager.dir
-C:/Users/andre/Documents/Andreu/Game/JoustManager/build/CMakeFiles/edit_cache.dir
-C:/Users/andre/Documents/Andreu/Game/JoustManager/build/CMakeFiles/rebuild_cache.dir
-C:/Users/andre/Documents/Andreu/Game/JoustManager/build/CMakeFiles/JoustManager_autogen_timestamp_deps.dir
-C:/Users/andre/Documents/Andreu/Game/JoustManager/build/CMakeFiles/JoustManager_autogen.dir
