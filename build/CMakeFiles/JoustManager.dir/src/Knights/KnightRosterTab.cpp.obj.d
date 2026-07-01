@@ -1,6 +1,6 @@
-CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.obj: \
- C:\Users\andre\Documents\Andreu\Game\JoustManager\src\ManagerInterface.cpp \
- C:\Users\andre\Documents\Andreu\Game\JoustManager\src\ManagerInterface.h \
+CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.obj: \
+ C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Knights\KnightRosterTab.cpp \
+ C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Knights\KnightRosterTab.h \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qwidget.h \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -400,4 +400,5 @@ CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.obj: \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qurl.h \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QPushButton \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qpushbutton.h \
- C:/Qt/6.11.1/mingw_64/include/QtWidgets/qabstractbutton.h
+ C:/Qt/6.11.1/mingw_64/include/QtWidgets/qabstractbutton.h \
+ C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Knights\Knight.h

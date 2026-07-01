@@ -1,5 +1,5 @@
 #include <QApplication>
-#include "src/GameWindow.h"
+#include "GameWindow.h"
 
 int main(int argc, char *argv[]) {
     // QApplication initializes operating system display loops and hooks

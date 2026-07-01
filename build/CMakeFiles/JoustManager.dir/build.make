@@ -104,67 +104,50 @@ CMakeFiles/JoustManager.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JoustManager.dir/main.cpp.s"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\andre\Documents\Andreu\Game\JoustManager\main.cpp -o CMakeFiles\JoustManager.dir\main.cpp.s
 
-CMakeFiles/JoustManager.dir/src/GameWindow.cpp.obj: CMakeFiles/JoustManager.dir/flags.make
-CMakeFiles/JoustManager.dir/src/GameWindow.cpp.obj: CMakeFiles/JoustManager.dir/includes_CXX.rsp
-CMakeFiles/JoustManager.dir/src/GameWindow.cpp.obj: C:/Users/andre/Documents/Andreu/Game/JoustManager/src/GameWindow.cpp
-CMakeFiles/JoustManager.dir/src/GameWindow.cpp.obj: CMakeFiles/JoustManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\andre\Documents\Andreu\Game\JoustManager\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/JoustManager.dir/src/GameWindow.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JoustManager.dir/src/GameWindow.cpp.obj -MF CMakeFiles\JoustManager.dir\src\GameWindow.cpp.obj.d -o CMakeFiles\JoustManager.dir\src\GameWindow.cpp.obj -c C:\Users\andre\Documents\Andreu\Game\JoustManager\src\GameWindow.cpp
+CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.obj: CMakeFiles/JoustManager.dir/flags.make
+CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.obj: CMakeFiles/JoustManager.dir/includes_CXX.rsp
+CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.obj: C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/Knight.cpp
+CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.obj: CMakeFiles/JoustManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\andre\Documents\Andreu\Game\JoustManager\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.obj -MF CMakeFiles\JoustManager.dir\src\Knights\Knight.cpp.obj.d -o CMakeFiles\JoustManager.dir\src\Knights\Knight.cpp.obj -c C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Knights\Knight.cpp
 
-CMakeFiles/JoustManager.dir/src/GameWindow.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JoustManager.dir/src/GameWindow.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\andre\Documents\Andreu\Game\JoustManager\src\GameWindow.cpp > CMakeFiles\JoustManager.dir\src\GameWindow.cpp.i
+CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.i"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Knights\Knight.cpp > CMakeFiles\JoustManager.dir\src\Knights\Knight.cpp.i
 
-CMakeFiles/JoustManager.dir/src/GameWindow.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JoustManager.dir/src/GameWindow.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\andre\Documents\Andreu\Game\JoustManager\src\GameWindow.cpp -o CMakeFiles\JoustManager.dir\src\GameWindow.cpp.s
+CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.s"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Knights\Knight.cpp -o CMakeFiles\JoustManager.dir\src\Knights\Knight.cpp.s
 
-CMakeFiles/JoustManager.dir/src/MainMenu.cpp.obj: CMakeFiles/JoustManager.dir/flags.make
-CMakeFiles/JoustManager.dir/src/MainMenu.cpp.obj: CMakeFiles/JoustManager.dir/includes_CXX.rsp
-CMakeFiles/JoustManager.dir/src/MainMenu.cpp.obj: C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.cpp
-CMakeFiles/JoustManager.dir/src/MainMenu.cpp.obj: CMakeFiles/JoustManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\andre\Documents\Andreu\Game\JoustManager\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/JoustManager.dir/src/MainMenu.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JoustManager.dir/src/MainMenu.cpp.obj -MF CMakeFiles\JoustManager.dir\src\MainMenu.cpp.obj.d -o CMakeFiles\JoustManager.dir\src\MainMenu.cpp.obj -c C:\Users\andre\Documents\Andreu\Game\JoustManager\src\MainMenu.cpp
+CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.obj: CMakeFiles/JoustManager.dir/flags.make
+CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.obj: CMakeFiles/JoustManager.dir/includes_CXX.rsp
+CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.obj: C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.cpp
+CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.obj: CMakeFiles/JoustManager.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\andre\Documents\Andreu\Game\JoustManager\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.obj -MF CMakeFiles\JoustManager.dir\src\Knights\KnightRosterTab.cpp.obj.d -o CMakeFiles\JoustManager.dir\src\Knights\KnightRosterTab.cpp.obj -c C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Knights\KnightRosterTab.cpp
 
-CMakeFiles/JoustManager.dir/src/MainMenu.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JoustManager.dir/src/MainMenu.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\andre\Documents\Andreu\Game\JoustManager\src\MainMenu.cpp > CMakeFiles\JoustManager.dir\src\MainMenu.cpp.i
+CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.i"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Knights\KnightRosterTab.cpp > CMakeFiles\JoustManager.dir\src\Knights\KnightRosterTab.cpp.i
 
-CMakeFiles/JoustManager.dir/src/MainMenu.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JoustManager.dir/src/MainMenu.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\andre\Documents\Andreu\Game\JoustManager\src\MainMenu.cpp -o CMakeFiles\JoustManager.dir\src\MainMenu.cpp.s
-
-CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.obj: CMakeFiles/JoustManager.dir/flags.make
-CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.obj: CMakeFiles/JoustManager.dir/includes_CXX.rsp
-CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.obj: C:/Users/andre/Documents/Andreu/Game/JoustManager/src/ManagerInterface.cpp
-CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.obj: CMakeFiles/JoustManager.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\andre\Documents\Andreu\Game\JoustManager\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.obj -MF CMakeFiles\JoustManager.dir\src\ManagerInterface.cpp.obj.d -o CMakeFiles\JoustManager.dir\src\ManagerInterface.cpp.obj -c C:\Users\andre\Documents\Andreu\Game\JoustManager\src\ManagerInterface.cpp
-
-CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\andre\Documents\Andreu\Game\JoustManager\src\ManagerInterface.cpp > CMakeFiles\JoustManager.dir\src\ManagerInterface.cpp.i
-
-CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\andre\Documents\Andreu\Game\JoustManager\src\ManagerInterface.cpp -o CMakeFiles\JoustManager.dir\src\ManagerInterface.cpp.s
+CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.s"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Knights\KnightRosterTab.cpp -o CMakeFiles\JoustManager.dir\src\Knights\KnightRosterTab.cpp.s
 
 # Object files for target JoustManager
 JoustManager_OBJECTS = \
 "CMakeFiles/JoustManager.dir/JoustManager_autogen/mocs_compilation.cpp.obj" \
 "CMakeFiles/JoustManager.dir/main.cpp.obj" \
-"CMakeFiles/JoustManager.dir/src/GameWindow.cpp.obj" \
-"CMakeFiles/JoustManager.dir/src/MainMenu.cpp.obj" \
-"CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.obj"
+"CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.obj" \
+"CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.obj"
 
 # External object files for target JoustManager
 JoustManager_EXTERNAL_OBJECTS =
 
 JoustManager.exe: CMakeFiles/JoustManager.dir/JoustManager_autogen/mocs_compilation.cpp.obj
 JoustManager.exe: CMakeFiles/JoustManager.dir/main.cpp.obj
-JoustManager.exe: CMakeFiles/JoustManager.dir/src/GameWindow.cpp.obj
-JoustManager.exe: CMakeFiles/JoustManager.dir/src/MainMenu.cpp.obj
-JoustManager.exe: CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.obj
+JoustManager.exe: CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.obj
+JoustManager.exe: CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.obj
 JoustManager.exe: CMakeFiles/JoustManager.dir/build.make
 JoustManager.exe: C:/Qt/6.11.1/mingw_64/lib/libQt6Widgets.a
 JoustManager.exe: C:/Qt/6.11.1/mingw_64/lib/libQt6Gui.a
@@ -172,7 +155,7 @@ JoustManager.exe: C:/Qt/6.11.1/mingw_64/lib/libQt6Core.a
 JoustManager.exe: CMakeFiles/JoustManager.dir/linkLibs.rsp
 JoustManager.exe: CMakeFiles/JoustManager.dir/objects1.rsp
 JoustManager.exe: CMakeFiles/JoustManager.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\andre\Documents\Andreu\Game\JoustManager\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable JoustManager.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\andre\Documents\Andreu\Game\JoustManager\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable JoustManager.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\JoustManager.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

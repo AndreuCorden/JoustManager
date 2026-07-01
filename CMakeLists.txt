@@ -9,7 +9,8 @@ set(CMAKE_PREFIX_PATH "C:/Qt/6.11.1/mingw_64")
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
-file(GLOB SOURCES "src/*.cpp" "src/*.h")
+file(GLOB_RECURSE SOURCES "src/**/*.cpp" "src/**/*.h")
 add_executable(JoustManager main.cpp ${SOURCES})
 
 target_link_libraries(JoustManager PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets)
+target_include_directories(JoustManager PRIVATE src)

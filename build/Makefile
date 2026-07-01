@@ -202,77 +202,53 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-src/GameWindow.obj: src/GameWindow.cpp.obj
-.PHONY : src/GameWindow.obj
+src/Knights/Knight.obj: src/Knights/Knight.cpp.obj
+.PHONY : src/Knights/Knight.obj
 
 # target to build an object file
-src/GameWindow.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/GameWindow.cpp.obj
-.PHONY : src/GameWindow.cpp.obj
+src/Knights/Knight.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.obj
+.PHONY : src/Knights/Knight.cpp.obj
 
-src/GameWindow.i: src/GameWindow.cpp.i
-.PHONY : src/GameWindow.i
+src/Knights/Knight.i: src/Knights/Knight.cpp.i
+.PHONY : src/Knights/Knight.i
 
 # target to preprocess a source file
-src/GameWindow.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/GameWindow.cpp.i
-.PHONY : src/GameWindow.cpp.i
+src/Knights/Knight.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.i
+.PHONY : src/Knights/Knight.cpp.i
 
-src/GameWindow.s: src/GameWindow.cpp.s
-.PHONY : src/GameWindow.s
+src/Knights/Knight.s: src/Knights/Knight.cpp.s
+.PHONY : src/Knights/Knight.s
 
 # target to generate assembly for a file
-src/GameWindow.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/GameWindow.cpp.s
-.PHONY : src/GameWindow.cpp.s
+src/Knights/Knight.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/Knights/Knight.cpp.s
+.PHONY : src/Knights/Knight.cpp.s
 
-src/MainMenu.obj: src/MainMenu.cpp.obj
-.PHONY : src/MainMenu.obj
+src/Knights/KnightRosterTab.obj: src/Knights/KnightRosterTab.cpp.obj
+.PHONY : src/Knights/KnightRosterTab.obj
 
 # target to build an object file
-src/MainMenu.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/MainMenu.cpp.obj
-.PHONY : src/MainMenu.cpp.obj
+src/Knights/KnightRosterTab.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.obj
+.PHONY : src/Knights/KnightRosterTab.cpp.obj
 
-src/MainMenu.i: src/MainMenu.cpp.i
-.PHONY : src/MainMenu.i
-
-# target to preprocess a source file
-src/MainMenu.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/MainMenu.cpp.i
-.PHONY : src/MainMenu.cpp.i
-
-src/MainMenu.s: src/MainMenu.cpp.s
-.PHONY : src/MainMenu.s
-
-# target to generate assembly for a file
-src/MainMenu.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/MainMenu.cpp.s
-.PHONY : src/MainMenu.cpp.s
-
-src/ManagerInterface.obj: src/ManagerInterface.cpp.obj
-.PHONY : src/ManagerInterface.obj
-
-# target to build an object file
-src/ManagerInterface.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.obj
-.PHONY : src/ManagerInterface.cpp.obj
-
-src/ManagerInterface.i: src/ManagerInterface.cpp.i
-.PHONY : src/ManagerInterface.i
+src/Knights/KnightRosterTab.i: src/Knights/KnightRosterTab.cpp.i
+.PHONY : src/Knights/KnightRosterTab.i
 
 # target to preprocess a source file
-src/ManagerInterface.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.i
-.PHONY : src/ManagerInterface.cpp.i
+src/Knights/KnightRosterTab.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.i
+.PHONY : src/Knights/KnightRosterTab.cpp.i
 
-src/ManagerInterface.s: src/ManagerInterface.cpp.s
-.PHONY : src/ManagerInterface.s
+src/Knights/KnightRosterTab.s: src/Knights/KnightRosterTab.cpp.s
+.PHONY : src/Knights/KnightRosterTab.s
 
 # target to generate assembly for a file
-src/ManagerInterface.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/ManagerInterface.cpp.s
-.PHONY : src/ManagerInterface.cpp.s
+src/Knights/KnightRosterTab.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\JoustManager.dir\build.make CMakeFiles/JoustManager.dir/src/Knights/KnightRosterTab.cpp.s
+.PHONY : src/Knights/KnightRosterTab.cpp.s
 
 # Help Target
 help:
@@ -291,15 +267,12 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
-	@echo ... src/GameWindow.obj
-	@echo ... src/GameWindow.i
-	@echo ... src/GameWindow.s
-	@echo ... src/MainMenu.obj
-	@echo ... src/MainMenu.i
-	@echo ... src/MainMenu.s
-	@echo ... src/ManagerInterface.obj
-	@echo ... src/ManagerInterface.i
-	@echo ... src/ManagerInterface.s
+	@echo ... src/Knights/Knight.obj
+	@echo ... src/Knights/Knight.i
+	@echo ... src/Knights/Knight.s
+	@echo ... src/Knights/KnightRosterTab.obj
+	@echo ... src/Knights/KnightRosterTab.i
+	@echo ... src/Knights/KnightRosterTab.s
 .PHONY : help
 
 

@@ -158,9 +158,7 @@ JoustManager_autogen/timestamp: \
 	C:/Qt/6.11.1/mingw_64/include/QtGui/qwindowdefs.h \
 	C:/Qt/6.11.1/mingw_64/include/QtGui/qwindowdefs_win.h \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/QLabel \
-	C:/Qt/6.11.1/mingw_64/include/QtWidgets/QMainWindow \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/QPushButton \
-	C:/Qt/6.11.1/mingw_64/include/QtWidgets/QStackedWidget \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/QTabWidget \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/QVBoxLayout \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/QWidget \
@@ -171,10 +169,8 @@ JoustManager_autogen/timestamp: \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/qlabel.h \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/qlayout.h \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/qlayoutitem.h \
-	C:/Qt/6.11.1/mingw_64/include/QtWidgets/qmainwindow.h \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/qpushbutton.h \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/qsizepolicy.h \
-	C:/Qt/6.11.1/mingw_64/include/QtWidgets/qstackedwidget.h \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtabwidget.h \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtwidgets-config.h \
 	C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtwidgetsexports.h \
@@ -665,10 +661,8 @@ JoustManager_autogen/timestamp: \
 	C:/Users/andre/Documents/Andreu/Game/JoustManager/build/CMakeFiles/3.30.5/CMakeSystem.cmake \
 	C:/Users/andre/Documents/Andreu/Game/JoustManager/build/JoustManager_autogen/moc_predefs.h \
 	C:/Users/andre/Documents/Andreu/Game/JoustManager/main.cpp \
-	C:/Users/andre/Documents/Andreu/Game/JoustManager/src/GameWindow.cpp \
-	C:/Users/andre/Documents/Andreu/Game/JoustManager/src/GameWindow.h \
-	C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.cpp \
-	C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.h \
-	C:/Users/andre/Documents/Andreu/Game/JoustManager/src/ManagerInterface.cpp \
-	C:/Users/andre/Documents/Andreu/Game/JoustManager/src/ManagerInterface.h \
+	C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/Knight.cpp \
+	C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/Knight.h \
+	C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.cpp \
+	C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.h \
 	C:/Qt/Tools/CMake_64/bin/cmake.exe

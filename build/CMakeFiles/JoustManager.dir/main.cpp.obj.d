@@ -384,8 +384,8 @@ CMakeFiles/JoustManager.dir/main.cpp.obj: \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qvarlengtharray.h \
  C:/Qt/6.11.1/mingw_64/include/QtCore/qalloc.h \
  C:/Qt/6.11.1/mingw_64/include/QtGui/qguiapplication_platform.h \
- C:\Users\andre\Documents\Andreu\Game\JoustManager\src/GameWindow.h \
- C:\Users\andre\Documents\Andreu\Game\JoustManager\src/ManagerInterface.h \
+ C:/Users/andre/Documents/Andreu/Game/JoustManager/src/GameWindow.h \
+ C:/Users/andre/Documents/Andreu/Game/JoustManager/src/ManagerInterface.h \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QWidget \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qwidget.h \
  C:/Qt/6.11.1/mingw_64/include/QtGui/qaction.h \
@@ -420,4 +420,4 @@ CMakeFiles/JoustManager.dir/main.cpp.obj: \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qmainwindow.h \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QStackedWidget \
  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qstackedwidget.h \
- C:\Users\andre\Documents\Andreu\Game\JoustManager\src/MainMenu.h
+ C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.h

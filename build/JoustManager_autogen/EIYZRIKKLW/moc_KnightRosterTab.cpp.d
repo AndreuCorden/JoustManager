@@ -1,4 +1,4 @@
-C:/Users/andre/Documents/Andreu/Game/JoustManager/build/JoustManager_autogen/UVLADIE3JM/moc_MainMenu.cpp: C:/Users/andre/Documents/Andreu/Game/JoustManager/src/MainMenu.h \
+C:/Users/andre/Documents/Andreu/Game/JoustManager/build/JoustManager_autogen/EIYZRIKKLW/moc_KnightRosterTab.cpp: C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/KnightRosterTab.h \
   C:/Users/andre/Documents/Andreu/Game/JoustManager/build/JoustManager_autogen/moc_predefs.h \
   C:/Qt/6.11.1/mingw_64/include/QtCore/q17memory.h \
   C:/Qt/6.11.1/mingw_64/include/QtCore/q20bit.h \
@@ -160,6 +160,7 @@ C:/Users/andre/Documents/Andreu/Game/JoustManager/build/JoustManager_autogen/UVL
   C:/Qt/6.11.1/mingw_64/include/QtGui/qwindowdefs_win.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/QLabel \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/QPushButton \
+  C:/Qt/6.11.1/mingw_64/include/QtWidgets/QTabWidget \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/QVBoxLayout \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/QWidget \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qabstractbutton.h \
@@ -171,6 +172,7 @@ C:/Users/andre/Documents/Andreu/Game/JoustManager/build/JoustManager_autogen/UVL
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qlayoutitem.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qpushbutton.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qsizepolicy.h \
+  C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtabwidget.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtwidgets-config.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtwidgetsexports.h \
   C:/Qt/6.11.1/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -387,4 +389,5 @@ C:/Users/andre/Documents/Andreu/Game/JoustManager/build/JoustManager_autogen/UVL
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sys/types.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/time.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h \
-  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h
+  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h \
+  C:/Users/andre/Documents/Andreu/Game/JoustManager/src/Knights/Knight.h
