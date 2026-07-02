@@ -1,0 +1,33 @@
+🪚 Jousting Lances (Primary Weapons)
+In actual medieval tournaments, lances were highly specialized. They can be broken down into tiers based on weight, materials, and tournament safety rules:
+
+Tier 1: Practice & Low-Stakes Lances
+Coronel / Courteous Lance: Equipped with a three-pronged blunt head (a coronel) instead of a sharp point. Designed explicitly to unseat an opponent without piercing their armor. Perfect for early-game training.
+
+Balsawood / Frangible Lance: Made of highly breakable, lightweight wood. In many tournaments, points were scored based on shattering your lance cleanly against an opponent's shield.
+
+Tier 2: Standard Tournament Lances
+Ashwood Lance: The historical standard. Ash is incredibly tough, straight-grained, and packs a massive impact punch without being excessively heavy.
+
+Vamplate Lance: A lance featuring an oversized, funnel-shaped steel hand guard (vamplate). It offers an extra defensive shield bonus to the knight's right arm and shoulder during the clash.
+
+Tier 3: Elite & War Lances
+Gothic Fluted Lance: An advanced, stylized lance with hollowed-out grooves (fluting) to reduce weight while maintaining rigid structural strength. Allows for easier aiming at high speeds.
+
+Great War Lance: A heavy, solid-oak weapon with a lethal diamond-shaped steel tip. Used in Jousts of War (Joute à l'Outrance), where knights fought with live, unblunted weapons. High damage, high risk.
+
+⚔️ Knightly Swords (Secondary / Foot Combat)
+If your knights engage in melee rounds after their lances shatter, or if you feature sword-fighting side events, here are the historical types categorized by how they are held:
+
+One-Handed Swords (Perfect paired with a Shield)
+Arming Sword: The classic, single-handed knightly sword. Balanced, lightweight, and designed for reliable cutting and thrusting from horseback.
+
+Falchion: A heavy-backed, curved one-handed sword. It functions like a cleaver, delivering high offensive slashing damage against lighter armors, though it lacks thrusting precision.
+
+Versatile Swords
+Bastard Sword (Hand-and-a-Half): Features an extended grip. A knight can use it with one hand while holding a shield, or drop the shield and grip it with two hands for a massive power/offensive bonus.
+
+Two-Handed Swords (Sacrifices Defense for Pure Offense)
+Longsword: A dedicated two-handed weapon with a long crossguard. Used for complex tactical fighting, bypassing heavy armor defenses through precise thrusting techniques.
+
+Zweihänder / Greatsword: An absolute monster of a blade. Too massive to use on horseback; on foot, it acts like a polearm, obliterating opponent guards and delivering maximum physical damage.

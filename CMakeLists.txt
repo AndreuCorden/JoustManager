@@ -22,6 +22,12 @@ set(SOURCES
     src/Knights/KnightRosterTab.cpp
     src/Knights/Knight.cpp
     src/Knights/Knight.h
+    src/Items/Item.cpp
+    src/Items/Item.h
+    src/Items/Armour/GothicArmour.cpp
+    src/Items/Armour/GothicArmour.h
+    src/Items/Weapon/CourteousLance.cpp
+    src/Items/Weapon/CourteousLance.h
 )
 
 # Compile the executable using the explicit list
