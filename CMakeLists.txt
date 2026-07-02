@@ -22,6 +22,8 @@ set(SOURCES
     src/Knights/KnightRosterTab.cpp
     src/Knights/Knight.cpp
     src/Knights/Knight.h
+    src/Knights/KnightDetailDialog.cpp
+    src/Knights/KnightDetailDialog.h
     src/Items/Item.cpp
     src/Items/Item.h
     src/Items/Armour/GothicArmour.cpp
