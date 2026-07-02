@@ -7,7 +7,7 @@ KnightDetailDialog::KnightDetailDialog(Knight &knight, QWidget *parent) : GameDi
     // Set up window properties
     setWindowTitle(QString("%1's Profile").arg(QString::fromStdString(knight.getName())));
     setMinimumSize(350, 450);
-    setModal(true); // Prevents interacting with the main menu until closed
+    setModal(true); 
 
     // Header
     QLabel *nameLabel = new QLabel(QString::fromStdString(knight.getName()), this);
@@ -19,110 +19,106 @@ KnightDetailDialog::KnightDetailDialog(Knight &knight, QWidget *parent) : GameDi
     statsLabel->setStyleSheet("font-size: 14px; color: #4A5568;");
     mainLayout->addWidget(statsLabel);
 
+    // --- WEAPON FIELD BUTTON ---
     QString currentWeaponName = QString::fromStdString(knight.getRightHandWeapon().getName());
     QPushButton *weaponField = new QPushButton("Weapon: " + currentWeaponName, this);
-    weaponField->setStyleSheet("padding: 15px; text-align: left; font-size: 14px; background: #1e1e1f;");
-    mainLayout->addWidget(weaponField);
+    weaponField->setStyleSheet("padding: 15px; text-align: left; font-size: 14px; background: #1e1e1f; color: white;");
+    mainLayout->addWidget(weaponField); 
 
     connect(weaponField, &QPushButton::clicked, this, [this, &knight, weaponField]() {
-        // Pull the available weapons from the global Player inventory
         std::vector<Item>& availableWeapons = Player::getInstance().getWeapons();
 
         if (availableWeapons.empty()) {
-            QMessageBox::information(this, "Armoury Empty", "You have no unassigned weapons in your inventory!");
+            // Fix QMessageBox frame too by using an instance
+            QMessageBox alertBox(this);
+            alertBox.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+            alertBox.setWindowTitle("Armoury Empty");
+            alertBox.setText("You have no unassigned weapons in your inventory!");
+            alertBox.exec();
             return;
         }
 
-        // Convert item names to QStringList for the Qt dropdown menu
         QStringList options;
         for (const Item& item : availableWeapons) {
             options.append(QString::fromStdString(item.getName()));
         }
 
-        // Show the dropdown dialog to the user
-        bool ok;
-        QString selectedName = QInputDialog::getItem(this, "Select Weapon", 
-                                                     "Choose a weapon to equip:", 
-                                                     options, 0, false, &ok);
+        QInputDialog dropDown(this);
+        dropDown.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog); 
+        dropDown.setWindowTitle("Select Weapon");
+        dropDown.setLabelText("Choose a weapon to equip:");
+        dropDown.setComboBoxItems(options);
+        dropDown.setComboBoxEditable(false);
 
-        if (ok && !selectedName.isEmpty()) {
-            // Find the item index inside the player's inventory
-            for (size_t i = 0; i < availableWeapons.size(); ++i) {
-                if (QString::fromStdString(availableWeapons[i].getName()) == selectedName) {
-                    
-                    // Step A: If the knight already had a weapon, give it back to the player inventory
-                    Item oldWeapon = knight.getRightHandWeapon();
-                    if (oldWeapon.getName() != "None") { // Assuming "None" is your empty state
-                        Player::getInstance().addWeapon(oldWeapon);
+        // Execute and check response
+        if (dropDown.exec() == QDialog::Accepted) {
+            QString selectedName = dropDown.textValue();
+            if (!selectedName.isEmpty()) {
+                for (size_t i = 0; i < availableWeapons.size(); ++i) {
+                    if (QString::fromStdString(availableWeapons[i].getName()) == selectedName) {
+                        Item oldWeapon = knight.getRightHandWeapon();
+                        if (oldWeapon.getName() != "None") { 
+                            Player::getInstance().addWeapon(oldWeapon);
+                        }
+                        knight.equipRightHandWeapon(availableWeapons[i]);
+                        availableWeapons.erase(availableWeapons.begin() + i);
+                        weaponField->setText("Weapon: " + selectedName);
+                        break;
                     }
-
-                    // Step B: Equip the new weapon onto the knight
-                    knight.equipRightHandWeapon(availableWeapons[i]);
-
-                    // Step C: Remove the item from the player's armory inventory
-                    availableWeapons.erase(availableWeapons.begin() + i);
-
-                    // Step D: Update the UI button text to reflect the change
-                    weaponField->setText("Weapon: " + selectedName);
-                    break;
                 }
             }
         }
     });
 
+    // --- ARMOUR FIELD BUTTON ---
     QString currentArmourName = QString::fromStdString(knight.getArmour().getName());
     QPushButton *armourField = new QPushButton("Armour: " + currentArmourName, this);
-    armourField->setStyleSheet("padding: 15px; text-align: left; font-size: 14px; background: #1e1e1f;");
+    armourField->setStyleSheet("padding: 15px; text-align: left; font-size: 14px; background: #1e1e1f; color: white;");
     mainLayout->addWidget(armourField);
 
-    // This one and the other one remove the weapon and armour from the list once selected. That's not correct. It should state who currently holds a weapon.
     connect(armourField, &QPushButton::clicked, this, [this, &knight, armourField]() {
-        // Pull the available weapons from the global Player inventory
         std::vector<Item>& availableArmour = Player::getInstance().getArmour();
 
         if (availableArmour.empty()) {
-            QMessageBox::information(this, "Armoury Empty", "You have no unassigned armour in your inventory!");
+            QMessageBox alertBox(this);
+            alertBox.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+            alertBox.setWindowTitle("Armoury Empty");
+            alertBox.setText("You have no unassigned armour in your inventory!");
+            alertBox.exec();
             return;
         }
 
-        // Convert item names to QStringList for the Qt dropdown menu
         QStringList options;
         for (const Item& item : availableArmour) {
             options.append(QString::fromStdString(item.getName()));
         }
 
-        // Show the dropdown dialog to the user
-        bool ok;
-        QString selectedName = QInputDialog::getItem(this, "Select Armour", 
-                                                     "Choose an armour to equip:", 
-                                                     options, 0, false, &ok);
+        QInputDialog dropDown(this);
+        dropDown.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+        dropDown.setWindowTitle("Select Armour");
+        dropDown.setLabelText("Choose an armour to equip:");
+        dropDown.setComboBoxItems(options);
+        dropDown.setComboBoxEditable(false);
 
-        if (ok && !selectedName.isEmpty()) {
-            // Find the item index inside the player's inventory
-            for (size_t i = 0; i < availableArmour.size(); ++i) {
-                if (QString::fromStdString(availableArmour[i].getName()) == selectedName) {
-                    
-                    // Step A: If the knight already had a weapon, give it back to the player inventory
-                    Item oldWeapon = knight.getRightHandWeapon();
-                    if (oldWeapon.getName() != "None") { // Assuming "None" is your empty state
-                        Player::getInstance().addWeapon(oldWeapon);
+        if (dropDown.exec() == QDialog::Accepted) {
+            QString selectedName = dropDown.textValue();
+            if (!selectedName.isEmpty()) {
+                for (size_t i = 0; i < availableArmour.size(); ++i) {
+                    if (QString::fromStdString(availableArmour[i].getName()) == selectedName) {
+                        Item oldWeapon = knight.getRightHandWeapon();
+                        if (oldWeapon.getName() != "None") { 
+                            Player::getInstance().addWeapon(oldWeapon);
+                        }
+                        knight.equipRightHandWeapon(availableArmour[i]);
+                        availableArmour.erase(availableArmour.begin() + i);
+                        armourField->setText("Armour: " + selectedName); // Fixed text indicator layout matching armour
+                        break;
                     }
-
-                    // Step B: Equip the new weapon onto the knight
-                    knight.equipRightHandWeapon(availableArmour[i]);
-
-                    // Step C: Remove the item from the player's armory inventory
-                    availableArmour.erase(availableArmour.begin() + i);
-
-                    // Step D: Update the UI button text to reflect the change
-                    armourField->setText("Weapon: " + selectedName);
-                    break;
                 }
             }
         }
     });
 
-    // Add spacing
     mainLayout->addStretch();
 
     // Close Button

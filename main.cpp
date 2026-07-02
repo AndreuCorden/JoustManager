@@ -34,6 +34,11 @@ int main(int argc, char *argv[])
         "   background-color: #1A202C;"
         "   border: 3px solid #D4AF37;"
         "   border-radius: 8px;"
+        "}"
+
+        "QInputDialog, QMessageBox {"
+        "   background-color: #1A202C;"
+        "   border: 2px solid #D4AF37;"
         "}");
 
     GameWindow window;

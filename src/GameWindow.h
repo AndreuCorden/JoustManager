@@ -6,10 +6,12 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QKeyEvent>
 #include <QStackedWidget>
 #include "MainMenu.h"
 
-class GameWindow : public QMainWindow {
+class GameWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
@@ -22,6 +24,9 @@ private:
     QStackedWidget *screenContainer;
     MainMenu *mainMenu;
     ManagerInterface *managerInterface;
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif

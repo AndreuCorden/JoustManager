@@ -6,7 +6,7 @@ GameWindow::GameWindow()
 
     setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
-    setMinimumSize(1024, 768);
+    this->showFullScreen();
     setWindowTitle("Knight Jousting Manager");
 
     screenContainer = new QStackedWidget(this);
@@ -31,4 +31,14 @@ void GameWindow::handleStartGame()
 {
     // Switch the screen inside the container seamlessly
     screenContainer->setCurrentWidget(managerInterface);
+}
+
+void GameWindow::keyPressEvent(QKeyEvent *event) {
+    // Check if the key that was pressed is the Escape key
+    if (event->key() == Qt::Key_Escape) {
+        this->close(); // Cleanly shuts down the entire application
+    } else {
+        // Pass any other keypresses back to the standard engine
+        QMainWindow::keyPressEvent(event);
+    }
 }
