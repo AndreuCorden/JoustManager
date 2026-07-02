@@ -20,6 +20,9 @@ public:
     KnightDetailDialog(Knight &knight, KnightRosterTab *parent = nullptr);
 
     KnightDetailDialog(Knight &knight, KnightRecruitmentTab *parent = nullptr);
+
+private:
+    QPushButton *createEquipmentSlot(Knight &knight, Item::ItemType type);
 };
 
 #endif
