@@ -7,8 +7,10 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include "Knight.h" // Replace with your actual Knight class header
+#include "GameDialog.h"
 
-class KnightDetailDialog : public QDialog {
+
+class KnightDetailDialog : public GameDialog {
     Q_OBJECT
 
 public:

@@ -3,28 +3,26 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
-KnightDetailDialog::KnightDetailDialog(Knight &knight, QWidget *parent) : QDialog(parent) {
+KnightDetailDialog::KnightDetailDialog(Knight &knight, QWidget *parent) : GameDialog(parent) {
     // Set up window properties
     setWindowTitle(QString("%1's Profile").arg(QString::fromStdString(knight.getName())));
     setMinimumSize(350, 450);
     setModal(true); // Prevents interacting with the main menu until closed
 
-    QVBoxLayout *layout = new QVBoxLayout(this);
-
     // Header
     QLabel *nameLabel = new QLabel(QString::fromStdString(knight.getName()), this);
     nameLabel->setStyleSheet("font-size: 24px; font-weight: bold; color: #D4AF37;");
-    layout->addWidget(nameLabel);
+    mainLayout->addWidget(nameLabel);
 
     // Display Stats (Example)
     QLabel *statsLabel = new QLabel("Stats & Equipment placeholder...", this);
     statsLabel->setStyleSheet("font-size: 14px; color: #4A5568;");
-    layout->addWidget(statsLabel);
+    mainLayout->addWidget(statsLabel);
 
     QString currentWeaponName = QString::fromStdString(knight.getRightHandWeapon().getName());
     QPushButton *weaponField = new QPushButton("Weapon: " + currentWeaponName, this);
     weaponField->setStyleSheet("padding: 15px; text-align: left; font-size: 14px; background: #1e1e1f;");
-    layout->addWidget(weaponField);
+    mainLayout->addWidget(weaponField);
 
     connect(weaponField, &QPushButton::clicked, this, [this, &knight, weaponField]() {
         // Pull the available weapons from the global Player inventory
@@ -75,7 +73,7 @@ KnightDetailDialog::KnightDetailDialog(Knight &knight, QWidget *parent) : QDialo
     QString currentArmourName = QString::fromStdString(knight.getArmour().getName());
     QPushButton *armourField = new QPushButton("Armour: " + currentArmourName, this);
     armourField->setStyleSheet("padding: 15px; text-align: left; font-size: 14px; background: #1e1e1f;");
-    layout->addWidget(armourField);
+    mainLayout->addWidget(armourField);
 
     // This one and the other one remove the weapon and armour from the list once selected. That's not correct. It should state who currently holds a weapon.
     connect(armourField, &QPushButton::clicked, this, [this, &knight, armourField]() {
@@ -125,13 +123,11 @@ KnightDetailDialog::KnightDetailDialog(Knight &knight, QWidget *parent) : QDialo
     });
 
     // Add spacing
-    layout->addStretch();
+    mainLayout->addStretch();
 
     // Close Button
     QPushButton *closeButton = new QPushButton("Back to Roster", this);
     closeButton->setStyleSheet("padding: 10px; font-weight: bold;");
     connect(closeButton, &QPushButton::clicked, this, &QDialog::accept);
-    layout->addWidget(closeButton);
-
-    setLayout(layout);
+    mainLayout->addWidget(closeButton);
 }

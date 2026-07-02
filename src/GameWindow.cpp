@@ -1,7 +1,11 @@
 #include "GameWindow.h"
 #include <QLabel>
 
-GameWindow::GameWindow() {
+GameWindow::GameWindow()
+{
+
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+
     setMinimumSize(1024, 768);
     setWindowTitle("Knight Jousting Manager");
 
@@ -23,7 +27,8 @@ GameWindow::GameWindow() {
     screenContainer->setCurrentWidget(mainMenu);
 }
 
-void GameWindow::handleStartGame() {
+void GameWindow::handleStartGame()
+{
     // Switch the screen inside the container seamlessly
     screenContainer->setCurrentWidget(managerInterface);
 }

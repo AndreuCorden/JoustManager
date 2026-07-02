@@ -12,26 +12,28 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 # Explicitly mapping out every single file so CMake cannot skip them
 set(SOURCES
     main.cpp
-    src/Player.cpp
     src/Player.h
+    src/Player.cpp
     src/GameWindow.h
     src/GameWindow.cpp
+    src/GameDialog.h
+    src/GameDialog.cpp
     src/MainMenu.h
     src/MainMenu.cpp
     src/ManagerInterface.h
     src/ManagerInterface.cpp
     src/Knights/KnightRosterTab.h
     src/Knights/KnightRosterTab.cpp
-    src/Knights/Knight.cpp
     src/Knights/Knight.h
-    src/Knights/KnightDetailDialog.cpp
+    src/Knights/Knight.cpp
     src/Knights/KnightDetailDialog.h
-    src/Items/Item.cpp
+    src/Knights/KnightDetailDialog.cpp
     src/Items/Item.h
-    src/Items/Armour/GothicArmour.cpp
+    src/Items/Item.cpp
     src/Items/Armour/GothicArmour.h
-    src/Items/Weapon/CourteousLance.cpp
+    src/Items/Armour/GothicArmour.cpp
     src/Items/Weapon/CourteousLance.h
+    src/Items/Weapon/CourteousLance.cpp
 )
 
 # Compile the executable using the explicit list

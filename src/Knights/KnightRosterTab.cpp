@@ -1,5 +1,6 @@
 #include "KnightRosterTab.h"
 #include "KnightDetailDialog.h"
+#include "Player.h"
 
 // Explicitly forward structural attachment rules down to QWidget base constructor
 KnightRosterTab::KnightRosterTab(QWidget *parent) : QWidget(parent)
@@ -12,10 +13,7 @@ KnightRosterTab::KnightRosterTab(QWidget *parent) : QWidget(parent)
 
     layout->addWidget(label);
 
-    Knight knight = Knight::generateRandomKnight();
-    addKnightToRosterTab(knight);
-
-    for (Knight &k : knightsInRoster)
+    for (Knight &k : Player::getInstance().getRoster())
     {
         Knight* knightPtr = &k;
         
@@ -33,9 +31,4 @@ KnightRosterTab::KnightRosterTab(QWidget *parent) : QWidget(parent)
     }
 
     layout->addStretch();
-}
-
-void KnightRosterTab::addKnightToRosterTab(const Knight &knigth)
-{
-    knightsInRoster.emplace_back(knigth);
 }
