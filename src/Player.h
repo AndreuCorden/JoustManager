@@ -30,10 +30,10 @@ public:
 
     // Inventory Management (Changed from Item& to Item for standard vectors)
     std::vector<Item>& getWeapons() { return weaponInventory; }
-    std::vector<Item>& getArmor() { return armorInventory; }
+    std::vector<Item>& getArmour() { return armorInventory; }
     
     void addWeapon(const Item& w) { weaponInventory.push_back(w); }
-    void addArmor(const Item& a) { armorInventory.push_back(a); }
+    void addArmour(const Item& a) { armorInventory.push_back(a); }
 
 private:
     Player(); // Constructor is now PRIVATE

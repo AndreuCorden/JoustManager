@@ -22,7 +22,12 @@ public:
     int getHeight() const { return height; }
     int getWeight() const { return weight; }
 
-    void setArmour(const Item & newArmour)
+    Item getArmour() const
+    {
+        return armour;
+    }
+    
+    void equipArmour(const Item & newArmour)
     {
         armour = newArmour;
     }
