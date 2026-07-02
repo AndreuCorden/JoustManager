@@ -1,5 +1,6 @@
 #include "ManagerInterface.h"
 #include "Knights/KnightRosterTab.h"
+#include "Knights/KnightRecruitmentTab.h"
 
 ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent) {
     // Main structural layout for this view
@@ -10,33 +11,16 @@ ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent) {
     tabWidget->setStyleSheet("QTabBar::tab { font-size: 16px; padding: 10px 20px; }");
 
     // Generate our sub-panels and plug them into the tabs
-    knightsTab = new KnightRosterTab();
-    tabWidget->addTab(knightsTab, "Knights Roster");
-    tabWidget->addTab(createRecruitmentTab(),"Knight Recruitment");
+    knightRosterTab = new KnightRosterTab();
+    knightRecruitmentTab = new KnightRecruitmentTab();
+    
+    tabWidget->addTab(knightRosterTab, "Knights Roster");
+    tabWidget->addTab(knightRecruitmentTab,"Knight Recruitment");
     tabWidget->addTab(createShopTab(), "Blacksmith Shop");
     tabWidget->addTab(createTournamentTab(), "Tournament Arena");
 
     mainLayout->addWidget(tabWidget);
     setLayout(mainLayout);
-}
-
-QWidget* ManagerInterface::createRecruitmentTab()
-{
-    QWidget *tab = new QWidget();
-    QVBoxLayout *layout = new QVBoxLayout(tab);
-
-    QLabel *label = new QLabel("AVAILABLE KNIGHTS");
-    label->setStyleSheet("font-size: 20px; font-weight: bold; color: #4A5568;");
-    
-    QPushButton *knightButton = new QPushButton("Sir Robert (View Stats & Gear)", tab);
-    knightButton->setStyleSheet("padding: 12px; font-size: 14px;");
-
-    layout->addWidget(label);
-    layout->addWidget(knightButton);
-    layout->addStretch();
-
-    tab->setLayout(layout);
-    return tab;
 }
 
 QWidget* ManagerInterface::createShopTab() {

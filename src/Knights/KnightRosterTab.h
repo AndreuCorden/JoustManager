@@ -9,8 +9,6 @@
 #include <QLabel>
 #include <QPushButton>
 
-#include <list>
-#include "Knight.h"
 
 class KnightRosterTab : public QWidget
 {

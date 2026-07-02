@@ -28,6 +28,8 @@ set(SOURCES
     src/Knights/Knight.cpp
     src/Knights/KnightDetailDialog.h
     src/Knights/KnightDetailDialog.cpp
+    src/Knights/KnightRecruitmentTab.h
+    src/Knights/KnightRecruitmentTab.cpp
     src/Items/Item.h
     src/Items/Item.cpp
     src/Items/Armour/GothicArmour.h

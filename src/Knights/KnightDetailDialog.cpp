@@ -3,7 +3,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
-KnightDetailDialog::KnightDetailDialog(Knight &knight, QWidget *parent) : GameDialog(parent) {
+KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRosterTab *parent) : GameDialog(parent) {
     // Set up window properties
     setWindowTitle(QString("%1's Profile").arg(QString::fromStdString(knight.getName())));
     setMinimumSize(350, 450);
@@ -118,6 +118,31 @@ KnightDetailDialog::KnightDetailDialog(Knight &knight, QWidget *parent) : GameDi
             }
         }
     });
+
+    mainLayout->addStretch();
+
+    // Close Button
+    QPushButton *closeButton = new QPushButton("Back to Roster", this);
+    closeButton->setStyleSheet("padding: 10px; font-weight: bold;");
+    connect(closeButton, &QPushButton::clicked, this, &QDialog::accept);
+    mainLayout->addWidget(closeButton);
+}
+
+KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRecruitmentTab *parent) : GameDialog(parent) {
+    // Set up window properties
+    setWindowTitle(QString("%1's Profile").arg(QString::fromStdString(knight.getName())));
+    setMinimumSize(350, 450);
+    setModal(true); 
+
+    // Header
+    QLabel *nameLabel = new QLabel(QString::fromStdString(knight.getName()), this);
+    nameLabel->setStyleSheet("font-size: 24px; font-weight: bold; color: #D4AF37;");
+    mainLayout->addWidget(nameLabel);
+
+    // Display Stats (Example)
+    QLabel *statsLabel = new QLabel("Stats & Equipment placeholder...", this);
+    statsLabel->setStyleSheet("font-size: 14px; color: #4A5568;");
+    mainLayout->addWidget(statsLabel);
 
     mainLayout->addStretch();
 

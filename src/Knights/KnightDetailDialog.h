@@ -7,6 +7,8 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include "Knight.h" // Replace with your actual Knight class header
+#include "KnightRosterTab.h"
+#include "KnightRecruitmentTab.h"
 #include "GameDialog.h"
 
 
@@ -15,7 +17,9 @@ class KnightDetailDialog : public GameDialog {
 
 public:
     // Pass the knight by reference so modifications (like changing gear) save back to the roster
-    KnightDetailDialog(Knight &knight, QWidget *parent = nullptr);
+    KnightDetailDialog(Knight &knight, KnightRosterTab *parent = nullptr);
+
+    KnightDetailDialog(Knight &knight, KnightRecruitmentTab *parent = nullptr);
 };
 
 #endif

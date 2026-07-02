@@ -19,8 +19,8 @@ private:
     QTabWidget *tabWidget;
 
     // Helper functions to keep our panel generation modular
-    QWidget* knightsTab;
-    QWidget* createRecruitmentTab();
+    QWidget* knightRosterTab;
+    QWidget* knightRecruitmentTab;
     QWidget* createShopTab();
     QWidget* createTournamentTab();
 };
