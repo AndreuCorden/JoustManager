@@ -1,4 +1,5 @@
 #include "ManagerInterface.h"
+#include "Knights/KnightRosterTab.h"
 
 ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent) {
     // Main structural layout for this view
@@ -9,7 +10,9 @@ ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent) {
     tabWidget->setStyleSheet("QTabBar::tab { font-size: 16px; padding: 10px 20px; }");
 
     // Generate our sub-panels and plug them into the tabs
-    tabWidget->addTab(createKnightsTab(), "Knights Roster");
+    knightsTab = new KnightRosterTab();
+    tabWidget->addTab(knightsTab, "Knights Roster");
+    tabWidget->addTab(createRecruitmentTab(),"Knight Recruitment");
     tabWidget->addTab(createShopTab(), "Blacksmith Shop");
     tabWidget->addTab(createTournamentTab(), "Tournament Arena");
 
@@ -17,20 +20,21 @@ ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent) {
     setLayout(mainLayout);
 }
 
-QWidget* ManagerInterface::createKnightsTab() {
+QWidget* ManagerInterface::createRecruitmentTab()
+{
     QWidget *tab = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout(tab);
 
-    QLabel *label = new QLabel("YOUR KNIGHTS ROSTER", tab);
+    QLabel *label = new QLabel("AVAILABLE KNIGHTS");
     label->setStyleSheet("font-size: 20px; font-weight: bold; color: #4A5568;");
     
-    QPushButton *knightButton = new QPushButton("Sir Lancelot (Manage Stats & Gear)", tab);
+    QPushButton *knightButton = new QPushButton("Sir Robert (View Stats & Gear)", tab);
     knightButton->setStyleSheet("padding: 12px; font-size: 14px;");
 
     layout->addWidget(label);
     layout->addWidget(knightButton);
-    layout->addStretch(); // Keeps everything neatly pushed to the top
-    
+    layout->addStretch();
+
     tab->setLayout(layout);
     return tab;
 }
@@ -60,7 +64,7 @@ QWidget* ManagerInterface::createTournamentTab() {
     QWidget *tab = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout(tab);
 
-    QLabel *label = new QLabel("UPCOMING JOUSTS", tab);
+    QLabel *label = new QLabel("UPCOMING TOURNAMENTS", tab);
     label->setStyleSheet("font-size: 20px; font-weight: bold; color: #4A5568;");
     
     QPushButton *enterTourney = new QPushButton("Enter the King's Grand Tournament", tab);

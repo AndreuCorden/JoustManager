@@ -1,5 +1,6 @@
 #ifndef _Manager_Interface
 #define _Manager_Interface
+
 #pragma once
 
 #include <QWidget>
@@ -18,7 +19,8 @@ private:
     QTabWidget *tabWidget;
 
     // Helper functions to keep our panel generation modular
-    QWidget* createKnightsTab();
+    QWidget* knightsTab;
+    QWidget* createRecruitmentTab();
     QWidget* createShopTab();
     QWidget* createTournamentTab();
 };
