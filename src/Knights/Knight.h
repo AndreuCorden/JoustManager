@@ -27,7 +27,12 @@ public:
         armour = newArmour;
     }
 
-    void setRightHandWeapon(const Item & newWeapon)
+    Item getRightHandWeapon() const
+    {
+        return rightHandWeapon;
+    }
+
+    void equipRightHandWeapon(const Item & newWeapon)
     {
         rightHandWeapon = newWeapon;
     }

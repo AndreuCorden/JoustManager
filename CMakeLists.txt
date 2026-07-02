@@ -12,6 +12,8 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 # Explicitly mapping out every single file so CMake cannot skip them
 set(SOURCES
     main.cpp
+    src/Player.cpp
+    src/Player.h
     src/GameWindow.h
     src/GameWindow.cpp
     src/MainMenu.h

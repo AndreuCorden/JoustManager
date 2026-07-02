@@ -17,7 +17,12 @@ public:
     : name(newName) , bonus(newBonus) , cost(newCost) , heldIn(newHeldIn) , typeOfItem(newTypeOfItem)
     {}
 
-    int getBonus()
+    std::string getName() const
+    {
+        return name;
+    }
+
+    int getBonus() const
     {
         return bonus;
     }
