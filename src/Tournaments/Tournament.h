@@ -5,36 +5,61 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <list>
+#include <cmath>
 #include "Knights/Knight.h"
+
+struct MatchUp {
+    std::vector<Knight> teamA;
+    std::vector<Knight> teamB;
+    bool involvesPlayer = false;
+};
 
 class Tournament
 {
 public:
     Tournament(std::string newName, int newTeammates, int newRounds, int newReward, std::string newHosterName)
-    : name(newName), teammates(newTeammates), rounds(newRounds), reward(newReward), hosterName(newHosterName)
+    : name(newName), teammates(newTeammates), maxRounds(newRounds), reward(newReward), hosterName(newHosterName),
+      currentRound(1), tournamentActive(false)
     {}
 
-    // Accessors for UI rendering
+    // Accessors
     std::string getName() const { return name; }
     int getRequiredTeammates() const { return teammates; }
-    int getReward() const { return reward; }
-    std::string getHosterName() const { return hosterName; }
+    int getMaxRounds() const { return maxRounds; }
+    int getCurrentRound() const { return currentRound; }
+    bool isActive() const { return tournamentActive; }
 
-    // Roster tracking
-    std::vector<Knight>& getSelectedTeam() { return playerTeam; }
-    void setSelectedTeam(std::vector<Knight>& newPlayerTeam) { playerTeam = newPlayerTeam; };
+    // Roster configuration
+    void registerPlayerTeam(const std::vector<Knight>& team) { 
+        playerTeam = team; 
+        initializeTournament();
+    }
     bool hasTeamAssembled() const { return !playerTeam.empty(); }
-    void clearTeam() { playerTeam.clear(); }
+    void clearTournament() {
+        playerTeam.clear();
+        activeTeams.clear();
+        currentRound = 1;
+        tournamentActive = false;
+    }
+
+    // Bracket Match Engine Functions
+    std::vector<MatchUp> generateCurrentRoundMatches();
+    void advanceTournamentRound(const std::vector<std::vector<Knight>>& winningTeams);
 
 private:
+    void initializeTournament();
+
     std::string name;
-    int teammates; // How many knights can enter (e.g., 1v1, 2v2)
-    int rounds;
+    int teammates; 
+    int maxRounds; // Total bracket levels (e.g., 3 rounds = Quarter, Semi, Finals)
     int reward;
     std::string hosterName;
-    std::vector<Knight> playerTeam; // Player's chosen fighting squad
-    std::list<std::vector<Knight>> participants;
+    
+    int currentRound; // Tracks 1, 2, or 3
+    bool tournamentActive;
+
+    std::vector<Knight> playerTeam;
+    std::vector<std::vector<Knight>> activeTeams; // All remaining fighting squads left in brackets
 };
 
 #endif

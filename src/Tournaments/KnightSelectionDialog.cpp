@@ -69,7 +69,7 @@ KnightSelectionDialog::KnightSelectionDialog(Tournament &tournament, QWidget *pa
         }
 
         // Save selected choices directly back into tournament instance structure
-        currentTournament.setSelectedTeam(selectedKnights);
+        currentTournament.registerPlayerTeam(selectedKnights);
         this->accept();
     });
 

@@ -43,6 +43,8 @@ set(SOURCES
     src/Tournaments/KnightSelectionDialog.h
     src/Tournaments/KnightSelectionDialog.cpp
     src/Tournaments/TournamentManager.h
+    src/Tournaments/Joust/JoustView.h
+    src/Tournaments/Joust/JoustView.cpp
 )
 
 # Compile the executable using the explicit list

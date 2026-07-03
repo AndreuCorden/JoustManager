@@ -1,6 +1,12 @@
 #include "Tournaments/TournamentTab.h"
-#include "TournamentManager.h"
-#include "KnightSelectionDialog.h"
+#include "Tournaments/TournamentManager.h"
+#include "Tournaments/KnightSelectionDialog.h"
+#include "Tournaments/Joust/JoustView.h"
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QPushButton>
+#include <QDialog>
 
 TournamentTab::TournamentTab(QWidget *parent) : QWidget(parent)
 {
@@ -19,16 +25,19 @@ TournamentTab::TournamentTab(QWidget *parent) : QWidget(parent)
 
 void TournamentTab::populateRoster()
 {
-    // Wipe out old row assets cleanly
+    // Clean layout views out completely
     QLayoutItem *child;
-    while ((child = tournamentListLayout->takeAt(0)) != nullptr) {
-        if (child->widget()) child->widget()->deleteLater();
+    while ((child = tournamentListLayout->takeAt(0)) != nullptr)
+    {
+        if (child->widget())
+            child->widget()->deleteLater();
         delete child;
     }
 
-    auto& activeTourneys = TournamentManager::getInstance().getActiveTournaments();
+    auto &activeTourneys = TournamentManager::getInstance().getActiveTournaments();
 
-    for (size_t i = 0; i < activeTourneys.size(); ++i) {
+    for (size_t i = 0; i < activeTourneys.size(); ++i)
+    {
         Tournament &t = activeTourneys[i];
 
         QWidget *rowWidget = new QWidget(this);
@@ -39,40 +48,102 @@ void TournamentTab::populateRoster()
         rowLayout->addWidget(nameLabel);
         rowLayout->addStretch();
 
-        // Branch UI behavior based on whether team selection array holds data
-        if (!t.hasTeamAssembled()) {
-            QPushButton *enterBtn = new QPushButton(QString("Enter (%1v%1)").arg(t.getRequiredTeammates()), this);
+        // STATE A: Player hasn't joined up yet
+        if (!t.isActive())
+        {
+            QPushButton *enterBtn = new QPushButton(QString("Enter Tournament (%1v%1)").arg(t.getRequiredTeammates()), this);
             enterBtn->setStyleSheet("padding: 10px 20px; background-color: #D4AF37; color: black; font-weight: bold;");
             rowLayout->addWidget(enterBtn);
 
-            connect(enterBtn, &QPushButton::clicked, this, [this, &t]() {
-                KnightSelectionDialog selectDialog(t, this);
+            connect(enterBtn, &QPushButton::clicked, this, [this, i]()
+                    {
+                auto &tourneys = TournamentManager::getInstance().getActiveTournaments();
+                Tournament &targetTourney = tourneys[i];
+
+                KnightSelectionDialog selectDialog(targetTourney, this);
                 if (selectDialog.exec() == QDialog::Accepted) {
-                    populateRoster(); // Refresh screen state layouts 
-                }
-            });
-        } else {
-            // Action changes to active simulation launch state!
-            QPushButton *playBtn = new QPushButton("⚔️ PLAY MATCH", this);
+                    populateRoster(); 
+                } });
+        }
+        // STATE B: Tournament is actively running its structural round passes
+        else
+        {
+            QString processText = QString("⚔️ RUN ROUND %1 / %2").arg(t.getCurrentRound()).arg(t.getMaxRounds());
+            QPushButton *playBtn = new QPushButton(processText, this);
             playBtn->setStyleSheet("padding: 10px 20px; background-color: #2F855A; color: white; font-weight: bold;");
             rowLayout->addWidget(playBtn);
 
-            QPushButton *resetBtn = new QPushButton("Reset Squad", this);
-            resetBtn->setStyleSheet("padding: 10px; background-color: #E53E3E; color: white; font-size: 11px;");
-            rowLayout->addWidget(resetBtn);
+            QPushButton *forfeitBtn = new QPushButton("Forfeit", this);
+            forfeitBtn->setStyleSheet("padding: 10px; background-color: #E53E3E; color: white;");
+            rowLayout->addWidget(forfeitBtn);
 
-            connect(playBtn, &QPushButton::clicked, this, [this, &t]() {
-                // Placeholder area: Hook up your combat visualizer engine here!
-                QMessageBox info(this);
-                info.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-                info.setText("CRITICAL NOTE: Playing simulation animation right now!");
-                info.exec();
-            });
+            connect(playBtn, &QPushButton::clicked, this, [this, i]()
+                    {
+                auto &tourneys = TournamentManager::getInstance().getActiveTournaments();
+                Tournament &targetTourney = tourneys[i];
 
-            connect(resetBtn, &QPushButton::clicked, this, [this, &t]() {
-                t.clearTeam();
-                populateRoster();
-            });
+                std::vector<MatchUp> currentMatches = targetTourney.generateCurrentRoundMatches();
+                std::vector<std::vector<Knight>> roundWinners;
+                bool playerSurvivedRound = false;
+
+                if (currentMatches.empty()) return;
+
+                // Track if we already launched an interactive arena window for the player
+                bool playerMatchHandled = false;
+
+                for (const MatchUp &match : currentMatches)
+                {
+                    if (match.involvesPlayer)
+                    {
+                        // 👍 FIXED: Guard against opening duplicate or runaway windows in the loop
+                        if (playerMatchHandled) {
+                            // If player data was duplicated, let background simulation process it safely
+                            roundWinners.push_back(match.teamA);
+                            continue;
+                        }
+
+                        QDialog arenaWindow(this);
+                        arenaWindow.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
+                        arenaWindow.setModal(true);
+                        QVBoxLayout *layout = new QVBoxLayout(&arenaWindow);
+
+                        JoustView *joustArena = new JoustView(match.teamA, match.teamB, &arenaWindow);
+                        layout->addWidget(joustArena);
+
+                        joustArena->setFocusPolicy(Qt::StrongFocus);
+                        joustArena->setFocus();
+
+                        QPushButton *exitBtn = new QPushButton("Return to Base", &arenaWindow);
+                        exitBtn->setStyleSheet("padding: 8px; font-weight: bold;");
+                        connect(exitBtn, &QPushButton::clicked, &arenaWindow, &QDialog::accept);
+                        layout->addWidget(exitBtn);
+
+                        arenaWindow.exec(); // Blocks execution thread cleanly here
+
+                        roundWinners.push_back(match.teamA);
+                        playerSurvivedRound = true;
+                        playerMatchHandled = true; // Mark as done so it cannot loop back open
+                    }
+                    else
+                    {
+                        roundWinners.push_back(match.teamA);
+                    }
+                }
+
+                targetTourney.advanceTournamentRound(roundWinners);
+
+                if (!targetTourney.isActive() && playerSurvivedRound)
+                {
+                    targetTourney.clearTournament();
+                }
+
+                this->populateRoster(); });
+
+            connect(forfeitBtn, &QPushButton::clicked, this, [this, i]()
+                    {
+                auto &tourneys = TournamentManager::getInstance().getActiveTournaments();
+                tourneys[i].clearTournament();
+                this->populateRoster(); });
         }
 
         tournamentListLayout->addWidget(rowWidget);
