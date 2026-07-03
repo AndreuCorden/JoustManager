@@ -66,22 +66,19 @@ private:
     int spriteFrameCounter;
     int currentFrameIndex;
 
-    QPixmap spriteSheet;
+    QPixmap horseSheets[4];
 
     int playerHorseColorIdx;
     int enemyHorseColorIdx;
 
     enum class ViewDirection {
-        Down = 0,
-        Left = 1,
-        Right = 2,
-        Up = 3
+        Left,
+        Right
     };
-
     ViewDirection playerFacing;
     ViewDirection enemyFacing;
 
-    QPixmap getHorseFrame(int breedIndex, ViewDirection direction, int frameNum);
+    QPixmap getHorseFrame(int colorIdx, ViewDirection direction, int frameNum);
     void updateVisualSprites();
 };
 

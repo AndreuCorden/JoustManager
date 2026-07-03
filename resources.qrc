@@ -1,5 +1,8 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
-    <file>assets/horses.png</file>
+    <file>assets/BrownHorse_Run.png</file>
+    <file>assets/WhiteHorse_Run.png</file>
+    <file>assets/BlackHorse_Run.png</file>
+    <file>assets/GreyHorse_Run.png</file>
 </qresource>
 </RCC>

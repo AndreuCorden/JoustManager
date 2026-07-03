@@ -14,8 +14,8 @@ JoustView::JoustView(const std::vector<Knight> &playerSquad, const std::vector<K
       currentState(JoustState::WaitingToStart), currentCharge(1),
       qteActive(false), baseSpeed(4.0), playerSpeedBoost(0.0),
       spriteFrameCounter(0), currentFrameIndex(0),
-      playerHorseColorIdx(0), // 👈 Assign breed color index (0 to 7)
-      enemyHorseColorIdx(3)   // 👈 Give enemy a different breed color index (0 to 7)
+      playerHorseColorIdx(0), // 0 = BrownHorse
+      enemyHorseColorIdx(3)   // 3 = GreyHorse
 {
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
@@ -25,10 +25,11 @@ JoustView::JoustView(const std::vector<Knight> &playerSquad, const std::vector<K
     setBackgroundBrush(QBrush(QColor("#4A5568")));
     setFixedSize(SCENE_WIDTH + 5, SCENE_HEIGHT + 5);
 
-    // Load the sprite sheet asset image file
-    if (!spriteSheet.load(":/assets/horses.png")) {
-        qWarning("Failed to load sprite sheet from embedded resources!");
-    }
+    // Load each color file into our array cleanly
+    horseSheets[0].load(":/assets/BrownHorse_Run.png");
+    horseSheets[1].load(":/assets/WhiteHorse_Run.png");
+    horseSheets[2].load(":/assets/BlackHorse_Run.png");
+    horseSheets[3].load(":/assets/GreyHorse_Run.png");
 
     announcerText = scene->addText("READY TO JOUST!\nClick Screen or Press SPACE to Charge", QFont("Arial", 16, QFont::Bold));
     announcerText->setDefaultTextColor(Qt::white);
@@ -38,7 +39,6 @@ JoustView::JoustView(const std::vector<Knight> &playerSquad, const std::vector<K
     qteDisplayItem->setDefaultTextColor(QColor("#E53E3E"));
     qteDisplayItem->setPos(CENTER_X - 25, 100);
 
-    // Instantiate scene layout pixmap containers
     playerSprite = scene->addPixmap(QPixmap());
     enemySprite = scene->addPixmap(QPixmap());
 
@@ -67,60 +67,39 @@ JoustView::~JoustView()
     }
 }
 
-QPixmap JoustView::getHorseFrame(int breedIndex, ViewDirection direction, int frameNum) {
-    if (spriteSheet.isNull()) return QPixmap(64, 64);
+QPixmap JoustView::getHorseFrame(int colorIdx, ViewDirection direction, int frameNum) {
+    // Safety fallback
+    if (colorIdx < 0 || colorIdx > 3 || horseSheets[colorIdx].isNull()) {
+        return QPixmap(60, 33);
+    }
 
-    const int FRAME_SIZE = 70;
+    const int FRAME_WIDTH = 60;   // 360 total width / 6 frames
+    const int FRAME_HEIGHT = 33;
 
-    // 1. Determine if the breed is in the Top Block (0-3) or Bottom Block (4-7)
-    int sheetRowBlock = breedIndex / 4;      // 0 for breeds 0-3, 1 for breeds 4-7
-    int breedColumnGroup = breedIndex % 4;   // Horizontal index inside that block (0 to 3)
+    // Slice out the exact single frame out of the 6 running frames
+    QPixmap frame = horseSheets[colorIdx].copy(frameNum * FRAME_WIDTH, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
-    // 2. Calculate the base Y position
-    // Top block rows start at Y=0. Bottom block rows start after 4 direction rows (4 * 64 = 256 pixels down)
-    int y = (sheetRowBlock * 4 * FRAME_SIZE) + (static_cast<int>(direction) * FRAME_SIZE);
+    // If the horse needs to move left, mirror the image horizontally
+    if (direction == ViewDirection::Right) {
+        frame = frame.transformed(QTransform().scale(-1, 1));
+    }
 
-    // 3. Calculate the base X position
-    // Each breed group owns exactly 3 columns of animation frames side-by-side
-    int x = (breedColumnGroup * 3 * FRAME_SIZE) + (frameNum * FRAME_SIZE);
-
-    // 4. Safely crop the isolated frame out of the sheet texture maps
-    return spriteSheet.copy(x, y, FRAME_SIZE, FRAME_SIZE);
+    return frame;
 }
 
-void JoustView::updateVisualSprites()
-{
-    // Frames alternate through a 3-stage loop: 0 -> 1 -> 2 -> 1 -> repeat
-    int animFrame = currentFrameIndex;
-    if (animFrame == 3)
-        animFrame = 1; // Maps 4 frame counters smoothly into a 3-frame looping chain
+void JoustView::updateVisualSprites() {
+    int pFrame = currentFrameIndex;
+    int eFrame = currentFrameIndex;
 
-    playerSprite->setPixmap(getHorseFrame(playerHorseColorIdx, playerFacing, animFrame));
-    enemySprite->setPixmap(getHorseFrame(enemyHorseColorIdx, enemyFacing, animFrame));
+    // Use frame index 1 (the 2nd image) for standing still
+    if (currentState == JoustState::WaitingToStart) {
+        pFrame = 1;
+        eFrame = 1;
+    }
+
+    playerSprite->setPixmap(getHorseFrame(playerHorseColorIdx, playerFacing, pFrame));
+    enemySprite->setPixmap(getHorseFrame(enemyHorseColorIdx, enemyFacing, eFrame));
 }
-
-
-// To draw knight on top.
-/*void JoustView::updateVisualSprites() {
-    int animFrame = currentFrameIndex;
-    if (animFrame == 3) animFrame = 1;
-
-    // 1. Extract base horse crop
-    QPixmap horsePixmap = getHorseFrame(playerHorseColorIdx, playerFacing, animFrame);
-
-    // 2. Create an editable painter overlay layer
-    QPainter painter(&horsePixmap);
-    
-    // 3. Load your knight asset file (e.g., a knight sitting pose with transparent background)
-    QPixmap knightPixmap("knight_overlay.png"); 
-    
-    // 4. Overlay the knight directly on top of the horse centered coordinates
-    painter.drawPixmap(0, -10, knightPixmap); // Adjust -10 up/down to seat him perfectly in the saddle
-    painter.end();
-
-    // 5. Send complete composite image to viewport
-    playerSprite->setPixmap(horsePixmap);
-}*/
 
 void JoustView::mousePressEvent(QMouseEvent *event)
 {
@@ -150,50 +129,44 @@ void JoustView::mousePressEvent(QMouseEvent *event)
 
 void JoustView::resetRound()
 {
-    if (qteTimer)
-        qteTimer->stop();
+    if (qteTimer) qteTimer->stop();
 
     qteActive = false;
-    if (qteDisplayItem)
-        qteDisplayItem->setPlainText("");
+    if (qteDisplayItem) qteDisplayItem->setPlainText("");
     playerSpeedBoost = 0.0;
 
-    // Alternate initial spawn locations and directions depending on pass count sequence
-    if (currentCharge % 2 != 0)
-    {
-        // Pass 1 & 3: Player starts Left (Charges Right), Enemy starts Right (Charges Left)
+    if (currentCharge % 2 != 0) {
         playerX = 50;
         enemyX = SCENE_WIDTH - 150;
-
         playerFacing = ViewDirection::Right;
         enemyFacing = ViewDirection::Left;
-    }
-    else
-    {
-        // Pass 2: Player starts Right (Charges Left), Enemy starts Left (Charges Right)
+    } else {
         playerX = SCENE_WIDTH - 150;
         enemyX = 50;
-
         playerFacing = ViewDirection::Left;
         enemyFacing = ViewDirection::Right;
     }
 
-    // OVERRIDE FOR BEFORE THE START: Show horses facing away/forward at rest before charge!
-    if (currentState == JoustState::WaitingToStart)
-    {
-        playerFacing = ViewDirection::Down; // Facing the audience/screen forward
-        enemyFacing = ViewDirection::Up;    // Facing away towards the background tents
-    }
-
-    if (playerSprite)
-        playerSprite->setPos(playerX, 140);
-    if (enemySprite)
-    {
-        enemySprite->setPos(enemyX, 230);
+    // Adjusting Y position so the horses sit beautifully on either side of the barrier
+    // The line is at Y=220, thickness is 6px (ranges 220 to 226)
+    if (playerSprite) playerSprite->setPos(playerX, 230); // 186 + 33 = 219 (rests on top of line)
+    if (enemySprite) {
+        enemySprite->setPos(enemyX, 175);                 // 228 (rests just beneath line thickness)
         enemySprite->setRotation(0);
     }
 
     updateVisualSprites();
+}
+
+// 5. Run a 6-frame loop engine pass
+void JoustView::updateSpriteFrames()
+{
+    spriteFrameCounter++;
+    if (spriteFrameCounter >= 5) { // Slightly speed up animation cycles for extra energy
+        spriteFrameCounter = 0;
+        currentFrameIndex = (currentFrameIndex + 1) % 6; // 👍 Loop cleanly through all 6 running frames
+        updateVisualSprites();
+    }
 }
 
 void JoustView::startMatch()
@@ -321,16 +294,5 @@ void JoustView::gameTick()
             announcerText->setPlainText("VICTORY!\n\nClick Screen to Complete Match.");
             qteDisplayItem->setPlainText("");
         }
-    }
-}
-
-void JoustView::updateSpriteFrames()
-{
-    spriteFrameCounter++;
-    if (spriteFrameCounter >= 6)
-    { // Advance gait speed loop pace every 6 frames
-        spriteFrameCounter = 0;
-        currentFrameIndex = (currentFrameIndex + 1) % 4; // Ping-pong loops (0,1,2,3)
-        updateVisualSprites();
     }
 }
