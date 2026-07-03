@@ -3,6 +3,7 @@ project(JoustManager LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 # Points to your Qt binaries
 set(CMAKE_PREFIX_PATH "C:/Qt/6.11.1/mingw_64") 
@@ -12,6 +13,7 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 # Explicitly mapping out every single file so CMake cannot skip them
 set(SOURCES
     main.cpp
+    resources.qrc
     src/Player.h
     src/Player.cpp
     src/GameWindow.h
