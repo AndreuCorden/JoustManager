@@ -38,6 +38,11 @@ set(SOURCES
     src/Items/Weapon/CourteousLance.cpp
     src/Tournaments/TournamentTab.h
     src/Tournaments/TournamentTab.cpp
+    src/Tournaments/Tournament.h
+    src/Tournaments/Tournament.cpp
+    src/Tournaments/KnightSelectionDialog.h
+    src/Tournaments/KnightSelectionDialog.cpp
+    src/Tournaments/TournamentManager.h
 )
 
 # Compile the executable using the explicit list
