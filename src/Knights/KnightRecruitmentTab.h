@@ -2,23 +2,25 @@
 #define _Knight_Recruitment_Tab
 
 #pragma once
-
 #include <QWidget>
-#include <QTabWidget>
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPushButton>
-
 #include <list>
-#include "Knights/Knight.h"
+#include "Knight.h"
 
 class KnightRecruitmentTab : public QWidget
 {
-    Q_OBJECT // Don't forget to include the macro if you intend to add buttons/signals later!
+    Q_OBJECT
+
 public:
-    explicit KnightRecruitmentTab(QWidget *parent = nullptr);
+    KnightRecruitmentTab(QWidget *parent = nullptr);
+
 private:
+    void populateList();
+
     std::list<Knight> recruitableKnights;
+    QVBoxLayout *listLayout;
 };
 
 #endif

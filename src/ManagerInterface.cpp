@@ -21,6 +21,13 @@ ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent) {
 
     mainLayout->addWidget(tabWidget);
     setLayout(mainLayout);
+    
+    connect(tabWidget, &QTabWidget::currentChanged, this, [this](int index) {
+        // Since "Knights Roster" was added first, its index is 0
+        if (index == 0) {
+            knightRosterTab->populateRoster();
+        }
+    });
 }
 
 QWidget* ManagerInterface::createShopTab() {

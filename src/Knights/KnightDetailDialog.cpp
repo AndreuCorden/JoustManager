@@ -129,9 +129,21 @@ KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRecruitmentTab *par
 
     mainLayout->addStretch();
 
+    // Buy Button
+    QPushButton *buyButton = new QPushButton("Buy Knight",this);
+    buyButton->setStyleSheet("padding: 10px; font-weight: bold;");
+    connect(buyButton, &QPushButton::clicked, this, [this, &knight]()
+    {
+        Player::getInstance().addKnight(knight);
+        Player::getInstance().modifyGold(-knight.getCost());
+
+        this->accept();
+    });
+    mainLayout->addWidget(buyButton);
+
     // Close Button
     QPushButton *closeButton = new QPushButton("Back to Roster", this);
     closeButton->setStyleSheet("padding: 10px; font-weight: bold;");
-    connect(closeButton, &QPushButton::clicked, this, &QDialog::accept);
+    connect(closeButton, &QPushButton::clicked, this, &QDialog::reject);
     mainLayout->addWidget(closeButton);
 }
