@@ -36,6 +36,8 @@ set(SOURCES
     src/Items/Armour/GothicArmour.cpp
     src/Items/Weapon/CourteousLance.h
     src/Items/Weapon/CourteousLance.cpp
+    src/Tournaments/TournamentTab.h
+    src/Tournaments/TournamentTab.cpp
 )
 
 # Compile the executable using the explicit list

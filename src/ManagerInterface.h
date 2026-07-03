@@ -11,6 +11,7 @@
 
 #include "Knights/KnightRosterTab.h"
 #include "Knights/KnightRecruitmentTab.h"
+#include "Tournaments/TournamentTab.h"
 
 class ManagerInterface : public QWidget {
     Q_OBJECT
@@ -25,6 +26,6 @@ private:
     KnightRosterTab* knightRosterTab;
     KnightRecruitmentTab* knightRecruitmentTab;
     QWidget* createShopTab();
-    QWidget* createTournamentTab();
+    TournamentTab* tournamentTab;
 };
 #endif
