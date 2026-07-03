@@ -1,8 +1,12 @@
 #include "GameWindow.h"
 #include <QLabel>
 
-GameWindow::GameWindow() {
-    setMinimumSize(1024, 768);
+GameWindow::GameWindow()
+{
+
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+
+    this->showFullScreen();
     setWindowTitle("Knight Jousting Manager");
 
     screenContainer = new QStackedWidget(this);
@@ -23,7 +27,18 @@ GameWindow::GameWindow() {
     screenContainer->setCurrentWidget(mainMenu);
 }
 
-void GameWindow::handleStartGame() {
+void GameWindow::handleStartGame()
+{
     // Switch the screen inside the container seamlessly
     screenContainer->setCurrentWidget(managerInterface);
+}
+
+void GameWindow::keyPressEvent(QKeyEvent *event) {
+    // Check if the key that was pressed is the Escape key
+    if (event->key() == Qt::Key_Escape) {
+        this->close(); // Cleanly shuts down the entire application
+    } else {
+        // Pass any other keypresses back to the standard engine
+        QMainWindow::keyPressEvent(event);
+    }
 }

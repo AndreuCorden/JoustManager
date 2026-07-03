@@ -9,18 +9,16 @@
 #include <QLabel>
 #include <QPushButton>
 
-#include <list>
-#include "Knight.h"
-
 class KnightRosterTab : public QWidget
 {
-    Q_OBJECT // Don't forget to include the macro if you intend to add buttons/signals later!
-public:
+Q_OBJECT // Don't forget to include the macro if you intend to add buttons/signals later!
+public: 
     explicit KnightRosterTab(QWidget *parent = nullptr);
 
-    void addKnightToRosterTab(const Knight& knight);
+    void populateRoster();
+
 private:
-    std::list<Knight> knightsInRoster;
+    QVBoxLayout *rosterListLayout;
 };
 
 #endif

@@ -9,6 +9,9 @@
 #include <QLabel>
 #include <QPushButton>
 
+#include "Knights/KnightRosterTab.h"
+#include "Knights/KnightRecruitmentTab.h"
+
 class ManagerInterface : public QWidget {
     Q_OBJECT
 
@@ -19,8 +22,8 @@ private:
     QTabWidget *tabWidget;
 
     // Helper functions to keep our panel generation modular
-    QWidget* knightsTab;
-    QWidget* createRecruitmentTab();
+    KnightRosterTab* knightRosterTab;
+    KnightRecruitmentTab* knightRecruitmentTab;
     QWidget* createShopTab();
     QWidget* createTournamentTab();
 };
