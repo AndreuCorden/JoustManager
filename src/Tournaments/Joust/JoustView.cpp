@@ -47,7 +47,7 @@ JoustView::JoustView(const std::vector<Knight> &playerSquad, const std::vector<K
     horseSheets[1].load(":/assets/WhiteHorse_Run.png");
     horseSheets[2].load(":/assets/BlackHorse_Run.png");
     horseSheets[3].load(":/assets/GreyHorse_Run.png");
-    knightPixmap.load(":/assets/Knight.png"); 
+    knightPixmap.load(":/assets/Knight2.png"); 
 
     qteDisplayItem = scene->addText("", QFont("Arial", 36, QFont::Bold));
     qteDisplayItem->setDefaultTextColor(QColor("#E53E3E"));
@@ -124,14 +124,32 @@ QPixmap JoustView::getKnightPixmap(ViewDirection direction)
 {
     if (knightPixmap.isNull())
     {
-        return QPixmap(60, 133); // Safe fallback dimensions matching scaled size
+        // Safe fallback dimensions matching previous 35x78 scaled size
+        return QPixmap(60, 133); 
     }
 
-    // Knight natively faces Right. If direction is Left, flip horizontally (-1.7 scale)
-    qreal scaleX = (direction == ViewDirection::Left) ? -0.8 : 0.8;
-    qreal scaleY = 0.8;
+    // 1. 🌟 Define dimensions matching your new giant asset frames
+    const int KNIGHT_FRAME_WIDTH = 350;
+    const int KNIGHT_FRAME_HEIGHT = 833;
 
-    return knightPixmap.transformed(QTransform().scale(scaleX, scaleY), Qt::SmoothTransformation);
+    // We alternate which frame to use based on the horse frame loop
+    int atlasFrameNum = (currentFrameIndex/3) % 2; 
+
+    // 2. 🌟 Slice the exact frame we need out of the atlas
+    QPixmap frame = knightPixmap.copy(atlasFrameNum * KNIGHT_FRAME_WIDTH, 0, 
+                                       KNIGHT_FRAME_WIDTH, KNIGHT_FRAME_HEIGHT);
+
+    // 3. 🌟 Calculate downscaling to keep him seated perfectly
+    // Our target vertical size remains 133px (matching previous 78 * 1.7 scale)
+    // 133 / 794 giant source height = ~0.1675 downscale factor.
+    qreal downScaleY = 0.08;
+    
+    // Natively faces right; if left, flip horizontally (-0.1675)
+    qreal scaleX = (direction == ViewDirection::Left) ? -0.08 : 0.08;
+
+    // 4. 🌟 Transform! Downscale with anti-aliasing to make it clean
+    return frame.transformed(QTransform().scale(scaleX, downScaleY), 
+                             Qt::SmoothTransformation);
 }
 
 void JoustView::updateVisualSprites()
@@ -153,7 +171,7 @@ void JoustView::updateVisualSprites()
     if (enemyKnightSprite)   enemyKnightSprite->setPixmap(getKnightPixmap(enemyFacing));
 
     int localX = 35;
-    int localY = -22;
+    int localY = -24;
 
     if (playerKnightSprite) playerKnightSprite->setPos(localX, localY);
     if (enemyKnightSprite)   enemyKnightSprite->setPos(localX + 5, localY);
