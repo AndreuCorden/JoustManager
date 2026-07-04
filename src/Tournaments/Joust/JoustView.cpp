@@ -38,15 +38,16 @@ JoustView::JoustView(const std::vector<Knight> &playerSquad, const std::vector<K
         setBackgroundBrush(QBrush(QColor("#4A5568"))); // Gray safety fallback
     }
 
+    announcerText = scene->addText("READY TO JOUST!\nClick Screen or Press SPACE to Charge", QFont("Arial", 16, QFont::Bold));
+    announcerText->setDefaultTextColor(Qt::white);
+    announcerText->setPos(CENTER_X - 180, 40);
+
     // Load each color file into our array cleanly
     horseSheets[0].load(":/assets/BrownHorse_Run.png");
     horseSheets[1].load(":/assets/WhiteHorse_Run.png");
     horseSheets[2].load(":/assets/BlackHorse_Run.png");
     horseSheets[3].load(":/assets/GreyHorse_Run.png");
-
-    announcerText = scene->addText("READY TO JOUST!\nClick Screen or Press SPACE to Charge", QFont("Arial", 16, QFont::Bold));
-    announcerText->setDefaultTextColor(Qt::white);
-    announcerText->setPos(CENTER_X - 180, 40);
+    knightPixmap.load(":/assets/Knight.png"); 
 
     qteDisplayItem = scene->addText("", QFont("Arial", 36, QFont::Bold));
     qteDisplayItem->setDefaultTextColor(QColor("#E53E3E"));
@@ -54,6 +55,12 @@ JoustView::JoustView(const std::vector<Knight> &playerSquad, const std::vector<K
 
     playerSprite = scene->addPixmap(QPixmap());
     enemySprite = scene->addPixmap(QPixmap());
+
+    playerKnightSprite = scene->addPixmap(QPixmap());
+    enemyKnightSprite = scene->addPixmap(QPixmap());
+
+    playerKnightSprite->setParentItem(playerSprite);
+    enemyKnightSprite->setParentItem(enemySprite);
 
     tiltBarrier = scene->addPixmap(QPixmap());
 
@@ -113,6 +120,20 @@ QPixmap JoustView::getHorseFrame(int colorIdx, ViewDirection direction, int fram
     return frame;
 }
 
+QPixmap JoustView::getKnightPixmap(ViewDirection direction)
+{
+    if (knightPixmap.isNull())
+    {
+        return QPixmap(60, 133); // Safe fallback dimensions matching scaled size
+    }
+
+    // Knight natively faces Right. If direction is Left, flip horizontally (-1.7 scale)
+    qreal scaleX = (direction == ViewDirection::Left) ? -0.8 : 0.8;
+    qreal scaleY = 0.8;
+
+    return knightPixmap.transformed(QTransform().scale(scaleX, scaleY), Qt::SmoothTransformation);
+}
+
 void JoustView::updateVisualSprites()
 {
     int pFrame = currentFrameIndex;
@@ -127,6 +148,15 @@ void JoustView::updateVisualSprites()
 
     playerSprite->setPixmap(getHorseFrame(playerHorseColorIdx, playerFacing, pFrame));
     enemySprite->setPixmap(getHorseFrame(enemyHorseColorIdx, enemyFacing, eFrame));
+
+    if (playerKnightSprite) playerKnightSprite->setPixmap(getKnightPixmap(playerFacing));
+    if (enemyKnightSprite)   enemyKnightSprite->setPixmap(getKnightPixmap(enemyFacing));
+
+    int localX = 35;
+    int localY = -22;
+
+    if (playerKnightSprite) playerKnightSprite->setPos(localX, localY);
+    if (enemyKnightSprite)   enemyKnightSprite->setPos(localX + 5, localY);
 }
 
 void JoustView::mousePressEvent(QMouseEvent *event)

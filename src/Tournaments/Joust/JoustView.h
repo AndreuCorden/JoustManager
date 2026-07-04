@@ -49,6 +49,8 @@ private:
     // Sprite graphics items
     QGraphicsPixmapItem *playerSprite;
     QGraphicsPixmapItem *enemySprite;
+    QGraphicsPixmapItem *playerKnightSprite;
+    QGraphicsPixmapItem *enemyKnightSprite;
     QGraphicsPixmapItem *tiltBarrier;
     QGraphicsTextItem *qteDisplayItem;
     QGraphicsTextItem *announcerText;
@@ -67,6 +69,7 @@ private:
     int currentFrameIndex;
 
     QPixmap horseSheets[4];
+    QPixmap knightPixmap;
 
     int playerHorseColorIdx;
     int enemyHorseColorIdx;
@@ -79,6 +82,7 @@ private:
     ViewDirection enemyFacing;
 
     QPixmap getHorseFrame(int colorIdx, ViewDirection direction, int frameNum);
+    QPixmap getKnightPixmap(ViewDirection direction);
     void updateVisualSprites();
 };
 
