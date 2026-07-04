@@ -5,14 +5,14 @@
 #include <QDialog>
 #include <QVBoxLayout>
 
-const int SCENE_WIDTH = 800;
+const int SCENE_WIDTH = 1200;
 const int SCENE_HEIGHT = 400;
 const int CENTER_X = SCENE_WIDTH / 2;
 
 JoustView::JoustView(const std::vector<Knight> &playerSquad, const std::vector<Knight> &enemySquad, QWidget *parent)
     : QGraphicsView(parent),
       currentState(JoustState::WaitingToStart), currentCharge(1),
-      qteActive(false), baseSpeed(4.0), playerSpeedBoost(0.0),
+      qteActive(false), baseSpeed(6.0), playerSpeedBoost(0.0),
       spriteFrameCounter(0), currentFrameIndex(0),
       playerHorseColorIdx(0), // 0 = BrownHorse
       enemyHorseColorIdx(3)   // 3 = GreyHorse
@@ -24,6 +24,19 @@ JoustView::JoustView(const std::vector<Knight> &playerSquad, const std::vector<K
     setScene(scene);
     setBackgroundBrush(QBrush(QColor("#4A5568")));
     setFixedSize(SCENE_WIDTH + 5, SCENE_HEIGHT + 5);
+
+    QPixmap bgPixmap(":/assets/Backgroundjoust.png");
+    if (!bgPixmap.isNull())
+    {
+        // Scales your pixel art to 800x400 using smooth filtering
+        QPixmap scaledBg = bgPixmap.scaled(SCENE_WIDTH, SCENE_HEIGHT, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        setBackgroundBrush(QBrush(scaledBg));
+    }
+    else
+    {
+        qWarning("Failed to load background image, falling back to flat gray color.");
+        setBackgroundBrush(QBrush(QColor("#4A5568"))); // Gray safety fallback
+    }
 
     // Load each color file into our array cleanly
     horseSheets[0].load(":/assets/BrownHorse_Run.png");
@@ -42,7 +55,18 @@ JoustView::JoustView(const std::vector<Knight> &playerSquad, const std::vector<K
     playerSprite = scene->addPixmap(QPixmap());
     enemySprite = scene->addPixmap(QPixmap());
 
-    tiltBarrier = scene->addLine(0, 220, SCENE_WIDTH, 220, QPen(QColor("#D4AF37"), 6));
+    tiltBarrier = scene->addPixmap(QPixmap());
+
+    QPixmap fence(":/assets/Fence.png");
+    if (!fence.isNull())
+    {
+        QPixmap scaledFence = fence.scaled(SCENE_WIDTH, 43, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        tiltBarrier->setPixmap(scaledFence);
+    }
+    tiltBarrier->setPos(0, 222);
+
+    announcerText->setZValue(10);
+    qteDisplayItem->setZValue(10);
 
     gameTimer = new QTimer(this);
     connect(gameTimer, &QTimer::timeout, this, &JoustView::gameTick);
@@ -67,32 +91,36 @@ JoustView::~JoustView()
     }
 }
 
-QPixmap JoustView::getHorseFrame(int colorIdx, ViewDirection direction, int frameNum) {
+QPixmap JoustView::getHorseFrame(int colorIdx, ViewDirection direction, int frameNum)
+{
     // Safety fallback
-    if (colorIdx < 0 || colorIdx > 3 || horseSheets[colorIdx].isNull()) {
-        return QPixmap(60, 33);
+    if (colorIdx < 0 || colorIdx > 3 || horseSheets[colorIdx].isNull())
+    {
+        return QPixmap(84, 46);
     }
 
-    const int FRAME_WIDTH = 60;   // 360 total width / 6 frames
+    const int FRAME_WIDTH = 60; // 360 total width / 6 frames
     const int FRAME_HEIGHT = 33;
 
     // Slice out the exact single frame out of the 6 running frames
     QPixmap frame = horseSheets[colorIdx].copy(frameNum * FRAME_WIDTH, 0, FRAME_WIDTH, FRAME_HEIGHT);
 
-    // If the horse needs to move left, mirror the image horizontally
-    if (direction == ViewDirection::Right) {
-        frame = frame.transformed(QTransform().scale(-1, 1));
-    }
+    qreal scaleX = (direction == ViewDirection::Right) ? -1.7 : 1.7;
+    qreal scaleY = 1.7;
+
+    frame = frame.transformed(QTransform().scale(scaleX, scaleY), Qt::SmoothTransformation);
 
     return frame;
 }
 
-void JoustView::updateVisualSprites() {
+void JoustView::updateVisualSprites()
+{
     int pFrame = currentFrameIndex;
     int eFrame = currentFrameIndex;
 
     // Use frame index 1 (the 2nd image) for standing still
-    if (currentState == JoustState::WaitingToStart) {
+    if (currentState == JoustState::WaitingToStart)
+    {
         pFrame = 1;
         eFrame = 1;
     }
@@ -129,30 +157,63 @@ void JoustView::mousePressEvent(QMouseEvent *event)
 
 void JoustView::resetRound()
 {
-    if (qteTimer) qteTimer->stop();
+    if (qteTimer)
+        qteTimer->stop();
 
     qteActive = false;
-    if (qteDisplayItem) qteDisplayItem->setPlainText("");
+    if (qteDisplayItem)
+        qteDisplayItem->setPlainText("");
     playerSpeedBoost = 0.0;
 
-    if (currentCharge % 2 != 0) {
+    // The dimensions of our upscaled horses (~46px high)
+    const int TOP_LANE_Y = 190;    // Higher up, slightly tucked behind the taller fence
+    const int BOTTOM_LANE_Y = 225; // Lower down, completely in the foreground
+
+    if (currentCharge % 2 != 0)
+    {
+        // 🏇 Pass 1 & 3: Player is on Bottom Track (Right), Enemy is on Top Track (Left)
         playerX = 50;
         enemyX = SCENE_WIDTH - 150;
         playerFacing = ViewDirection::Right;
         enemyFacing = ViewDirection::Left;
-    } else {
+
+        if (playerSprite)
+        {
+            playerSprite->setPos(playerX, BOTTOM_LANE_Y);
+            playerSprite->setZValue(4); // Foreground layer
+        }
+        if (enemySprite)
+        {
+            enemySprite->setPos(enemyX, TOP_LANE_Y);
+            enemySprite->setZValue(1); // Background layer (behind fence)
+            enemySprite->setRotation(0);
+        }
+    }
+    else
+    {
+        // 🏇 Pass 2: Player is on Top Track (Left), Enemy is on Bottom Track (Right)
         playerX = SCENE_WIDTH - 150;
         enemyX = 50;
         playerFacing = ViewDirection::Left;
         enemyFacing = ViewDirection::Right;
+
+        if (playerSprite)
+        {
+            playerSprite->setPos(playerX, TOP_LANE_Y);
+            playerSprite->setZValue(1); // Background layer (behind fence)
+        }
+        if (enemySprite)
+        {
+            enemySprite->setPos(enemyX, BOTTOM_LANE_Y);
+            enemySprite->setZValue(4); // Foreground layer
+            enemySprite->setRotation(0);
+        }
     }
 
-    // Adjusting Y position so the horses sit beautifully on either side of the barrier
-    // The line is at Y=220, thickness is 6px (ranges 220 to 226)
-    if (playerSprite) playerSprite->setPos(playerX, 230); // 186 + 33 = 219 (rests on top of line)
-    if (enemySprite) {
-        enemySprite->setPos(enemyX, 175);                 // 228 (rests just beneath line thickness)
-        enemySprite->setRotation(0);
+    // Keep the fence securely locked between them at middle layer depth
+    if (tiltBarrier)
+    {
+        tiltBarrier->setZValue(2);
     }
 
     updateVisualSprites();
@@ -162,7 +223,8 @@ void JoustView::resetRound()
 void JoustView::updateSpriteFrames()
 {
     spriteFrameCounter++;
-    if (spriteFrameCounter >= 5) { // Slightly speed up animation cycles for extra energy
+    if (spriteFrameCounter >= 5)
+    { // Slightly speed up animation cycles for extra energy
         spriteFrameCounter = 0;
         currentFrameIndex = (currentFrameIndex + 1) % 6; // 👍 Loop cleanly through all 6 running frames
         updateVisualSprites();

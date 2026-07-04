@@ -49,7 +49,7 @@ private:
     // Sprite graphics items
     QGraphicsPixmapItem *playerSprite;
     QGraphicsPixmapItem *enemySprite;
-    QGraphicsLineItem *tiltBarrier;
+    QGraphicsPixmapItem *tiltBarrier;
     QGraphicsTextItem *qteDisplayItem;
     QGraphicsTextItem *announcerText;
 
