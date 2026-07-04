@@ -28,6 +28,8 @@ public:
     int getMaxRounds() const { return maxRounds; }
     int getCurrentRound() const { return currentRound; }
     bool isActive() const { return tournamentActive; }
+    int getReward() const { return reward; }
+    std::string getHost() const { return hosterName; }
 
     // Roster configuration
     void registerPlayerTeam(const std::vector<Knight>& team) { 

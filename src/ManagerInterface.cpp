@@ -3,7 +3,8 @@
 #include "Knights/KnightRecruitmentTab.h"
 #include "Tournaments/TournamentTab.h"
 
-ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent) {
+ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent)
+{
     // Main structural layout for this view
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
@@ -16,30 +17,43 @@ ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent) {
     knightRecruitmentTab = new KnightRecruitmentTab();
 
     tournamentTab = new TournamentTab();
-    
+
     tabWidget->addTab(knightRosterTab, "Knights Roster");
-    tabWidget->addTab(knightRecruitmentTab,"Knight Recruitment");
+    tabWidget->addTab(knightRecruitmentTab, "Knight Recruitment");
     tabWidget->addTab(createShopTab(), "Blacksmith Shop");
     tabWidget->addTab(tournamentTab, "Tournament Arena");
 
     mainLayout->addWidget(tabWidget);
     setLayout(mainLayout);
-    
-    connect(tabWidget, &QTabWidget::currentChanged, this, [this](int index) {
+
+    connect(tabWidget, &QTabWidget::currentChanged, this, [this](int index)
+            {
         // Since "Knights Roster" was added first, its index is 0
         if (index == 0) {
             knightRosterTab->populateRoster();
-        }
-    });
+        } });
+
+    gameController = new GameTimelineController(this);
+
+    QPushButton *nextDayButton = new QPushButton("Next Day", this);
+    nextDayButton->setStyleSheet("padding: 10px 20px; background-color: #D4AF37; color: black; font-weight: bold;");
+    mainLayout->addWidget(nextDayButton);
+
+    connect(nextDayButton, &QPushButton::clicked, this, [this]()
+            { gameController->triggerNextDay(); });
+
+    // Refresh all lists and view labels when a new day successfully loads
+    connect(gameController, &GameTimelineController::dayAdvanced, this, &refreshDashboardUI);
 }
 
-QWidget* ManagerInterface::createShopTab() {
+QWidget *ManagerInterface::createShopTab()
+{
     QWidget *tab = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout(tab);
 
     QLabel *label = new QLabel("ARMOURY & BLACKSMITH", tab);
     label->setStyleSheet("font-size: 20px; font-weight: bold; color: #4A5568;");
-    
+
     QPushButton *buyWeapon = new QPushButton("Buy Steel Lance - 50 Gold", tab);
     QPushButton *buyArmor = new QPushButton("Buy Plate Armour - 120 Gold", tab);
     buyWeapon->setStyleSheet("padding: 10px; margin: 5px;");
@@ -52,4 +66,10 @@ QWidget* ManagerInterface::createShopTab() {
 
     tab->setLayout(layout);
     return tab;
+}
+
+void ManagerInterface::refreshDashboardUI()
+{
+    knightRosterTab->populateRoster();
+    knightRecruitmentTab->populateList();
 }

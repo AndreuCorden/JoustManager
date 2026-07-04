@@ -16,6 +16,8 @@ set(SOURCES
     resources.qrc
     src/Player.h
     src/Player.cpp
+    src/GameTimelineController.h
+    src/GameTimelineController.cpp
     src/GameWindow.h
     src/GameWindow.cpp
     src/GameDialog.h

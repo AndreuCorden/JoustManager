@@ -12,6 +12,7 @@
 #include "Knights/KnightRosterTab.h"
 #include "Knights/KnightRecruitmentTab.h"
 #include "Tournaments/TournamentTab.h"
+#include "GameTimelineController.h"
 
 class ManagerInterface : public QWidget {
     Q_OBJECT
@@ -19,8 +20,11 @@ class ManagerInterface : public QWidget {
 public:
     explicit ManagerInterface(QWidget *parent = nullptr);
 
+    void refreshDashboardUI();
+
 private:
     QTabWidget *tabWidget;
+    GameTimelineController *gameController;
 
     // Helper functions to keep our panel generation modular
     KnightRosterTab* knightRosterTab;

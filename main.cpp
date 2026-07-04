@@ -39,7 +39,14 @@ int main(int argc, char *argv[])
         "QInputDialog, QMessageBox {"
         "   background-color: #1A202C;"
         "   border: 2px solid #D4AF37;"
-        "}");
+        "}"
+        
+        /*"QPushButton {"
+        "   background-color: #48BB78; color: white; font-size: 16px; font-weight: bold;"
+        "   padding: 12px 30px; border-radius: 6px; border: none;"
+        "}"
+        "QPushButton:hover { background-color: #38A169; }"*/
+    );
 
     GameWindow window;
     window.show();
