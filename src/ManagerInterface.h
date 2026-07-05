@@ -1,5 +1,5 @@
-#ifndef _Manager_Interface
-#define _Manager_Interface
+#ifndef MANAGERINTERFACE_H
+#define MANAGERINTERFACE_H
 
 #pragma once
 
@@ -18,17 +18,19 @@ class ManagerInterface : public QWidget {
     Q_OBJECT
 
 public:
-    explicit ManagerInterface(QWidget *parent = nullptr);
+    explicit ManagerInterface(QWidget *parent, GameTimelineController &gameTimelineController);
 
     void refreshDashboardUI();
 
 private:
-    QTabWidget *tabWidget;
+    GameTimelineController &m_gameTimelineController;
+
+    QTabWidget *m_tabWidget;
 
     // Helper functions to keep our panel generation modular
-    KnightRosterTab* knightRosterTab;
-    KnightRecruitmentTab* knightRecruitmentTab;
+    KnightRosterTab* m_knightRosterTab;
+    KnightRecruitmentTab* m_knightRecruitmentTab;
     QWidget* createShopTab();
-    TournamentTab* tournamentTab;
+    TournamentTab* m_tournamentTab;
 };
 #endif

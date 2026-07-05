@@ -4,49 +4,46 @@
 #include "Tournaments/TournamentTab.h"
 #include "GameTimelineController.h"
 
-ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent)
+ManagerInterface::ManagerInterface(QWidget *parent, GameTimelineController &gameTimelineController) 
+: QWidget(parent)
+, m_gameTimelineController(gameTimelineController)
+, m_tabWidget(new QTabWidget(this))
+, m_knightRosterTab(new KnightRosterTab(this))
+, m_knightRecruitmentTab(new KnightRecruitmentTab(this))
+, m_tournamentTab(new TournamentTab(this))
 {
     // Main structural layout for this view
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
-
-    auto& gameController = GameTimelineController::getInstance();
 
     /*dayLabel = new QLabel(QString("CURRENT DAY: %1").arg(gameController.getCurrentDay()), this);
     dayLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #D4AF37; padding: 5px;");
     mainLayout->addWidget(dayLabel);*/
 
     // Create the Tab Container
-    tabWidget = new QTabWidget(this);
-    tabWidget->setStyleSheet("QTabBar::tab { font-size: 16px; padding: 10px 20px; }");
+    m_tabWidget->setStyleSheet("QTabBar::tab { font-size: 16px; padding: 10px 20px; }");
 
-    // Generate our sub-panels and plug them into the tabs
-    knightRosterTab = new KnightRosterTab();
-    knightRecruitmentTab = new KnightRecruitmentTab();
 
-    tournamentTab = new TournamentTab();
+    m_tabWidget->addTab(m_knightRosterTab, "Knights Roster");
+    m_tabWidget->addTab(m_knightRecruitmentTab, "Knight Recruitment");
+    m_tabWidget->addTab(createShopTab(), "Blacksmith Shop");
+    m_tabWidget->addTab(m_tournamentTab, "Tournament Arena");
 
-    tabWidget->addTab(knightRosterTab, "Knights Roster");
-    tabWidget->addTab(knightRecruitmentTab, "Knight Recruitment");
-    tabWidget->addTab(createShopTab(), "Blacksmith Shop");
-    tabWidget->addTab(tournamentTab, "Tournament Arena");
-
-    mainLayout->addWidget(tabWidget);
+    mainLayout->addWidget(m_tabWidget);
     setLayout(mainLayout);
 
-    connect(tabWidget, &QTabWidget::currentChanged, this, [this](int index)
+    connect(m_tabWidget, &QTabWidget::currentChanged, this, [this](int index)
             {
         // Since "Knights Roster" was added first, its index is 0
         if (index == 0) {
-            knightRosterTab->populateRoster();
+            m_knightRosterTab->populateRoster();
         } });
 
     QPushButton *nextDayButton = new QPushButton("Next Day", this);
     nextDayButton->setStyleSheet("padding: 10px 20px; background-color: #D4AF37; color: black; font-weight: bold;");
     mainLayout->addWidget(nextDayButton);
 
-    connect(nextDayButton, &QPushButton::clicked, this, []() { 
-        GameTimelineController::getInstance().triggerNextDay(); 
-    });
+    connect(nextDayButton, &QPushButton::clicked, 
+        &this->m_gameTimelineController, &GameTimelineController::triggerNextDay);
 
     connect(&GameTimelineController::getInstance(), &GameTimelineController::dayAdvanced, 
             this, &ManagerInterface::refreshDashboardUI);
@@ -79,7 +76,7 @@ void ManagerInterface::refreshDashboardUI()
     // 🌟 Update visual day text using the singleton instance
     // dayLabel->setText(QString("CURRENT DAY: %1").arg(GameTimelineController::getInstance().getCurrentDay()));
 
-    knightRosterTab->populateRoster();
-    knightRecruitmentTab->startDay();
-    tournamentTab->populateRoster(); 
+    m_knightRosterTab->populateRoster();
+    m_knightRecruitmentTab->startDay();
+    m_tournamentTab->populateRoster(); 
 }
