@@ -1,4 +1,6 @@
 // Tournaments/Tournament.cpp
+#include <QRandomGenerator>
+
 #include "Tournament.h"
 
 void Tournament::initializeTournament()
@@ -25,48 +27,28 @@ void Tournament::initializeTournament()
     }
 }
 
-std::vector<MatchUp> Tournament::generateCurrentRoundMatches()
+std::vector<Knight> Tournament::getEnemyTeam() const
 {
-    std::vector<MatchUp> matchups;
-
-    // Prevent out-of-bounds loops if activeTeams is empty or corrupted
-    if (activeTeams.size() < 2)
-        return matchups;
-
-    // Ensure the loop stops safely before accessing i + 1
-    for (size_t i = 0; i + 1 < activeTeams.size(); i += 2)
+    if (activeTeams.empty())
     {
-        MatchUp match;
-        match.teamA = activeTeams[i];
-        match.teamB = activeTeams[i + 1];
-
-        // 👍 FIX 3: Safe, defensive guard checks before accessing index [0]
-        if (!match.teamA.empty() && !playerTeam.empty())
-        {
-            if (match.teamA[0].getName() == playerTeam[0].getName())
-            {
-                match.involvesPlayer = true;
-            }
-        }
-        if (!match.teamB.empty() && !playerTeam.empty())
-        {
-            if (match.teamB[0].getName() == playerTeam[0].getName())
-            {
-                match.involvesPlayer = true;
-            }
-        }
-        matchups.push_back(match);
+        return {Knight::generateRandomKnight()};
     }
-    return matchups;
+
+    auto *rand = QRandomGenerator::global();
+    size_t randomIndex = rand->bounded(activeTeams.size());
+
+    return activeTeams[randomIndex];
 }
 
-void Tournament::advanceTournamentRound(const std::vector<std::vector<Knight>> &winningTeams)
+void Tournament::advanceTournamentRound(const bool won)
 {
-    activeTeams = winningTeams; // Prune out losers entirely
-    currentRound++;
-
-    if (currentRound > maxRounds || activeTeams.size() <= 1)
+    playerParticipating = won;
+    if (!playerParticipating)
     {
-        playerParticipating = false; // Tournament concludes!
+        // simulate rest of tournament
+    }
+    else
+    {
+        currentRound++;
     }
 }

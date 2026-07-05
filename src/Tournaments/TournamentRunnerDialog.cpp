@@ -2,6 +2,8 @@
 #include "Tournaments/Joust/JoustView.h"
 #include "Player.h"
 
+#include <iostream>
+
 TournamentRunnerDialog::TournamentRunnerDialog(Tournament &tournament, QWidget *parent)
     : GameDialog(parent), activeTournament(tournament)
 {
@@ -14,7 +16,6 @@ TournamentRunnerDialog::TournamentRunnerDialog(Tournament &tournament, QWidget *
         this->mainLayout->setSpacing(20);
     }
 
-    // Load Stage 1: The Announcement Screen safely
     setupIntroScreen();
 }
 
@@ -22,19 +23,20 @@ void TournamentRunnerDialog::setupIntroScreen()
 {
     clearCurrentLayout();
 
-    // Ensure mainLayout is valid before attaching widgets
     if (!mainLayout)
         return;
 
-    titleLabel = new QLabel(QString::fromStdString(activeTournament.getName()), this);
-    titleLabel->setStyleSheet("font-size: 28px; font-weight: bold; color: #F6AD55; background: transparent;");
+    titleLabel = new QLabel(QString("%1").arg(QString::fromStdString(activeTournament.getName())), this);
+    titleLabel->setStyleSheet("font-size: 26px; font-weight: bold; color: #F6AD55; background: transparent;");
     titleLabel->setAlignment(Qt::AlignCenter);
 
-    infoLabel = new QLabel(QString("Hosted by: %1\n\nPrepare your knights for battle!").arg(QString::fromStdString(activeTournament.getHost())), this);
+    infoLabel = new QLabel(QString("Hosted by: %1")
+                               .arg(QString::fromStdString(activeTournament.getHost())),
+                           this);
     infoLabel->setStyleSheet("font-size: 16px; color: #E2E8F0; font-style: italic; background: transparent;");
     infoLabel->setAlignment(Qt::AlignCenter);
 
-    actionButton = new QPushButton("Enter the Arena", this);
+    actionButton = new QPushButton("Begin Tournament", this);
     actionButton->setStyleSheet("background-color: #48BB78; color: white; font-size: 16px; font-weight: bold; padding: 12px 30px; border-radius: 6px;");
     actionButton->setCursor(Qt::PointingHandCursor);
 
@@ -42,108 +44,138 @@ void TournamentRunnerDialog::setupIntroScreen()
     mainLayout->addWidget(infoLabel);
     mainLayout->addWidget(actionButton);
 
-    connect(actionButton, &QPushButton::clicked, this, &TournamentRunnerDialog::startNextRoundLifecycle);
+    connect(actionButton, &QPushButton::clicked, this, &TournamentRunnerDialog::runTournamentRound);
+}
+
+// 🌟 NEW METHOD: Displayed once all bracket levels are cleared out!
+void TournamentRunnerDialog::setupRewardsScreen()
+{
+    titleLabel = new QLabel("TOURNAMENT COMPLETE!", this);
+    titleLabel->setStyleSheet("font-size: 28px; font-weight: bold; color: #D4AF37; background: transparent;");
+    titleLabel->setAlignment(Qt::AlignCenter);
+
+    infoLabel = new QLabel(QString("Victory! Your squad conquered the tournament tracks.\n\nReward Claimed: +%1 Gold Pieces")
+                               .arg(activeTournament.getReward()),
+                           this);
+    infoLabel->setStyleSheet("font-size: 16px; color: #E2E8F0; background: transparent;");
+    infoLabel->setAlignment(Qt::AlignCenter);
+
+    actionButton = new QPushButton("Collect Rewards & Leave", this);
+    actionButton->setStyleSheet("background-color: #3182CE; color: white; font-size: 16px; font-weight: bold; padding: 12px 30px; border-radius: 6px;");
+    actionButton->setCursor(Qt::PointingHandCursor);
+
+    mainLayout->addWidget(titleLabel);
+    mainLayout->addWidget(infoLabel);
+    mainLayout->addWidget(actionButton);
+
+    connect(actionButton, &QPushButton::clicked, this, &QDialog::accept);
 }
 
 void TournamentRunnerDialog::startNextRoundLifecycle()
 {
-    // 🌟 BASE CASE: Check if matches exist first. If none, wrap up cleanly.
-    std::vector<MatchUp> currentMatches = activeTournament.generateCurrentRoundMatches();
-    if (currentMatches.empty())
+    this->hide();
+
+    JoustView *joustArena = new JoustView(activeTournament.getPlayerTeam(), activeTournament.getEnemyTeam(), nullptr);
+    joustArena->setWindowFlags(Qt::FramelessWindowHint);
+    joustArena->setWindowModality(Qt::ApplicationModal);
+    joustArena->setAttribute(Qt::WA_DeleteOnClose);
+
+    QScreen *primaryScreen = QGuiApplication::primaryScreen();
+    if (primaryScreen)
     {
-        this->accept();
-        return;
+        QRect screenGeometry = primaryScreen->geometry();
+        int x = (screenGeometry.width() - joustArena->width()) / 2;
+        int y = (screenGeometry.height() - joustArena->height()) / 2;
+        joustArena->move(x, y);
     }
+    joustArena->show();
+    joustArena->raise();
+    joustArena->activateWindow();
 
-    std::vector<std::vector<Knight>> roundWinners;
-    bool playerMatchFound = false;
-    MatchUp playerMatch;
-
-    for (const MatchUp &match : currentMatches)
-    {
-        if (match.involvesPlayer && !playerMatchFound)
-        {
-            playerMatch = match;
-            playerMatchFound = true;
-        }
-        else
-        {
-            roundWinners.push_back(match.teamA); // AI auto-advancements
-        }
-    }
-
-    // 🎥 STATE A: Player is fighting!
-    if (playerMatchFound)
-    {
-
-        // 🌟 STEP 1: Close the intro dialog completely to get it out of the way
-        this->accept();
-
-        // 🌟 STEP 2: Spawn JoustView with NO parent (nullptr).
-        // This guarantees it runs completely independently at its own 1205x405 size.
-        JoustView *joustArena = new JoustView(playerMatch.teamA, playerMatch.teamB, nullptr);
-
-        // We set the WindowModal flag so it still blocks background inputs nicely
-        joustArena->setWindowFlags(Qt::FramelessWindowHint);
-        joustArena->setWindowModality(Qt::ApplicationModal);
-
-        QScreen *primaryScreen = QGuiApplication::primaryScreen();
-        if (primaryScreen)
-        {
-            QRect screenGeometry = primaryScreen->geometry();
-
-            // Calculate the exact center position
-            int x = (screenGeometry.width() - joustArena->width()) / 2;
-            int y = (screenGeometry.height() - joustArena->height()) / 2;
-
-            // Explicitly lock the coordinates onto the window frame before showing it
-            joustArena->move(x, y);
-        }
-        joustArena->show();
-        joustArena->raise();
-        joustArena->activateWindow();
-
-        // 🌟 STEP 3: Connect to the arena lifecycle from your global controller scope
-        // When the player clicks to close the match, proceed to the next logic loop step.
-        // (Note: Since your JoustView calls parentWidget() -> accept(), we handle destruction cleanly)
-        QObject::connect(joustArena, &QWidget::destroyed, [roundWinners, playerMatch, this]() mutable
-                         {
-            // Assume player won for logic progression
-            roundWinners.push_back(playerMatch.teamA); 
-            this->activeTournament.advanceTournamentRound(roundWinners); });
-    }
-    // 💤 STATE B: Player isn't in this round. Auto-simulate.
-    else
-    {
-        activeTournament.advanceTournamentRound(roundWinners);
-        startNextRoundLifecycle(); // Check next round
-    }
+    QObject::connect(joustArena, &QWidget::destroyed, this, [this]() mutable
+                     {
+            this->activeTournament.advanceTournamentRound(true); 
+            
+            this->runTournamentRound(); });
 }
 
 void TournamentRunnerDialog::clearCurrentLayout()
 {
-    // 1. Explicitly clean up your known text elements and buttons
+    if (!mainLayout)
+        return;
+
+    // 🌟 FIX 1: Explicitly remove widgets from the layout container before deleting them.
+    // This stops empty layout wrappers from piling up and breaking window geometry over multiple rounds!
     if (titleLabel)
     {
+        mainLayout->removeWidget(titleLabel);
         titleLabel->deleteLater();
         titleLabel = nullptr;
     }
     if (infoLabel)
     {
+        mainLayout->removeWidget(infoLabel);
         infoLabel->deleteLater();
         infoLabel = nullptr;
     }
     if (actionButton)
     {
+        mainLayout->removeWidget(actionButton);
         actionButton->deleteLater();
         actionButton = nullptr;
     }
 
-    // 🌟 FIX: Safely scan and delete ONLY child JoustView widgets without wiping out layout matrices
-    // This looks for any JoustView child instance currently inside this window block.
     JoustView *oldArena = this->findChild<JoustView *>();
     if (oldArena)
     {
         oldArena->deleteLater();
+        oldArena = nullptr;
+    }
+}
+
+void TournamentRunnerDialog::runTournamentRound()
+{
+
+    // when click start it loads the joust view. After end loads next round runTournament(++currentRound)
+    clearCurrentLayout();
+    this->show();
+    if (!activeTournament.isPlayerParticipating())
+    {
+        // Player lost and is no longer participatin, open lose screen
+    }
+    else if (activeTournament.getCurrentRound() > activeTournament.getMaxRounds())
+    {
+        // Player wins
+        setupRewardsScreen();
+    }
+    else
+    {
+        QString roundText = QString("ROUND %1").arg(activeTournament.getCurrentRound());
+
+        titleLabel = new QLabel(QString("%1 - %2").arg(QString::fromStdString(activeTournament.getName()), roundText), this);
+        titleLabel->setStyleSheet("font-size: 26px; font-weight: bold; color: #F6AD55; background: transparent;");
+        titleLabel->setAlignment(Qt::AlignCenter);
+
+        std::string names;
+        for (auto k : activeTournament.getEnemyTeam())
+        {
+            names += " " + k.getName();
+        }
+
+        infoLabel = new QLabel(QString("Oponent:%1")
+                                   .arg(QString::fromStdString(names)),
+                               this);
+        infoLabel->setStyleSheet("font-size: 16px; color: #E2E8F0; font-style: italic; background: transparent;");
+        infoLabel->setAlignment(Qt::AlignCenter);
+
+        actionButton = new QPushButton("Enter the Arena", this);
+        actionButton->setStyleSheet("background-color: #48BB78; color: white; font-size: 16px; font-weight: bold; padding: 12px 30px; border-radius: 6px;");
+        actionButton->setCursor(Qt::PointingHandCursor);
+
+        mainLayout->addWidget(titleLabel);
+        mainLayout->addWidget(infoLabel);
+        mainLayout->addWidget(actionButton);
+
+        connect(actionButton, &QPushButton::clicked, this, &TournamentRunnerDialog::startNextRoundLifecycle);
     }
 }

@@ -7,12 +7,6 @@
 #include <cmath>
 #include "Knights/Knight.h"
 
-struct MatchUp {
-    std::vector<Knight> teamA;
-    std::vector<Knight> teamB;
-    bool involvesPlayer = false;
-};
-
 class Tournament
 {
 public:
@@ -29,6 +23,8 @@ public:
     bool isPlayerParticipating() const { return playerParticipating; }
     int getReward() const { return reward; }
     std::string getHost() const { return hosterName; }
+    std::vector<Knight> getPlayerTeam() const { return playerTeam; }
+    std::vector<Knight> getEnemyTeam() const;
 
     // Roster configuration
     void registerPlayerTeam(const std::vector<Knight>& team) { 
@@ -44,8 +40,7 @@ public:
     }
 
     // Bracket Match Engine Functions
-    std::vector<MatchUp> generateCurrentRoundMatches();
-    void advanceTournamentRound(const std::vector<std::vector<Knight>>& winningTeams);
+    void advanceTournamentRound(const bool won);
 
 private:
     void initializeTournament();

@@ -185,20 +185,11 @@ void JoustView::mousePressEvent(QMouseEvent *event)
     {
         startMatch();
     }
-    // 👍 FIXED: If the match has ended, a click will close out the arena window cleanly
+    // 🌟 FIX: Close the standalone window directly when clicked at match completion!
     else if (currentState == JoustState::MatchOver)
     {
-        QWidget *p = this->parentWidget();
-        while (p)
-        {
-            QDialog *dialog = qobject_cast<QDialog *>(p);
-            if (dialog)
-            {
-                dialog->accept();
-                return;
-            }
-            p = p->parentWidget();
-        }
+        this->close();
+        return;
     }
     QGraphicsView::mousePressEvent(event);
 }

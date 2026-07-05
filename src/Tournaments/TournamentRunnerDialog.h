@@ -20,8 +20,11 @@ public:
 
 private:
     void setupIntroScreen();
+    void setupRewardsScreen();
     void startNextRoundLifecycle();
     void clearCurrentLayout();
+
+    void runTournamentRound();
 
     Tournament& activeTournament;
 
