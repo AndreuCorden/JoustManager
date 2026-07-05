@@ -12,9 +12,12 @@
 #include "Items/Armour/GothicArmour.h"
 #include "Items/Weapon/CourteousLance.h"
 #include "GameDialog.h"
+#include "Tournaments/TournamentRunnerDialog.h"
+
+#include <algorithm>
 
 GameTimelineController::GameTimelineController(QObject *parent)
-    : QObject(parent), currentDay(1)
+    : QObject(nullptr), currentDay(1)
 {
     // Roll items for Day 1
     generateDailyPools();
@@ -62,85 +65,55 @@ void GameTimelineController::registerForTournament(int tournamentIndex)
     if (tournamentIndex >= 0 && tournamentIndex < (int)availableTournaments.size())
     {
         // Push selected tournament straight into tomorrow's processing queue
-        tournamentQueue.push(availableTournaments[tournamentIndex]);
+        tournamentVector.push_back(availableTournaments[tournamentIndex]);
     }
+}
+
+void GameTimelineController::cancelTournamentRegistration(const std::string& tournamentName)
+{
+    tournamentVector.erase(
+        std::remove_if(tournamentVector.begin(), tournamentVector.end(),
+            [&tournamentName](const Tournament& t) {
+                return t.getName() == tournamentName;
+            }),
+        tournamentVector.end()
+    );
 }
 
 void GameTimelineController::triggerNextDay()
 {
     // Kick off sequential animations of all signed-up matches
-    runNextRegisteredTournament();
+    runNextRegisteredTournament(0);
 }
 
-void GameTimelineController::runNextRegisteredTournament()
+// 🌟 The Correct, Stable Pattern (Sequential State Machine)
+void GameTimelineController::runNextRegisteredTournament(size_t currentIndex)
 {
-    // Base Case: If no tournaments are left in today's queue, advance the timeline safely
-    if (tournamentQueue.empty())
+    // 1. BASE CASE: If we processed every item in the vector queue, reset and advance!
+    if (currentIndex >= tournamentVector.size())
     {
+        tournamentVector.clear(); // 🧼 Clean everything out safely at the very end
         currentDay++;
         generateDailyPools();
-        emit dayAdvanced(); // UI intercepts this to refresh text assets and storefronts
+        emit dayAdvanced(); 
         return;
     }
 
-    // Grab the next tournament in line
-    Tournament activeMatch = tournamentQueue.front();
-    tournamentQueue.pop();
+    // 2. Grab a perfectly safe, stable reference using the tracking index
+    Tournament& activeMatch = tournamentVector[currentIndex];
 
-    activeMatch.generateCurrentRoundMatches();
-
-    // 🎥 Spin up your JoustView inside a modal dialog window container
-    GameDialog *matchDialog = new GameDialog();
-    matchDialog->setStyleSheet("background-color: #2D3748;");
-
-    QVBoxLayout *layout = new QVBoxLayout(matchDialog);
-    layout->setAlignment(Qt::AlignCenter);
-    layout->setSpacing(20);
-
-    QLabel *titleLabel = new QLabel(QString::fromStdString(activeMatch.getName()), matchDialog);
-    titleLabel->setAlignment(Qt::AlignCenter);
-    titleLabel->setStyleSheet("font-size: 26px; font-weight: bold; color: #F6AD55; margin-bottom: 10px;");
-
-    QLabel *hostLabel = new QLabel(QString::fromStdString(activeMatch.getHost()), matchDialog);
-    hostLabel->setAlignment(Qt::AlignCenter);
-    hostLabel->setStyleSheet("font-size: 16px; color: #E2E8F0; font-style: italic;");
-
-    QPushButton *advanceButton = new QPushButton("Advance to Round", matchDialog);
-    advanceButton->setCursor(Qt::PointingHandCursor);
-    advanceButton->setStyleSheet(
-        "QPushButton {"
-        "   background-color: #48BB78; color: white; font-size: 16px; font-weight: bold;"
-        "   padding: 12px 30px; border-radius: 6px; border: none;"
-        "}"
-        "QPushButton:hover { background-color: #38A169; }");
-
-    layout->addWidget(titleLabel);
-    layout->addWidget(hostLabel);
-    layout->addWidget(advanceButton);
-
-    QObject::connect(advanceButton, &QPushButton::clicked, [this, activeMatch, matchDialog, layout, titleLabel, hostLabel, advanceButton]() mutable
-                     {
+    TournamentRunnerDialog *runner = new TournamentRunnerDialog(activeMatch, nullptr);
+    
+    QObject::connect(runner, &QDialog::accepted, [this, currentIndex, runner]() {
+        // Collect rewards from the stable vector slot
+        int rewardAmount = tournamentVector[currentIndex].getReward();
+        Player::getInstance().modifyGold(rewardAmount); 
         
-        // Step A: Trigger match creation logic right now on click
-        activeMatch.generateCurrentRoundMatches();
+        runner->deleteLater();
 
-        // Step B: Clean up and remove the introductory UI assets
-        layout->removeWidget(titleLabel);
-        layout->removeWidget(hostLabel);
-        layout->removeWidget(advanceButton);
-        
-        titleLabel->deleteLater();
-        hostLabel->deleteLater();
-        advanceButton->deleteLater(); });
+        // 3. RECURSION STEP: Safely pass the NEXT index integer forward 
+        this->runNextRegisteredTournament(currentIndex + 1); 
+    });
 
-    // 4. Clean up structural framework when matches terminate completely
-    QObject::connect(matchDialog, &QDialog::accepted, [this, activeMatch, matchDialog]()
-                     {
-        Player::getInstance().modifyGold(activeMatch.getReward()); // Collect gold
-        matchDialog->deleteLater();
-
-        // RECURSIVE CALL: Keep executing the loop until the queue clears completely
-        this->runNextRegisteredTournament(); });
-
-    matchDialog->exec();
+    runner->exec(); 
 }

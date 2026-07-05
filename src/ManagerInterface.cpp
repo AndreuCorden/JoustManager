@@ -2,11 +2,18 @@
 #include "Knights/KnightRosterTab.h"
 #include "Knights/KnightRecruitmentTab.h"
 #include "Tournaments/TournamentTab.h"
+#include "GameTimelineController.h"
 
 ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent)
 {
     // Main structural layout for this view
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
+
+    auto& gameController = GameTimelineController::getInstance();
+
+    /*dayLabel = new QLabel(QString("CURRENT DAY: %1").arg(gameController.getCurrentDay()), this);
+    dayLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #D4AF37; padding: 5px;");
+    mainLayout->addWidget(dayLabel);*/
 
     // Create the Tab Container
     tabWidget = new QTabWidget(this);
@@ -33,17 +40,16 @@ ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent)
             knightRosterTab->populateRoster();
         } });
 
-    gameController = new GameTimelineController(this);
-
     QPushButton *nextDayButton = new QPushButton("Next Day", this);
     nextDayButton->setStyleSheet("padding: 10px 20px; background-color: #D4AF37; color: black; font-weight: bold;");
     mainLayout->addWidget(nextDayButton);
 
-    connect(nextDayButton, &QPushButton::clicked, this, [this]()
-            { gameController->triggerNextDay(); });
+    connect(nextDayButton, &QPushButton::clicked, this, []() { 
+        GameTimelineController::getInstance().triggerNextDay(); 
+    });
 
-    // Refresh all lists and view labels when a new day successfully loads
-    connect(gameController, &GameTimelineController::dayAdvanced, this, &refreshDashboardUI);
+    connect(&GameTimelineController::getInstance(), &GameTimelineController::dayAdvanced, 
+            this, &ManagerInterface::refreshDashboardUI);
 }
 
 QWidget *ManagerInterface::createShopTab()
@@ -70,6 +76,10 @@ QWidget *ManagerInterface::createShopTab()
 
 void ManagerInterface::refreshDashboardUI()
 {
+    // 🌟 Update visual day text using the singleton instance
+    // dayLabel->setText(QString("CURRENT DAY: %1").arg(GameTimelineController::getInstance().getCurrentDay()));
+
     knightRosterTab->populateRoster();
     knightRecruitmentTab->populateList();
+    tournamentTab->populateRoster(); 
 }

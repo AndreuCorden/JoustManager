@@ -44,9 +44,10 @@ set(SOURCES
     src/Tournaments/TournamentTab.cpp
     src/Tournaments/Tournament.h
     src/Tournaments/Tournament.cpp
+    src/Tournaments/TournamentRunnerDialog.h
+    src/Tournaments/TournamentRunnerDialog.cpp
     src/Tournaments/KnightSelectionDialog.h
     src/Tournaments/KnightSelectionDialog.cpp
-    src/Tournaments/TournamentManager.h
     src/Tournaments/Joust/JoustView.h
     src/Tournaments/Joust/JoustView.cpp
 )

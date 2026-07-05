@@ -1,7 +1,7 @@
 #include "Tournaments/TournamentTab.h"
-#include "Tournaments/TournamentManager.h"
 #include "Tournaments/KnightSelectionDialog.h"
 #include "Tournaments/Joust/JoustView.h"
+#include "GameTimelineController.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -34,11 +34,11 @@ void TournamentTab::populateRoster()
         delete child;
     }
 
-    auto &activeTourneys = TournamentManager::getInstance().getActiveTournaments();
+    auto &tourneys = GameTimelineController::getInstance().getAvailableTournaments();
 
-    for (size_t i = 0; i < activeTourneys.size(); ++i)
+    for (size_t i = 0; i < tourneys.size(); ++i)
     {
-        Tournament &t = activeTourneys[i];
+        Tournament &t = tourneys[i];
 
         QWidget *rowWidget = new QWidget(this);
         QHBoxLayout *rowLayout = new QHBoxLayout(rowWidget);
@@ -49,7 +49,7 @@ void TournamentTab::populateRoster()
         rowLayout->addStretch();
 
         // STATE A: Player hasn't joined up yet
-        if (!t.isActive())
+        if (!t.isPlayerParticipating())
         {
             QPushButton *enterBtn = new QPushButton(QString("Enter Tournament (%1v%1)").arg(t.getRequiredTeammates()), this);
             enterBtn->setStyleSheet("padding: 10px 20px; background-color: #D4AF37; color: black; font-weight: bold;");
@@ -57,93 +57,30 @@ void TournamentTab::populateRoster()
 
             connect(enterBtn, &QPushButton::clicked, this, [this, i]()
                     {
-                auto &tourneys = TournamentManager::getInstance().getActiveTournaments();
-                Tournament &targetTourney = tourneys[i];
+            auto &liveTourneys = GameTimelineController::getInstance().getAvailableTournaments();
+            Tournament &targetTourney = liveTourneys[i];
 
-                KnightSelectionDialog selectDialog(targetTourney, this);
-                if (selectDialog.exec() == QDialog::Accepted) {
-                    populateRoster(); 
-                } });
+            KnightSelectionDialog selectDialog(targetTourney, this);
+            if (selectDialog.exec() == QDialog::Accepted) {
+                GameTimelineController::getInstance().registerForTournament(i);
+                populateRoster(); 
+            } });
         }
         // STATE B: Tournament is actively running its structural round passes
         else
         {
-            QString processText = QString("⚔️ RUN ROUND %1 / %2").arg(t.getCurrentRound()).arg(t.getMaxRounds());
-            QPushButton *playBtn = new QPushButton(processText, this);
-            playBtn->setStyleSheet("padding: 10px 20px; background-color: #2F855A; color: white; font-weight: bold;");
-            rowLayout->addWidget(playBtn);
+            QPushButton *leaveBtn = new QPushButton("Leave Torunament", this);
+            leaveBtn->setStyleSheet("padding: 10px; background-color: #E53E3E; color: white;");
+            rowLayout->addWidget(leaveBtn);
 
-            QPushButton *forfeitBtn = new QPushButton("Forfeit", this);
-            forfeitBtn->setStyleSheet("padding: 10px; background-color: #E53E3E; color: white;");
-            rowLayout->addWidget(forfeitBtn);
-
-            connect(playBtn, &QPushButton::clicked, this, [this, i]()
+            connect(leaveBtn, &QPushButton::clicked, this, [this, i]()
                     {
-                auto &tourneys = TournamentManager::getInstance().getActiveTournaments();
-                Tournament &targetTourney = tourneys[i];
+    auto &liveTourneys = GameTimelineController::getInstance().getAvailableTournaments();
+    Tournament &t = liveTourneys[i];
 
-                std::vector<MatchUp> currentMatches = targetTourney.generateCurrentRoundMatches();
-                std::vector<std::vector<Knight>> roundWinners;
-                bool playerSurvivedRound = false;
-
-                if (currentMatches.empty()) return;
-
-                // Track if we already launched an interactive arena window for the player
-                bool playerMatchHandled = false;
-
-                for (const MatchUp &match : currentMatches)
-                {
-                    if (match.involvesPlayer)
-                    {
-                        // 👍 FIXED: Guard against opening duplicate or runaway windows in the loop
-                        if (playerMatchHandled) {
-                            // If player data was duplicated, let background simulation process it safely
-                            roundWinners.push_back(match.teamA);
-                            continue;
-                        }
-
-                        QDialog arenaWindow(this);
-                        arenaWindow.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
-                        arenaWindow.setModal(true);
-                        QVBoxLayout *layout = new QVBoxLayout(&arenaWindow);
-
-                        JoustView *joustArena = new JoustView(match.teamA, match.teamB, &arenaWindow);
-                        layout->addWidget(joustArena);
-
-                        joustArena->setFocusPolicy(Qt::StrongFocus);
-                        joustArena->setFocus();
-
-                        QPushButton *exitBtn = new QPushButton("Return to Base", &arenaWindow);
-                        exitBtn->setStyleSheet("padding: 8px; font-weight: bold;");
-                        connect(exitBtn, &QPushButton::clicked, &arenaWindow, &QDialog::accept);
-                        layout->addWidget(exitBtn);
-
-                        arenaWindow.exec(); // Blocks execution thread cleanly here
-
-                        roundWinners.push_back(match.teamA);
-                        playerSurvivedRound = true;
-                        playerMatchHandled = true; // Mark as done so it cannot loop back open
-                    }
-                    else
-                    {
-                        roundWinners.push_back(match.teamA);
-                    }
-                }
-
-                targetTourney.advanceTournamentRound(roundWinners);
-
-                if (!targetTourney.isActive() && playerSurvivedRound)
-                {
-                    targetTourney.clearTournament();
-                }
-
-                this->populateRoster(); });
-
-            connect(forfeitBtn, &QPushButton::clicked, this, [this, i]()
-                    {
-                auto &tourneys = TournamentManager::getInstance().getActiveTournaments();
-                tourneys[i].clearTournament();
-                this->populateRoster(); });
+    GameTimelineController::getInstance().cancelTournamentRegistration(t.getName());
+    t.clearTournament(); 
+    this->populateRoster(); });
         }
 
         tournamentListLayout->addWidget(rowWidget);

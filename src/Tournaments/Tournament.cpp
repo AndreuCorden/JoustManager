@@ -5,7 +5,7 @@ void Tournament::initializeTournament()
 {
     activeTeams.clear();
     currentRound = 1;
-    tournamentActive = true;
+    playerParticipating = true;
 
     // 1. Add player squad first
     activeTeams.push_back(playerTeam);
@@ -67,6 +67,6 @@ void Tournament::advanceTournamentRound(const std::vector<std::vector<Knight>> &
 
     if (currentRound > maxRounds || activeTeams.size() <= 1)
     {
-        tournamentActive = false; // Tournament concludes!
+        playerParticipating = false; // Tournament concludes!
     }
 }

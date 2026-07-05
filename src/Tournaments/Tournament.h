@@ -1,6 +1,5 @@
-// Tournaments/Tournament.h
-#ifndef _Tournament
-#define _Tournament
+#ifndef TOURNAMENT_H
+#define TOURNAMENT_H
 
 #pragma once
 #include <string>
@@ -19,7 +18,7 @@ class Tournament
 public:
     Tournament(std::string newName, int newTeammates, int newRounds, int newReward, std::string newHosterName)
     : name(newName), teammates(newTeammates), maxRounds(newRounds), reward(newReward), hosterName(newHosterName),
-      currentRound(1), tournamentActive(false)
+      currentRound(1), playerParticipating(false)
     {}
 
     // Accessors
@@ -27,7 +26,7 @@ public:
     int getRequiredTeammates() const { return teammates; }
     int getMaxRounds() const { return maxRounds; }
     int getCurrentRound() const { return currentRound; }
-    bool isActive() const { return tournamentActive; }
+    bool isPlayerParticipating() const { return playerParticipating; }
     int getReward() const { return reward; }
     std::string getHost() const { return hosterName; }
 
@@ -41,7 +40,7 @@ public:
         playerTeam.clear();
         activeTeams.clear();
         currentRound = 1;
-        tournamentActive = false;
+        playerParticipating = false;
     }
 
     // Bracket Match Engine Functions
@@ -58,7 +57,7 @@ private:
     std::string hosterName;
     
     int currentRound; // Tracks 1, 2, or 3
-    bool tournamentActive;
+    bool playerParticipating;
 
     std::vector<Knight> playerTeam;
     std::vector<std::vector<Knight>> activeTeams; // All remaining fighting squads left in brackets

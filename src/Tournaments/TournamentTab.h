@@ -9,7 +9,7 @@
 
 class TournamentTab : public QWidget
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     explicit TournamentTab(QWidget *parent = nullptr);
 
