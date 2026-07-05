@@ -80,6 +80,6 @@ void ManagerInterface::refreshDashboardUI()
     // dayLabel->setText(QString("CURRENT DAY: %1").arg(GameTimelineController::getInstance().getCurrentDay()));
 
     knightRosterTab->populateRoster();
-    knightRecruitmentTab->populateList();
+    knightRecruitmentTab->startDay();
     tournamentTab->populateRoster(); 
 }

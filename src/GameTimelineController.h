@@ -32,7 +32,6 @@ public:
 
     // --- Getters for UI Panels ---
     int getCurrentDay() const { return currentDay; }
-    const std::vector<Knight> &getAvailableRecruits() const { return availableRecruits; }
     const std::vector<Item> &getAvailableShopItems() const { return availableShopItems; }
     std::vector<Tournament> &getAvailableTournaments() { return availableTournaments; }
 
@@ -50,7 +49,6 @@ private:
     int currentDay;
 
     // Daily Regenerating Pools
-    std::vector<Knight> availableRecruits;
     std::vector<Item> availableShopItems;
     std::vector<Tournament> availableTournaments;
 

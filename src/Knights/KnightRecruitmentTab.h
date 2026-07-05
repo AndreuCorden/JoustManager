@@ -16,9 +16,11 @@ class KnightRecruitmentTab : public QWidget
 public:
     KnightRecruitmentTab(QWidget *parent = nullptr);
 
-    void populateList();
+    void startDay();
 
 private:
+
+    void populateList();
 
     std::list<Knight> recruitableKnights;
     QVBoxLayout *listLayout;

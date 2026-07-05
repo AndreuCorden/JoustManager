@@ -1,4 +1,3 @@
-#include <QRandomGenerator>
 #include <QDialog>
 #include <QVBoxLayout>
 #include <QLabel>
@@ -25,27 +24,8 @@ GameTimelineController::GameTimelineController(QObject *parent)
 
 void GameTimelineController::generateDailyPools()
 {
-    availableRecruits.clear();
     availableShopItems.clear();
     availableTournaments.clear();
-
-    auto *rand = QRandomGenerator::global();
-
-    // 1. Generate 3 Random Knights to Hire
-    std::vector<std::string> knightNames = {"Gawain", "Lancelot", "Bors", "Galahad", "Percival"};
-    std::vector<std::string> knightLocations = {"English", "French", "Bavaria", "Spain", "Scotland"};
-    std::vector<std::string> knightTitles = {"Knight", "Chivalric Knight", "Baron", "Count", "Earl", "Duke", "Prince"};
-    for (int i = 0; i < 3; ++i)
-    {
-        Knight k(knightNames[rand->bounded(knightNames.size())],
-                 knightLocations[rand->bounded(knightLocations.size())],
-                 knightTitles[rand->bounded(knightTitles.size())],
-                 rand->bounded(150, 210),
-                 rand->bounded(70, 90),
-                 rand->bounded(100, 500));
-        // Set basic random stats scaled slightly by day progression
-        availableRecruits.push_back(k);
-    }
 
     // 2. Generate 3 Random Shop Items
     availableShopItems.push_back(GothicArmour());

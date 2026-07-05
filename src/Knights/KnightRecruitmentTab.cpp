@@ -1,6 +1,9 @@
+#include <QRandomGenerator>
+
 #include "KnightRecruitmentTab.h"
 #include "KnightDetailDialog.h"
 #include "Player.h"
+#include "GameTimelineController.h"
 
 KnightRecruitmentTab::KnightRecruitmentTab(QWidget *parent) : QWidget(parent)
 {
@@ -17,15 +20,8 @@ KnightRecruitmentTab::KnightRecruitmentTab(QWidget *parent) : QWidget(parent)
 
     mainLayout->addStretch();
 
-    // STEP A: Generate the market data pool EXACTLY ONCE on initialization
-    int numRecruitableKnights = 1 + (std::rand() % 3);
-    for (int i = 0; i < numRecruitableKnights; ++i)
-    {
-        recruitableKnights.emplace_back(Knight::generateRandomKnight());
-    }
-
     // STEP B: Trigger the initial rendering pass
-    populateList();
+    startDay();
 }
 
 void KnightRecruitmentTab::populateList()
@@ -40,7 +36,7 @@ void KnightRecruitmentTab::populateList()
     }
 
     // 2. REBUILD ROWS using iterators instead of indices
-    // We use a regular loop but keep tracking the live iterator 'it'
+    // We use a regular loop but keep tracking the live iterator 'it'    
     for (auto it = recruitableKnights.begin(); it != recruitableKnights.end(); ++it)
     {
         // Dereference the iterator to get our specific Knight reference
@@ -69,4 +65,30 @@ void KnightRecruitmentTab::populateList()
             }
         });
     }
+}
+
+void KnightRecruitmentTab::startDay()
+{
+    recruitableKnights.clear();
+
+    auto *rand = QRandomGenerator::global();
+
+    std::vector<std::string> knightNames = {"Gawain", "Lancelot", "Bors", "Galahad", "Percival"};
+    std::vector<std::string> knightLocations = {"English", "French", "Bavaria", "Spain", "Scotland"};
+    std::vector<std::string> knightTitles = {"Knight", "Chivalric Knight", "Baron", "Count", "Earl", "Duke", "Prince"};
+
+    int numKnights = rand->bounded(1,3);
+    for (int i = 0; i < numKnights; ++i)
+    {
+        Knight k(knightNames[rand->bounded(knightNames.size())],
+                 knightLocations[rand->bounded(knightLocations.size())],
+                 knightTitles[rand->bounded(knightTitles.size())],
+                 rand->bounded(150, 210),
+                 rand->bounded(70, 90),
+                 rand->bounded(100, 500));
+        // Set basic random stats scaled slightly by day progression
+        recruitableKnights.push_back(k);
+    }
+
+    populateList();
 }

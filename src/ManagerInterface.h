@@ -24,7 +24,6 @@ public:
 
 private:
     QTabWidget *tabWidget;
-    GameTimelineController *gameController;
 
     // Helper functions to keep our panel generation modular
     KnightRosterTab* knightRosterTab;
