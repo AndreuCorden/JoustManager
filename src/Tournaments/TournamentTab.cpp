@@ -8,7 +8,9 @@
 #include <QPushButton>
 #include <QDialog>
 
-TournamentTab::TournamentTab(QWidget *parent) : QWidget(parent)
+TournamentTab::TournamentTab(GameTimelineController &gameTimelineController, QWidget *parent) 
+: QWidget(parent)
+, m_gameTimelineController(gameTimelineController)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
@@ -16,8 +18,8 @@ TournamentTab::TournamentTab(QWidget *parent) : QWidget(parent)
     label->setStyleSheet("font-size: 20px; font-weight: bold; color: #4A5568;");
     mainLayout->addWidget(label);
 
-    tournamentListLayout = new QVBoxLayout();
-    mainLayout->addLayout(tournamentListLayout);
+    m_tournamentListLayout = new QVBoxLayout();
+    mainLayout->addLayout(m_tournamentListLayout);
     mainLayout->addStretch();
 
     populateRoster();
@@ -27,14 +29,14 @@ void TournamentTab::populateRoster()
 {
     // Clean layout views out completely
     QLayoutItem *child;
-    while ((child = tournamentListLayout->takeAt(0)) != nullptr)
+    while ((child = m_tournamentListLayout->takeAt(0)) != nullptr)
     {
         if (child->widget())
             child->widget()->deleteLater();
         delete child;
     }
 
-    auto &tourneys = GameTimelineController::getInstance().getAvailableTournaments();
+    auto &tourneys = m_gameTimelineController.getAvailableTournaments();
 
     for (size_t i = 0; i < tourneys.size(); ++i)
     {
@@ -57,12 +59,12 @@ void TournamentTab::populateRoster()
 
             connect(enterBtn, &QPushButton::clicked, this, [this, i]()
                     {
-            auto &liveTourneys = GameTimelineController::getInstance().getAvailableTournaments();
+            auto &liveTourneys = m_gameTimelineController.getAvailableTournaments();
             Tournament &targetTourney = liveTourneys[i];
 
             KnightSelectionDialog selectDialog(targetTourney, this);
             if (selectDialog.exec() == QDialog::Accepted) {
-                GameTimelineController::getInstance().registerForTournament(i);
+                m_gameTimelineController.registerForTournament(i);
                 populateRoster(); 
             } });
         }
@@ -75,14 +77,14 @@ void TournamentTab::populateRoster()
 
             connect(leaveBtn, &QPushButton::clicked, this, [this, i]()
                     {
-    auto &liveTourneys = GameTimelineController::getInstance().getAvailableTournaments();
+    auto &liveTourneys = m_gameTimelineController.getAvailableTournaments();
     Tournament &t = liveTourneys[i];
 
-    GameTimelineController::getInstance().cancelTournamentRegistration(t.getName());
+    m_gameTimelineController.cancelTournamentRegistration(t.getName());
     t.clearTournament(); 
     this->populateRoster(); });
         }
 
-        tournamentListLayout->addWidget(rowWidget);
+        m_tournamentListLayout->addWidget(rowWidget);
     }
 }

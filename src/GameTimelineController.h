@@ -15,17 +15,12 @@ class GameTimelineController : public QObject
     Q_OBJECT
 
 public:
-    static GameTimelineController &getInstance()
-    {
-        static GameTimelineController instance;
-        return instance;
-    }
+    explicit GameTimelineController(QObject *parent = nullptr);
+    ~GameTimelineController() override = default;
     GameTimelineController(const GameTimelineController &) = delete;
     void operator=(const GameTimelineController &) = delete;
 
     // --- Daily Actions Engine ---
-    void hireKnight(int poolIndex);
-    void buyEquipment(int shopIndex, int knightIndex);
     void registerForTournament(int tournamentIndex);
     void cancelTournamentRegistration(const std::string& tournamentIndex);
     void triggerNextDay();
@@ -39,8 +34,6 @@ signals:
     void dayAdvanced(); // Notify UI to refresh all shops, lists, and gold displays
 
 private:
-    explicit GameTimelineController(QObject *parent = nullptr);
-    ~GameTimelineController() override = default;
 
     void generateDailyPools();
     void runNextRegisteredTournament(size_t currentIndex);

@@ -18,12 +18,12 @@ class ManagerInterface : public QWidget {
     Q_OBJECT
 
 public:
-    explicit ManagerInterface(QWidget *parent, GameTimelineController &gameTimelineController);
+    explicit ManagerInterface(QWidget *parent);
 
     void refreshDashboardUI();
 
 private:
-    GameTimelineController &m_gameTimelineController;
+    GameTimelineController* m_gameTimelineController;
 
     QTabWidget *m_tabWidget;
 

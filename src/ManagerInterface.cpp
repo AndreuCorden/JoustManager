@@ -4,13 +4,13 @@
 #include "Tournaments/TournamentTab.h"
 #include "GameTimelineController.h"
 
-ManagerInterface::ManagerInterface(QWidget *parent, GameTimelineController &gameTimelineController) 
+ManagerInterface::ManagerInterface(QWidget *parent) 
 : QWidget(parent)
-, m_gameTimelineController(gameTimelineController)
+, m_gameTimelineController(new GameTimelineController())
 , m_tabWidget(new QTabWidget(this))
 , m_knightRosterTab(new KnightRosterTab(this))
 , m_knightRecruitmentTab(new KnightRecruitmentTab(this))
-, m_tournamentTab(new TournamentTab(this))
+, m_tournamentTab(new TournamentTab((*m_gameTimelineController),this))
 {
     // Main structural layout for this view
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -43,9 +43,9 @@ ManagerInterface::ManagerInterface(QWidget *parent, GameTimelineController &game
     mainLayout->addWidget(nextDayButton);
 
     connect(nextDayButton, &QPushButton::clicked, 
-        &this->m_gameTimelineController, &GameTimelineController::triggerNextDay);
+        m_gameTimelineController, &GameTimelineController::triggerNextDay);
 
-    connect(&GameTimelineController::getInstance(), &GameTimelineController::dayAdvanced, 
+    connect(m_gameTimelineController, &GameTimelineController::dayAdvanced, 
             this, &ManagerInterface::refreshDashboardUI);
 }
 
@@ -74,7 +74,7 @@ QWidget *ManagerInterface::createShopTab()
 void ManagerInterface::refreshDashboardUI()
 {
     // 🌟 Update visual day text using the singleton instance
-    // dayLabel->setText(QString("CURRENT DAY: %1").arg(GameTimelineController::getInstance().getCurrentDay()));
+    // dayLabel->setText(QString("CURRENT DAY: %1").arg(m_gameTimelineController->getCurrentDay()));
 
     m_knightRosterTab->populateRoster();
     m_knightRecruitmentTab->startDay();

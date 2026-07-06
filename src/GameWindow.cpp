@@ -4,7 +4,7 @@
 GameWindow::GameWindow()
 : screenContainer(new QStackedWidget(this))
 , mainMenu(new MainMenu(this))
-, managerInterface(new ManagerInterface(this,GameTimelineController::getInstance()))
+, managerInterface(new ManagerInterface(this))
 {
 
     setWindowFlags(Qt::FramelessWindowHint | Qt::Window);

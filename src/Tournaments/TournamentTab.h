@@ -1,5 +1,5 @@
-#ifndef _Tournament_Tab
-#define _Tournament_Tab
+#ifndef TOURNAMENTTAB_H
+#define TOURNAMENTTAB_H
 
 #include <QWidget>
 #include <QTabWidget>
@@ -7,16 +7,20 @@
 #include <QLabel>
 #include <QPushButton>
 
+#include "GameTimelineController.h"
+
 class TournamentTab : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TournamentTab(QWidget *parent = nullptr);
+    explicit TournamentTab(GameTimelineController &gameTimelineController, QWidget *parent = nullptr);
 
     void populateRoster();
 
 private:
-    QVBoxLayout *tournamentListLayout;
+    GameTimelineController &m_gameTimelineController;
+
+    QVBoxLayout *m_tournamentListLayout;
 };
 
 #endif
