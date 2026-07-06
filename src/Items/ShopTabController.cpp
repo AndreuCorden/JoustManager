@@ -17,3 +17,9 @@ void ShopTabController::handleItemPurchase(const Item &item)
     // 2. Force the view to repaint and sync with the clean backend data list
     m_shopView->populateList(m_shopTabHandler->getBuyableItems());
 }
+
+void ShopTabController::startDay()
+{
+    m_shopTabHandler->startDay();
+    m_shopView->populateList(m_shopTabHandler->getBuyableItems());
+}

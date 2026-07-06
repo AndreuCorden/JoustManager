@@ -53,5 +53,6 @@ void ManagerInterface::refreshDashboardUI()
 
     m_knightRosterTab->populateRoster();
     m_knightRecruitmentTab->startDay();
+    m_shopTabController->startDay();
     m_tournamentTab->populateRoster(); 
 }

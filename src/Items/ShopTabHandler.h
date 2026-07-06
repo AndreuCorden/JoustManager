@@ -4,7 +4,9 @@
 #pragma once
 
 #include "Items/Item.h"
+
 #include <list>
+#include <random>
 
 class ShopTabHandler
 {
@@ -17,8 +19,9 @@ public:
     void sellItem(const Item& soldItem);
 
 private:
-
     std::list<Item> m_buyableItems;
+
+    std::default_random_engine m_random_engine;
 };
 
 #endif

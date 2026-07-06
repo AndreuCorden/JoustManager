@@ -17,6 +17,8 @@ public:
 
     ShopView* getTab() { return m_shopView; }
 
+    void startDay();
+
 private slots:
     void handleItemPurchase(const Item &item);
 
