@@ -2,6 +2,9 @@
 #include <QLabel>
 
 GameWindow::GameWindow()
+: screenContainer(new QStackedWidget(this))
+, mainMenu(new MainMenu(this))
+, managerInterface(new ManagerInterface(this))
 {
 
     setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
@@ -9,14 +12,11 @@ GameWindow::GameWindow()
     this->showFullScreen();
     setWindowTitle("Knight Jousting Manager");
 
-    screenContainer = new QStackedWidget(this);
     setCentralWidget(screenContainer);
 
     // Instantiate your main menu screen
-    mainMenu = new MainMenu(this);
     screenContainer->addWidget(mainMenu);
 
-    managerInterface = new ManagerInterface(this);
     screenContainer->addWidget(managerInterface);
 
     // Listen to the menu signals

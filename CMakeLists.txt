@@ -3,6 +3,7 @@ project(JoustManager LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 # Points to your Qt binaries
 set(CMAKE_PREFIX_PATH "C:/Qt/6.11.1/mingw_64") 
@@ -12,8 +13,11 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 # Explicitly mapping out every single file so CMake cannot skip them
 set(SOURCES
     main.cpp
+    resources.qrc
     src/Player.h
     src/Player.cpp
+    src/GameTimelineController.h
+    src/GameTimelineController.cpp
     src/GameWindow.h
     src/GameWindow.cpp
     src/GameDialog.h
@@ -36,6 +40,16 @@ set(SOURCES
     src/Items/Armour/GothicArmour.cpp
     src/Items/Weapon/CourteousLance.h
     src/Items/Weapon/CourteousLance.cpp
+    src/Tournaments/TournamentTab.h
+    src/Tournaments/TournamentTab.cpp
+    src/Tournaments/Tournament.h
+    src/Tournaments/Tournament.cpp
+    src/Tournaments/TournamentRunnerDialog.h
+    src/Tournaments/TournamentRunnerDialog.cpp
+    src/Tournaments/KnightSelectionDialog.h
+    src/Tournaments/KnightSelectionDialog.cpp
+    src/Tournaments/Joust/JoustView.h
+    src/Tournaments/Joust/JoustView.cpp
 )
 
 # Compile the executable using the explicit list

@@ -1,5 +1,5 @@
-#ifndef _Game_Window
-#define _Game_Window
+#ifndef GAMEWINDOW_H
+#define GAMEWINDOW_H
 
 #include "ManagerInterface.h"
 
@@ -9,6 +9,7 @@
 #include <QKeyEvent>
 #include <QStackedWidget>
 #include "MainMenu.h"
+#include "ManagerInterface.h"
 
 class GameWindow : public QMainWindow
 {
