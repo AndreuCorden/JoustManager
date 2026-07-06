@@ -1,5 +1,6 @@
 #include "Items/ShopView.h"
 #include "Items/Item.h"
+#include "Items/ItemDetailDialog.h"
 
 ShopView::ShopView(QWidget *parent) : QWidget(parent)
 {
@@ -39,7 +40,13 @@ void ShopView::populateList(const std::list<Item> &buyableItems)
         itemButton->setStyleSheet("padding: 12px; font-size: 14px;");
         listLayout->addWidget(itemButton);
 
-        /*connect(itemButton, &QPushButton::clicked, this, [this, index]()
-                { emit itemSelected(index); });*/
+        connect(itemButton, &QPushButton::clicked, this, [this, i]()
+                { 
+                     ItemDetailDialog dialog(i,this);
+                     if(dialog.exec() == QDialog::Accepted)
+                     {
+                        emit itemPurchased(i);
+                     }
+                });
     }
 }

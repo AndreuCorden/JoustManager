@@ -21,6 +21,9 @@ public:
 
     void populateList(const std::list<Item> &buyableItems);
 
+signals:
+    void itemPurchased(const Item &item);
+
 private:
     QVBoxLayout *listLayout;
 };

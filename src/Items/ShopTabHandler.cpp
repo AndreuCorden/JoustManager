@@ -30,3 +30,16 @@ void ShopTabHandler::startDay()
         m_buyableItems.push_back(item);
     }
 }
+
+void ShopTabHandler::sellItem(const Item& soldItem)
+{
+    // Loop using an iterator to find and wipe out the target element item block
+    for (auto it = m_buyableItems.begin(); it != m_buyableItems.end(); ++it)
+    {
+        if (it->getName() == soldItem.getName() && it->getBonus() == soldItem.getBonus())
+        {
+            m_buyableItems.erase(it); // Erase the matching entry item layout
+            break; // Stop looking after removing one instance matching this signature
+        }
+    }
+}

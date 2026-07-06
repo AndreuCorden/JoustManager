@@ -14,7 +14,7 @@ public:
     void startDay();
 
     const std::list<Item>& getBuyableItems() const { return m_buyableItems; }
-    void sellItem(Item soldItem);
+    void sellItem(const Item& soldItem);
 
 private:
 
