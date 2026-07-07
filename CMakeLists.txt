@@ -36,6 +36,14 @@ set(SOURCES
     src/Knights/KnightRecruitmentTab.cpp
     src/Items/Item.h
     src/Items/Item.cpp
+    src/Items/ShopTabController.h
+    src/Items/ShopTabController.cpp
+    src/Items/ShopTabHandler.h
+    src/Items/ShopTabHandler.cpp
+    src/Items/ShopView.h
+    src/Items/ShopView.cpp
+    src/Items/ItemDetailDialog.h
+    src/Items/ItemDetailDialog.cpp
     src/Items/Armour/GothicArmour.h
     src/Items/Armour/GothicArmour.cpp
     src/Items/Weapon/CourteousLance.h

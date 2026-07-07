@@ -1,8 +1,4 @@
 #include "ManagerInterface.h"
-#include "Knights/KnightRosterTab.h"
-#include "Knights/KnightRecruitmentTab.h"
-#include "Tournaments/TournamentTab.h"
-#include "GameTimelineController.h"
 
 ManagerInterface::ManagerInterface(QWidget *parent) 
 : QWidget(parent)
@@ -10,6 +6,7 @@ ManagerInterface::ManagerInterface(QWidget *parent)
 , m_tabWidget(new QTabWidget(this))
 , m_knightRosterTab(new KnightRosterTab(this))
 , m_knightRecruitmentTab(new KnightRecruitmentTab(this))
+, m_shopTabController(new ShopTabController(this))
 , m_tournamentTab(new TournamentTab((*m_gameTimelineController),this))
 {
     // Main structural layout for this view
@@ -25,7 +22,7 @@ ManagerInterface::ManagerInterface(QWidget *parent)
 
     m_tabWidget->addTab(m_knightRosterTab, "Knights Roster");
     m_tabWidget->addTab(m_knightRecruitmentTab, "Knight Recruitment");
-    m_tabWidget->addTab(createShopTab(), "Blacksmith Shop");
+    m_tabWidget->addTab(m_shopTabController->getTab(), "Blacksmith Shop");
     m_tabWidget->addTab(m_tournamentTab, "Tournament Arena");
 
     mainLayout->addWidget(m_tabWidget);
@@ -49,28 +46,6 @@ ManagerInterface::ManagerInterface(QWidget *parent)
             this, &ManagerInterface::refreshDashboardUI);
 }
 
-QWidget *ManagerInterface::createShopTab()
-{
-    QWidget *tab = new QWidget();
-    QVBoxLayout *layout = new QVBoxLayout(tab);
-
-    QLabel *label = new QLabel("ARMOURY & BLACKSMITH", tab);
-    label->setStyleSheet("font-size: 20px; font-weight: bold; color: #4A5568;");
-
-    QPushButton *buyWeapon = new QPushButton("Buy Steel Lance - 50 Gold", tab);
-    QPushButton *buyArmor = new QPushButton("Buy Plate Armour - 120 Gold", tab);
-    buyWeapon->setStyleSheet("padding: 10px; margin: 5px;");
-    buyArmor->setStyleSheet("padding: 10px; margin: 5px;");
-
-    layout->addWidget(label);
-    layout->addWidget(buyWeapon);
-    layout->addWidget(buyArmor);
-    layout->addStretch();
-
-    tab->setLayout(layout);
-    return tab;
-}
-
 void ManagerInterface::refreshDashboardUI()
 {
     // 🌟 Update visual day text using the singleton instance
@@ -78,5 +53,6 @@ void ManagerInterface::refreshDashboardUI()
 
     m_knightRosterTab->populateRoster();
     m_knightRecruitmentTab->startDay();
+    m_shopTabController->startDay();
     m_tournamentTab->populateRoster(); 
 }

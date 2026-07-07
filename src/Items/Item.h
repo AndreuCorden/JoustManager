@@ -19,7 +19,7 @@ public:
         Armour,
         Weapon
     };
-    
+
     Item()
         : name("Blank Item"), bonus(0), cost(0), heldIn(Body), typeOfItem(Armour)
     {
@@ -38,6 +38,16 @@ public:
     int getBonus() const
     {
         return bonus;
+    }
+
+    const ItemType& getItemType() const
+    {
+        return typeOfItem;
+    }
+
+    const int getCost() const
+    {
+        return cost;
     }
 
 protected:

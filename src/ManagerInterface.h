@@ -11,6 +11,7 @@
 
 #include "Knights/KnightRosterTab.h"
 #include "Knights/KnightRecruitmentTab.h"
+#include "Items/ShopTabController.h"
 #include "Tournaments/TournamentTab.h"
 #include "GameTimelineController.h"
 
@@ -30,7 +31,7 @@ private:
     // Helper functions to keep our panel generation modular
     KnightRosterTab* m_knightRosterTab;
     KnightRecruitmentTab* m_knightRecruitmentTab;
-    QWidget* createShopTab();
+    ShopTabController* m_shopTabController;
     TournamentTab* m_tournamentTab;
 };
 #endif
