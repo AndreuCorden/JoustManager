@@ -1,4 +1,4 @@
-#include "KnightDetailDialog.h"
+#include "view/knights/KnightDetailDialog.h"
 #include "Player.h"
 #include "model/items/Item.h"
 #include <QInputDialog>
@@ -80,7 +80,7 @@ QPushButton* KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemT
     return field;
 }
 
-KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRosterTab *parent) : GameDialog(parent) {
+KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRosterView *parent) : GameDialog(parent) {
     // Set up window properties
     setWindowTitle(QString("%1's Profile").arg(QString::fromStdString(knight.getName())));
     setMinimumSize(350, 450);
@@ -111,7 +111,7 @@ KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRosterTab *parent) 
     mainLayout->addWidget(closeButton);
 }
 
-KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRecruitmentTab *parent) : GameDialog(parent) {
+KnightDetailDialog::KnightDetailDialog(const Knight &knight, KnightRecruitmentView *parent) : GameDialog(parent) {
     // Set up window properties
     setWindowTitle(QString("%1's Profile").arg(QString::fromStdString(knight.getName())));
     setMinimumSize(350, 450);

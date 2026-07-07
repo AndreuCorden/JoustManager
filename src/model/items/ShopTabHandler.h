@@ -1,5 +1,5 @@
-#ifndef SHOPTAB_H
-#define SHOPTAB_H
+#ifndef SHOPTABHANDLER_H
+#define SHOPTABHANDLER_H
 
 #pragma once
 

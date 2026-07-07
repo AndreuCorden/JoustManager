@@ -6,7 +6,7 @@
 #include <queue>
 #include <QString>
 #include <QObject>
-#include "Knights/Knight.h"
+#include "model/knights/Knight.h"
 #include "Tournaments/Tournament.h"
 #include "model/items/Item.h"
 

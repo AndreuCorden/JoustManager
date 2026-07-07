@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
-#include "Knights/Knight.h"
+#include "model/knights/Knight.h"
 
 class Tournament
 {

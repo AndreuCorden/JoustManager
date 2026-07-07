@@ -9,8 +9,8 @@
 #include <QLabel>
 #include <QPushButton>
 
-#include "Knights/KnightRosterTab.h"
-#include "Knights/KnightRecruitmentTab.h"
+#include "controller/knights/KnightRosterTabController.h"
+#include "controller/knights/KnightRecruitmentTabController.h"
 #include "controller/items/ShopTabController.h"
 #include "Tournaments/TournamentTab.h"
 #include "GameTimelineController.h"
@@ -29,8 +29,8 @@ private:
     QTabWidget *m_tabWidget;
 
     // Helper functions to keep our panel generation modular
-    KnightRosterTab* m_knightRosterTab;
-    KnightRecruitmentTab* m_knightRecruitmentTab;
+    KnightRosterTabController* m_knightRosterTabController;
+    KnightRecruitmentTabController* m_knightRecruitmentTabController;
     ShopTabController* m_shopTabController;
     TournamentTab* m_tournamentTab;
 };

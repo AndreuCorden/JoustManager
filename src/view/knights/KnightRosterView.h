@@ -1,5 +1,5 @@
-#ifndef _Knight_Roster_Tab
-#define _Knight_Roster_Tab
+#ifndef KNIGHTROSTERVIEW_H
+#define KNIGHTROSTERVIEW_H
 
 #pragma once
 
@@ -9,11 +9,11 @@
 #include <QLabel>
 #include <QPushButton>
 
-class KnightRosterTab : public QWidget
+class KnightRosterView : public QWidget
 {
 Q_OBJECT // Don't forget to include the macro if you intend to add buttons/signals later!
 public: 
-    explicit KnightRosterTab(QWidget *parent = nullptr);
+    explicit KnightRosterView(QWidget *parent = nullptr);
 
     void populateRoster();
 

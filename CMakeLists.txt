@@ -26,14 +26,22 @@ set(SOURCES
     src/MainMenu.cpp
     src/ManagerInterface.h
     src/ManagerInterface.cpp
-    src/Knights/KnightRosterTab.h
-    src/Knights/KnightRosterTab.cpp
-    src/Knights/Knight.h
-    src/Knights/Knight.cpp
-    src/Knights/KnightDetailDialog.h
-    src/Knights/KnightDetailDialog.cpp
-    src/Knights/KnightRecruitmentTab.h
-    src/Knights/KnightRecruitmentTab.cpp
+    src/model/knights/Knight.h
+    src/model/knights/Knight.cpp
+    src/model/knights/KnightRosterTabHandler.h
+    src/model/knights/KnightRosterTabHandler.cpp
+    src/model/knights/KnightRecruitmentTabHandler.h
+    src/model/knights/KnightRecruitmentTabHandler.cpp
+    src/view/knights/KnightDetailDialog.h
+    src/view/knights/KnightDetailDialog.cpp
+    src/view/knights/KnightRosterView.h
+    src/view/knights/KnightRosterView.cpp
+    src/view/knights/KnightRecruitmentView.h
+    src/view/knights/KnightRecruitmentView.cpp
+    src/controller/knights/KnightRosterTabController.h
+    src/controller/knights/KnightRosterTabController.cpp
+    src/controller/knights/KnightRecruitmentTabController.h
+    src/controller/knights/KnightRecruitmentTabController.cpp
     src/model/items/Item.h
     src/model/items/Item.cpp
     src/model/items/ShopTabHandler.h
@@ -42,12 +50,12 @@ set(SOURCES
     src/model/items/Armour/GothicArmour.cpp
     src/model/items/Weapon/CourteousLance.h
     src/model/items/Weapon/CourteousLance.cpp
-    src/controller/items/ShopTabController.h
-    src/controller/items/ShopTabController.cpp
     src/view/items/ShopView.h
     src/view/items/ShopView.cpp
     src/view/items/ItemDetailDialog.h
     src/view/items/ItemDetailDialog.cpp
+    src/controller/items/ShopTabController.h
+    src/controller/items/ShopTabController.cpp
     src/Tournaments/TournamentTab.h
     src/Tournaments/TournamentTab.cpp
     src/Tournaments/Tournament.h

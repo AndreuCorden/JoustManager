@@ -1,9 +1,9 @@
-#include "KnightRosterTab.h"
-#include "KnightDetailDialog.h"
+#include "view/knights/KnightRosterView.h"
+#include "view/knights/KnightDetailDialog.h"
 #include "Player.h"
 
 // Explicitly forward structural attachment rules down to QWidget base constructor
-KnightRosterTab::KnightRosterTab(QWidget *parent) : QWidget(parent)
+KnightRosterView::KnightRosterView(QWidget *parent) : QWidget(parent)
 {
     // Apply layout logic directly to THIS object instance!
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -20,7 +20,7 @@ KnightRosterTab::KnightRosterTab(QWidget *parent) : QWidget(parent)
     populateRoster();
 }
 
-void KnightRosterTab::populateRoster()
+void KnightRosterView::populateRoster()
 {
     // 1. CLEANUP FLUSH: Wipe out any old buttons/widgets currently on screen
     QLayoutItem *child;

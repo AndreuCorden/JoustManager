@@ -1,14 +1,14 @@
-#ifndef _Knight_Detail_Dialog
-#define _Knight_Detail_Dialog
+#ifndef KNIGHTDETAILDIALOG_H
+#define KNIGHTDETAILDIALOG_H
 
 #pragma once
 #include <QDialog>
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPushButton>
-#include "Knight.h" // Replace with your actual Knight class header
-#include "KnightRosterTab.h"
-#include "KnightRecruitmentTab.h"
+#include "model/knights/Knight.h"
+#include "view/knights/KnightRosterView.h"
+#include "view/knights/KnightRecruitmentView.h"
 #include "GameDialog.h"
 
 
@@ -17,9 +17,9 @@ class KnightDetailDialog : public GameDialog {
 
 public:
     // Pass the knight by reference so modifications (like changing gear) save back to the roster
-    KnightDetailDialog(Knight &knight, KnightRosterTab *parent = nullptr);
+    KnightDetailDialog(Knight &knight, KnightRosterView *parent = nullptr);
 
-    KnightDetailDialog(Knight &knight, KnightRecruitmentTab *parent = nullptr);
+    KnightDetailDialog(const Knight &knight, KnightRecruitmentView *parent = nullptr);
 
 private:
     QPushButton *createEquipmentSlot(Knight &knight, Item::ItemType type);

@@ -1,11 +1,11 @@
-#ifndef _Player
-#define _Player
+#ifndef PLAYER_H
+#define PLAYER_H
 
 #pragma once
 #include <string>
 #include <list>
 #include <vector>
-#include "Knights/Knight.h"
+#include "model/knights/Knight.h"
 #include "model/items/Item.h"
 
 class Player {

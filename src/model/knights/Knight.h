@@ -1,5 +1,5 @@
-#ifndef _Knight
-#define _Knight
+#ifndef KNIGHT_H
+#define KNIGHT_H
 
 #include <string>
 #include <vector>

@@ -9,7 +9,7 @@
 #include <QTimer>
 #include <QKeyEvent>
 
-#include "Knights/Knight.h"
+#include "model/knights/Knight.h"
 
 enum class JoustState
 {
