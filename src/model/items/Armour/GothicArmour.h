@@ -1,7 +1,7 @@
-#ifndef _Gothic_Armour
-#define _Gothic_Armour
+#ifndef GOTHICARMOUR_H
+#define GOTHICARMOUR_H
 
-#include "Items/Item.h"
+#include "model/items/Item.h"
 
 class GothicArmour : public Item
 {

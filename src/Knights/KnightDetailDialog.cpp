@@ -1,6 +1,6 @@
 #include "KnightDetailDialog.h"
 #include "Player.h"
-#include "Items/Item.h"
+#include "model/items/Item.h"
 #include <QInputDialog>
 #include <QMessageBox>
 

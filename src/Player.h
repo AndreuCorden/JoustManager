@@ -6,7 +6,7 @@
 #include <list>
 #include <vector>
 #include "Knights/Knight.h"
-#include "Items/Item.h"
+#include "model/items/Item.h"
 
 class Player {
 public:

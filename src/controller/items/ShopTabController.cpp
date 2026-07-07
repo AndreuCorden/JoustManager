@@ -1,4 +1,4 @@
-#include "Items/ShopTabController.h"
+#include "controller/items/ShopTabController.h"
 
 ShopTabController::ShopTabController(QWidget *parent)
 : m_shopTabHandler(new ShopTabHandler())

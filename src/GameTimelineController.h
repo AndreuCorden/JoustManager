@@ -8,7 +8,7 @@
 #include <QObject>
 #include "Knights/Knight.h"
 #include "Tournaments/Tournament.h"
-#include "Items/Item.h"
+#include "model/items/Item.h"
 
 class GameTimelineController : public QObject
 {

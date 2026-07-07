@@ -9,7 +9,7 @@
 #include <QLabel>
 #include <QPushButton>
 
-#include "Items/Item.h"
+#include "model/items/Item.h"
 
 #include <list>
 

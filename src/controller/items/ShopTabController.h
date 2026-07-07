@@ -6,8 +6,8 @@
 #include <QObject>
 #include <QWidget>
 
-#include "Items/ShopTabHandler.h"
-#include "Items/ShopView.h"
+#include "model/items/ShopTabHandler.h"
+#include "view/items/ShopView.h"
 
 class ShopTabController : public QObject
 {

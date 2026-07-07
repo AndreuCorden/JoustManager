@@ -1,7 +1,7 @@
-#ifndef _Courteous_Lance
-#define _Courteous_Lance
+#ifndef COURTEOUSLANCE_H
+#define COURTEOUSLANCE_H
 
-#include "Items/Item.h"
+#include "model/items/Item.h"
 
 class CourteousLance : public Item
 {

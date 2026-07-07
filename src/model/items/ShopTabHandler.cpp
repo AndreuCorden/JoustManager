@@ -1,6 +1,6 @@
-#include "Items/ShopTabHandler.h"
-#include "Items/Armour/GothicArmour.h"
-#include "Items/Weapon/CourteousLance.h"
+#include "model/items/ShopTabHandler.h"
+#include "model/items/Armour/GothicArmour.h"
+#include "model/items/Weapon/CourteousLance.h"
 
 ShopTabHandler::ShopTabHandler()
 : m_buyableItems()

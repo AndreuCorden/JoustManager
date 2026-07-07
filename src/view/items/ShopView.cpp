@@ -1,6 +1,6 @@
-#include "Items/ShopView.h"
-#include "Items/Item.h"
-#include "Items/ItemDetailDialog.h"
+#include "view/items/ShopView.h"
+#include "model/items/Item.h"
+#include "view/items/ItemDetailDialog.h"
 
 ShopView::ShopView(QWidget *parent) : QWidget(parent)
 {
@@ -10,7 +10,6 @@ ShopView::ShopView(QWidget *parent) : QWidget(parent)
     label->setStyleSheet("font-size: 20px; font-weight: bold; color: #4A5568;");
     mainLayout->addWidget(label);
 
-    // 🌟 FIX 2: Allocate memory for your dynamic item list layout container!
     listLayout = new QVBoxLayout();
     mainLayout->addLayout(listLayout);
 

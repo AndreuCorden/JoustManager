@@ -6,8 +6,8 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QPushButton>
-#include "Items/Item.h"
-#include "ShopView.h"
+#include "model/items/Item.h"
+#include "view/items/ShopView.h"
 #include "GameDialog.h"
 
 

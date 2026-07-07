@@ -8,8 +8,8 @@
 #include "GameTimelineController.h"
 #include "Tournaments/Joust/JoustView.h"
 #include "Player.h"
-#include "Items/Armour/GothicArmour.h"
-#include "Items/Weapon/CourteousLance.h"
+#include "model/items/Armour/GothicArmour.h"
+#include "model/items/Weapon/CourteousLance.h"
 #include "GameDialog.h"
 #include "Tournaments/TournamentRunnerDialog.h"
 

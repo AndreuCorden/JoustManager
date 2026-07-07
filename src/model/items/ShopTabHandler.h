@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "Items/Item.h"
+#include "model/items/Item.h"
 
 #include <list>
 #include <random>

@@ -1,7 +1,7 @@
 #include "Player.h"
 // Include specific items ONLY here in the implementation file
-#include "Items/Weapon/CourteousLance.h" 
-#include "Items/Armour/GothicArmour.h"
+#include "model/items/Weapon/CourteousLance.h" 
+#include "model/items/Armour/GothicArmour.h"
 
 Player::Player() {
     gold = 500; 

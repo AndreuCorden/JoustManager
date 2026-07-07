@@ -11,7 +11,7 @@
 
 #include "Knights/KnightRosterTab.h"
 #include "Knights/KnightRecruitmentTab.h"
-#include "Items/ShopTabController.h"
+#include "controller/items/ShopTabController.h"
 #include "Tournaments/TournamentTab.h"
 #include "GameTimelineController.h"
 

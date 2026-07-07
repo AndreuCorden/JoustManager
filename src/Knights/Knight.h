@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "Items/Item.h"
+#include "model/items/Item.h"
 
 class Knight
 {
