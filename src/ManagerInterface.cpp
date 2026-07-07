@@ -1,13 +1,7 @@
 #include "ManagerInterface.h"
 
-ManagerInterface::ManagerInterface(QWidget *parent) 
-: QWidget(parent)
-, m_gameTimelineController(new GameTimelineController())
-, m_tabWidget(new QTabWidget(this))
-, m_knightRosterTabController(new KnightRosterTabController(this))
-, m_knightRecruitmentTabController(new KnightRecruitmentTabController(this))
-, m_shopTabController(new ShopTabController(this))
-, m_tournamentTabController(new TournamentTabController(this, m_gameTimelineController->getTodaysTournaments()))
+ManagerInterface::ManagerInterface(QWidget *parent)
+    : QWidget(parent), m_gameTimelineController(new GameTimelineController()), m_tabWidget(new QTabWidget(this)), m_knightRosterTabController(new KnightRosterTabController(this)), m_knightRecruitmentTabController(new KnightRecruitmentTabController(this)), m_shopTabController(new ShopTabController(this)), m_tournamentTabController(new TournamentTabController(this, m_gameTimelineController->getTodaysTournaments()))
 {
     // Main structural layout for this view
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -18,7 +12,6 @@ ManagerInterface::ManagerInterface(QWidget *parent)
 
     // Create the Tab Container
     m_tabWidget->setStyleSheet("QTabBar::tab { font-size: 16px; padding: 10px 20px; }");
-
 
     m_tabWidget->addTab(m_knightRosterTabController->getTab(), "Knights Roster");
     m_tabWidget->addTab(m_knightRecruitmentTabController->getTab(), "Knight Recruitment");
@@ -39,17 +32,23 @@ ManagerInterface::ManagerInterface(QWidget *parent)
     nextDayButton->setStyleSheet("padding: 10px 20px; background-color: #D4AF37; color: black; font-weight: bold;");
     mainLayout->addWidget(nextDayButton);
 
-    connect(nextDayButton, &QPushButton::clicked, 
-        m_gameTimelineController, &GameTimelineController::triggerNextDay);
+    connect(nextDayButton, &QPushButton::clicked,
+            m_gameTimelineController, &GameTimelineController::triggerNextDay);
 
-    connect(m_gameTimelineController, &GameTimelineController::dayAdvanced, 
+    connect(m_gameTimelineController, &GameTimelineController::dayAdvanced,
+            this, &ManagerInterface::runJousts);
+
+    connect(m_tournamentTabController,&TournamentTabController::endOfJousting,
             this, &ManagerInterface::startNextDay);
+}
+
+void ManagerInterface::runJousts()
+{
+    m_tournamentTabController->runTournaments();
 }
 
 void ManagerInterface::startNextDay()
 {
-    m_tournamentTabController->runTournaments();
-
     // dayLabel->setText(QString("CURRENT DAY: %1").arg(m_gameTimelineController->getCurrentDay()));
 
     m_knightRosterTabController->startDay();

@@ -52,6 +52,7 @@ void TournamentTabController::runNextRegisteredTournament(size_t currentIndex)
         // Flush daily tracks and clear visual states
         m_tournamentTabHandler->getAvailableTournaments().clear();
         m_tournamentView->populateRoster(m_tournamentTabHandler->getAvailableTournaments());
+        emit endOfJousting();
         return;
     }
 

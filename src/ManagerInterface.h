@@ -21,6 +21,9 @@ class ManagerInterface : public QWidget {
 public:
     explicit ManagerInterface(QWidget *parent);
 
+    void runJousts();
+
+private slots:
     void startNextDay();
 
 private:

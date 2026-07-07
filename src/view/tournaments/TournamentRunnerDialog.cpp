@@ -96,7 +96,8 @@ void TournamentRunnerDialog::startNextRoundLifecycle()
                      {
             this->activeTournament.advanceTournamentRound(true); 
             
-            this->runTournamentRound(); });
+            this->runTournamentRound(); 
+            });
 }
 
 void TournamentRunnerDialog::clearCurrentLayout()

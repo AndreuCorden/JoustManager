@@ -19,6 +19,9 @@ public:
 
     void runTournaments() { runNextRegisteredTournament(0); }
 
+signals:
+    void endOfJousting();
+
 private slots:
     void handleRegistration(size_t index, const std::vector<Knight> &knights);
     void handleCancellation(size_t index);

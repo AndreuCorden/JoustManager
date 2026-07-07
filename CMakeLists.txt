@@ -83,9 +83,5 @@ set(SOURCES
 # Compile the executable using the explicit list
 add_executable(JoustManager ${SOURCES})
 
-# 2. Add a 'd' suffix to the executable name when compiling in Debug mode 
-# (e.g., JoustManagerd.exe vs JoustManager.exe). This prevents overwriting builds.
-set_target_properties(JoustManager PROPERTIES DEBUG_POSTFIX "d")
-
 target_link_libraries(JoustManager PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets)
 target_include_directories(JoustManager PRIVATE src)
