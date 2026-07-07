@@ -3,7 +3,7 @@
 
 #pragma once
 #include "GameDialog.h"
-#include "Tournaments/Tournament.h"
+#include "model/tournaments/Tournament.h"
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPushButton>

@@ -7,8 +7,8 @@
 #include <QString>
 #include <QObject>
 #include "model/knights/Knight.h"
-#include "Tournaments/Tournament.h"
 #include "model/items/Item.h"
+#include "model/tournaments/Tournament.h"
 
 class GameTimelineController : public QObject
 {
@@ -21,14 +21,11 @@ public:
     void operator=(const GameTimelineController &) = delete;
 
     // --- Daily Actions Engine ---
-    void registerForTournament(int tournamentIndex);
-    void cancelTournamentRegistration(const std::string& tournamentIndex);
     void triggerNextDay();
 
     // --- Getters for UI Panels ---
-    int getCurrentDay() const { return currentDay; }
-    const std::vector<Item> &getAvailableShopItems() const { return availableShopItems; }
-    std::vector<Tournament> &getAvailableTournaments() { return availableTournaments; }
+    int getCurrentDay() const { return m_currentDay; }
+    std::vector<Tournament> getTodaysTournaments();
 
 signals:
     void dayAdvanced(); // Notify UI to refresh all shops, lists, and gold displays
@@ -39,14 +36,9 @@ private:
     void runNextRegisteredTournament(size_t currentIndex);
 
     // Player State
-    int currentDay;
+    int m_currentDay;
 
-    // Daily Regenerating Pools
-    std::vector<Item> availableShopItems;
-    std::vector<Tournament> availableTournaments;
-
-    // Active Day Queue Processing
-    std::vector<Tournament> tournamentVector;
+    std::queue<std::vector<Tournament>> m_upcommingTournaments;
 };
 
 #endif // GAMETIMELINECONTROLLER_H

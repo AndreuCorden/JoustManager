@@ -4,8 +4,9 @@
 #include <QLabel>
 #include <QPushButton>
 
-KnightSelectionDialog::KnightSelectionDialog(Tournament &tournament, QWidget *parent) 
-    : GameDialog(parent), currentTournament(tournament) 
+KnightSelectionDialog::KnightSelectionDialog(const Tournament &tournament, QWidget *parent) 
+    : GameDialog(parent)
+    , m_requiredTeammates(tournament.getRequiredTeammates()) 
 {
     setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
     setModal(true);
@@ -15,7 +16,7 @@ KnightSelectionDialog::KnightSelectionDialog(Tournament &tournament, QWidget *pa
     title->setStyleSheet("font-size: 20px; font-weight: bold; color: #D4AF37;");
     mainLayout->addWidget(title);
 
-    QLabel *ruleLabel = new QLabel(QString("Select exactly %1 Knight(s) to deploy:").arg(tournament.getRequiredTeammates()), this);
+    QLabel *ruleLabel = new QLabel(QString("Select exactly %1 Knight(s) to deploy:").arg(m_requiredTeammates), this);
     ruleLabel->setStyleSheet("font-size: 13px; color: #A0AEC0; margin-bottom: 10px;");
     mainLayout->addWidget(ruleLabel);
 
@@ -50,26 +51,23 @@ KnightSelectionDialog::KnightSelectionDialog(Tournament &tournament, QWidget *pa
     mainLayout->addWidget(confirmBtn);
 
     connect(confirmBtn, &QPushButton::clicked, this, [this]() {
-        std::vector<Knight> selectedKnights;
+        m_selectedKnights.clear();
         
         for (auto &pair : checkboxRegistry) {
             if (pair.second->isChecked()) {
-                selectedKnights.push_back(*(pair.first));
+                m_selectedKnights.push_back(*(pair.first));
             }
         }
 
         // Validate squad size restrictions
-        if (selectedKnights.size() != currentTournament.getRequiredTeammates()) {
+        if (m_selectedKnights.size() != m_requiredTeammates) {
             QMessageBox alert(this);
             alert.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
             alert.setText(QString("Invalid deployment size! You must select exactly %1 knights.")
-                          .arg(currentTournament.getRequiredTeammates()));
+                          .arg(m_requiredTeammates));
             alert.exec();
             return;
         }
-
-        // Save selected choices directly back into tournament instance structure
-        currentTournament.registerPlayerTeam(selectedKnights);
         this->accept();
     });
 

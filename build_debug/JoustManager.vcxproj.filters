@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\build_debug\JoustManager_autogen\mocs_compilation_Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\GameTimelineController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\GameWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\GameDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\MainMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\ManagerInterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\knights\Knight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\knights\KnightRosterTabHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\knights\KnightRecruitmentTabHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\knights\KnightDetailDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\knights\KnightRosterView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\knights\KnightRecruitmentView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\controller\knights\KnightRosterTabController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\controller\knights\KnightRecruitmentTabController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\items\Item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\items\ShopTabHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\items\Armour\GothicArmour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\items\Weapon\CourteousLance.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\items\ShopView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\items\ItemDetailDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\controller\items\ShopTabController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\tournaments\Tournament.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\tournaments\TournamentTabHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\tournaments\TournamentRunnerDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\tournaments\KnightSelectionDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\tournaments\TournamentView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\controller\tournaments\TournamentTabController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Tournaments\Joust\JoustView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\build_debug\JoustManager_autogen\EWIEGA46WW\qrc_resources_Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\build_debug\JoustManager_autogen\mocs_compilation_Release.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\build_debug\JoustManager_autogen\EWIEGA46WW\qrc_resources_Release.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\build_debug\JoustManager_autogen\mocs_compilation_MinSizeRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\build_debug\JoustManager_autogen\EWIEGA46WW\qrc_resources_MinSizeRel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\build_debug\JoustManager_autogen\mocs_compilation_RelWithDebInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\build_debug\JoustManager_autogen\EWIEGA46WW\qrc_resources_RelWithDebInfo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\GameTimelineController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\GameWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\GameDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\MainMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\ManagerInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\knights\Knight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\knights\KnightRosterTabHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\knights\KnightRecruitmentTabHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\knights\KnightDetailDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\knights\KnightRosterView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\knights\KnightRecruitmentView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\controller\knights\KnightRosterTabController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\controller\knights\KnightRecruitmentTabController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\items\Item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\items\ShopTabHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\items\Armour\GothicArmour.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\items\Weapon\CourteousLance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\items\ShopView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\items\ItemDetailDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\controller\items\ShopTabController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\tournaments\Tournament.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\model\tournaments\TournamentTabHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\tournaments\TournamentRunnerDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\tournaments\KnightSelectionDialog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\view\tournaments\TournamentView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\controller\tournaments\TournamentTabController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\src\Tournaments\Joust\JoustView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\build_debug\CMakeFiles\5fafb7865421c41b438c80926f0fd065\qrc_resources_(CONFIG).cpp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\andre\Documents\Andreu\Game\JoustManager\resources.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{D57D2273-B273-3AF6-A41A-DEF6BC8A674D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{F8C613B7-D520-3C48-8819-FBBA3AE4D391}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{E65EA938-57AA-3122-B6EA-131E14900115}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

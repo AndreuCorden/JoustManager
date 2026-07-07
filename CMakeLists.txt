@@ -5,6 +5,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+# 1. Set a default build type (Release) if none is explicitly provided.
+# This is useful for single-configuration generators like MinGW Makefiles or Ninja.
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    message(STATUS "No build type specified. Defaulting to 'Release'.")
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
 # Points to your Qt binaries
 set(CMAKE_PREFIX_PATH "C:/Qt/6.11.1/mingw_64") 
 
@@ -56,20 +64,28 @@ set(SOURCES
     src/view/items/ItemDetailDialog.cpp
     src/controller/items/ShopTabController.h
     src/controller/items/ShopTabController.cpp
-    src/Tournaments/TournamentTab.h
-    src/Tournaments/TournamentTab.cpp
-    src/Tournaments/Tournament.h
-    src/Tournaments/Tournament.cpp
-    src/Tournaments/TournamentRunnerDialog.h
-    src/Tournaments/TournamentRunnerDialog.cpp
-    src/Tournaments/KnightSelectionDialog.h
-    src/Tournaments/KnightSelectionDialog.cpp
+    src/model/tournaments/Tournament.h
+    src/model/tournaments/Tournament.cpp
+    src/model/tournaments/TournamentTabHandler.h
+    src/model/tournaments/TournamentTabHandler.cpp
+    src/view/tournaments/TournamentRunnerDialog.h
+    src/view/tournaments/TournamentRunnerDialog.cpp
+    src/view/tournaments/KnightSelectionDialog.h
+    src/view/tournaments/KnightSelectionDialog.cpp
+    src/view/tournaments/TournamentView.h
+    src/view/tournaments/TournamentView.cpp
+    src/controller/tournaments/TournamentTabController.h
+    src/controller/tournaments/TournamentTabController.cpp
     src/Tournaments/Joust/JoustView.h
     src/Tournaments/Joust/JoustView.cpp
 )
 
 # Compile the executable using the explicit list
 add_executable(JoustManager ${SOURCES})
+
+# 2. Add a 'd' suffix to the executable name when compiling in Debug mode 
+# (e.g., JoustManagerd.exe vs JoustManager.exe). This prevents overwriting builds.
+set_target_properties(JoustManager PROPERTIES DEBUG_POSTFIX "d")
 
 target_link_libraries(JoustManager PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets)
 target_include_directories(JoustManager PRIVATE src)

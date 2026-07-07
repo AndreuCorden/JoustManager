@@ -12,7 +12,7 @@
 #include "controller/knights/KnightRosterTabController.h"
 #include "controller/knights/KnightRecruitmentTabController.h"
 #include "controller/items/ShopTabController.h"
-#include "Tournaments/TournamentTab.h"
+#include "controller/tournaments/TournamentTabController.h"
 #include "GameTimelineController.h"
 
 class ManagerInterface : public QWidget {
@@ -21,7 +21,7 @@ class ManagerInterface : public QWidget {
 public:
     explicit ManagerInterface(QWidget *parent);
 
-    void refreshDashboardUI();
+    void startNextDay();
 
 private:
     GameTimelineController* m_gameTimelineController;
@@ -32,6 +32,6 @@ private:
     KnightRosterTabController* m_knightRosterTabController;
     KnightRecruitmentTabController* m_knightRecruitmentTabController;
     ShopTabController* m_shopTabController;
-    TournamentTab* m_tournamentTab;
+    TournamentTabController* m_tournamentTabController;
 };
 #endif
