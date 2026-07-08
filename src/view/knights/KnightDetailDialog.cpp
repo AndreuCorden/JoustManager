@@ -4,43 +4,84 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
-QPushButton* KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemType type)
+QWidget *KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemType type)
 {
-    // 1. Resolve configuration values based on the enum type
+    // 1. Setup a container widget and horizontal row layout
+    QWidget *rowContainer = new QWidget(this);
+    QHBoxLayout *rowLayout = new QHBoxLayout(rowContainer);
+    rowLayout->setContentsMargins(0, 0, 0, 0);
+    rowLayout->setSpacing(8);
+
     std::string labelPrefix = (type == Item::ItemType::Weapon) ? "Weapon" : "Armour";
-    Item currentItem       = (type == Item::ItemType::Weapon) ? knight.getRightHandWeapon() : knight.getArmour();
-
+    Item currentItem = (type == Item::ItemType::Weapon) ? knight.getRightHandWeapon() : knight.getArmour();
     QString currentItemName = QString::fromStdString(currentItem.getName());
-    QPushButton *field = new QPushButton(QString::fromStdString(labelPrefix) + ": " + currentItemName, this);
-    field->setStyleSheet("padding: 15px; text-align: left; font-size: 14px; background: #1e1e1f; color: white;");
 
-    connect(field, &QPushButton::clicked, this, [this, &knight, field, type, labelPrefix]() {
+    // 2. Create the main Item Selection Button
+    QPushButton *field = new QPushButton(QString::fromStdString(labelPrefix) + ": " + currentItemName, rowContainer);
+    field->setStyleSheet("padding: 15px; text-align: left; font-size: 14px; background: #1e1e1f; color: white; border-radius: 4px;");
+
+    // 3. Create the dedicated Unequip Button
+    QPushButton *unequipBtn = new QPushButton("❌", rowContainer);
+    unequipBtn->setFixedWidth(45);
+
+    // Style sheets for enabled/disabled states
+    QString activeRedStyle = "padding: 15px; font-size: 14px; background: #991B1B; color: white; font-weight: bold; border-radius: 4px;";
+    QString disabledGrayStyle = "padding: 15px; font-size: 14px; background: #2D3748; color: #718096; border-radius: 4px;";
+
+    // Determine if an item is actively equipped to toggle initial button state
+    bool hasItemEquipped = (currentItemName != "None" && !currentItemName.isEmpty());
+    unequipBtn->setEnabled(hasItemEquipped);
+    unequipBtn->setStyleSheet(hasItemEquipped ? activeRedStyle : disabledGrayStyle);
+
+    // --- CONNECTION 1: EXPLICIT UNEQUIP CLICK ---
+    connect(unequipBtn, &QPushButton::clicked, this, [this, &knight, field, unequipBtn, type, labelPrefix, disabledGrayStyle]()
+            {
+        Item oldItem = (type == Item::ItemType::Weapon) ? knight.getRightHandWeapon() : knight.getArmour();
         
-        // 2. Point to the correct live inventory vector
+        // Return item back to the armory vault safely
+        if (oldItem.getName() != "None") { 
+            if (type == Item::ItemType::Weapon) {
+                Player::getInstance().addWeapon(oldItem);
+                knight.equipRightHandWeapon(Item()); // Equips a blank/default item constructor
+            } else {
+                Player::getInstance().addArmour(oldItem);
+                knight.equipArmour(Item()); // Equips a blank/default item constructor
+            }
+        }
+
+        // Wipe the UI representation instantly
+        field->setText(QString::fromStdString(labelPrefix) + ": None");
+        unequipBtn->setEnabled(false);
+        unequipBtn->setStyleSheet(disabledGrayStyle); });
+
+    // --- CONNECTION 2: ITEM SELECTION DROPDOWN (Modified from your original) ---
+    connect(field, &QPushButton::clicked, this, [this, &knight, field, unequipBtn, type, labelPrefix, activeRedStyle]()
+            {
         std::vector<Item>& availableItems = (type == Item::ItemType::Weapon) 
             ? Player::getInstance().getWeapons() 
             : Player::getInstance().getArmour();
 
-        if (availableItems.empty()) {
+        QStringList options;
+        for (const Item& item : availableItems) {
+            std::string name = item.getName();
+            if (name != "None" && !name.empty()) {
+                options.append(QString::fromStdString(name));
+            }
+        }
+
+        if (options.isEmpty()) {
             QMessageBox alertBox(this);
             alertBox.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog);
             alertBox.setWindowTitle("Armoury Empty");
-            alertBox.setText(QString("You have no unassigned %1 items in your inventory!")
-                             .arg(QString::fromStdString(labelPrefix).toLower()));
+            alertBox.setText(QString("You have no unassigned %1 items in your inventory!").arg(QString::fromStdString(labelPrefix).toLower()));
             alertBox.exec();
             return;
-        }
-
-        QStringList options;
-        for (const Item& item : availableItems) {
-            options.append(QString::fromStdString(item.getName()));
         }
 
         QInputDialog dropDown(this);
         dropDown.setWindowFlags(Qt::FramelessWindowHint | Qt::Dialog); 
         dropDown.setWindowTitle("Select " + QString::fromStdString(labelPrefix));
-        dropDown.setLabelText(QString("Choose %1 to equip:")
-                              .arg(QString::fromStdString(labelPrefix).toLower()));
+        dropDown.setLabelText(QString("Choose %1 to equip:").arg(QString::fromStdString(labelPrefix).toLower()));
         dropDown.setComboBoxItems(options);
         dropDown.setComboBoxEditable(false);
 
@@ -50,7 +91,7 @@ QPushButton* KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemT
                 for (size_t i = 0; i < availableItems.size(); ++i) {
                     if (QString::fromStdString(availableItems[i].getName()) == selectedName) {
                         
-                        // 3. Extract and return old equipment safely (Bug-free!)
+                        // Extract and return old equipment if applicable
                         Item oldItem = (type == Item::ItemType::Weapon) ? knight.getRightHandWeapon() : knight.getArmour();
                         if (oldItem.getName() != "None") { 
                             if (type == Item::ItemType::Weapon) {
@@ -60,31 +101,38 @@ QPushButton* KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemT
                             }
                         }
                         
-                        // 4. Bind the new item to the correct entity property
+                        // Bind new item
                         if (type == Item::ItemType::Weapon) {
                             knight.equipRightHandWeapon(availableItems[i]);
                         } else {
                             knight.equipArmour(availableItems[i]); 
                         }
                         
-                        // 5. Erase from vault and refresh UI text
                         availableItems.erase(availableItems.begin() + i);
                         field->setText(QString::fromStdString(labelPrefix) + ": " + selectedName);
+                        
+                        // 🌟 Crucial UI Sync: Enable the clear button since an item is active!
+                        unequipBtn->setEnabled(true);
+                        unequipBtn->setStyleSheet(activeRedStyle);
                         break;
                     }
                 }
             }
-        }
-    });
+        } });
 
-    return field;
+    // Add widgets to our row layout tracking line
+    rowLayout->addWidget(field, 1); // Give the item button a stretch factor of 1 to span full width
+    rowLayout->addWidget(unequipBtn);
+
+    return rowContainer;
 }
 
-KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRosterView *parent) : GameDialog(parent) {
+KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRosterView *parent) : GameDialog(parent)
+{
     // Set up window properties
     setWindowTitle(QString("%1's Profile").arg(QString::fromStdString(knight.getName())));
     setMinimumSize(350, 450);
-    setModal(true); 
+    setModal(true);
 
     // Header
     QLabel *nameLabel = new QLabel(QString::fromStdString(knight.getName()), this);
@@ -97,8 +145,8 @@ KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRosterView *parent)
     mainLayout->addWidget(statsLabel);
 
     // --- WEAPON FIELD BUTTON ---
-    
-    mainLayout->addWidget(createEquipmentSlot(knight, Item::ItemType::Weapon)); 
+
+    mainLayout->addWidget(createEquipmentSlot(knight, Item::ItemType::Weapon));
 
     // --- ARMOUR FIELD BUTTON ---
     mainLayout->addWidget(createEquipmentSlot(knight, Item::ItemType::Armour));
@@ -111,11 +159,12 @@ KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRosterView *parent)
     mainLayout->addWidget(closeButton);
 }
 
-KnightDetailDialog::KnightDetailDialog(const Knight &knight, KnightRecruitmentView *parent) : GameDialog(parent) {
+KnightDetailDialog::KnightDetailDialog(const Knight &knight, KnightRecruitmentView *parent) : GameDialog(parent)
+{
     // Set up window properties
     setWindowTitle(QString("%1's Profile").arg(QString::fromStdString(knight.getName())));
     setMinimumSize(350, 450);
-    setModal(true); 
+    setModal(true);
 
     // Header
     QLabel *nameLabel = new QLabel(QString::fromStdString(knight.getName()), this);
@@ -130,12 +179,10 @@ KnightDetailDialog::KnightDetailDialog(const Knight &knight, KnightRecruitmentVi
     mainLayout->addStretch();
 
     // Buy Button
-    QPushButton *buyButton = new QPushButton("Buy Knight",this);
+    QPushButton *buyButton = new QPushButton("Buy Knight", this);
     buyButton->setStyleSheet("padding: 10px; font-weight: bold;");
     connect(buyButton, &QPushButton::clicked, this, [this, &knight]()
-    {
-        this->accept();
-    });
+            { this->accept(); });
     mainLayout->addWidget(buyButton);
 
     // Close Button

@@ -22,7 +22,7 @@ public:
     KnightDetailDialog(const Knight &knight, KnightRecruitmentView *parent = nullptr);
 
 private:
-    QPushButton *createEquipmentSlot(Knight &knight, Item::ItemType type);
+    QWidget *createEquipmentSlot(Knight &knight, Item::ItemType type);
 };
 
 #endif
