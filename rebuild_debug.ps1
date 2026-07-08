@@ -1,6 +1,6 @@
 # 1. Automatically change directory to the script's location, then into build
 cd "$PSScriptRoot"
-if (-not (Test-Path build)) { mkdir build_debug }
+if (-not (Test-Path build_debug)) { mkdir build_debug }
 cd build_debug
 
 # 2. Clean out old tracking cache files safely

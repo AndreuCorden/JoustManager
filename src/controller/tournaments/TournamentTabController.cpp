@@ -1,4 +1,5 @@
 #include "controller/tournaments/TournamentTabController.h"
+#include "controller/tournaments/JoustController.h"
 #include "view/tournaments/TournamentRunnerDialog.h"
 #include "Player.h"
 
@@ -61,22 +62,55 @@ void TournamentTabController::runNextRegisteredTournament(size_t currentIndex)
     Tournament& activeMatch = tourneys[static_cast<size_t>(nextIndex)];
 
     // 3. Controller constructs the View component
-    TournamentRunnerDialog *runner = new TournamentRunnerDialog(activeMatch, nullptr);
+    TournamentRunnerDialog *runnerDlg = new TournamentRunnerDialog(activeMatch, m_tournamentView);
+
+    QObject::connect(runnerDlg, &TournamentRunnerDialog::nextRoundRequested, this, [this, runnerDlg, &activeMatch]() {
+        runnerDlg->hide(); // Take the overview away safely
+
+        // 🌟 The Controller instantiates the gameplay loop components!
+        JoustController *joustCtrl = new JoustController(runnerDlg); 
+        JoustView *joustArena = joustCtrl->getView();
+
+        // Configure window styles cleanly
+        joustArena->setWindowFlags(Qt::FramelessWindowHint);
+        joustArena->setWindowModality(Qt::ApplicationModal);
+        
+        // Center the gameplay window on screen
+        QScreen *primaryScreen = QGuiApplication::primaryScreen();
+        if (primaryScreen) {
+            QRect geo = primaryScreen->geometry();
+            joustArena->move((geo.width() - joustArena->width()) / 2, (geo.height() - joustArena->height()) / 2);
+        }
+
+        joustArena->show();
+        joustCtrl->startMatchLoop();
+
+        // 3. SCENARIO: The gameplay finishes
+        QObject::connect(joustCtrl, &JoustController::matchFinished, this, [this, runnerDlg, joustCtrl, &activeMatch]() {
+            activeMatch.advanceTournamentRound(true); 
+            
+            joustCtrl->deleteLater(); // Burn the arena assets out of memory
+            
+            // Bring back the overview dialog and evaluate if they won the whole thing or have a next round
+            runnerDlg->show();
+            runnerDlg->runTournamentRound(); 
+        });
+    });
     
     // 4. Handle closure logic hooks
-    QObject::connect(runner, &QDialog::accepted, this, [this, nextIndex, runner]() {
+    QObject::connect(runnerDlg, &QDialog::accepted, this, [this, nextIndex, runnerDlg]() {
         
         // Apply reward states using backend controllers/singletons
         std::vector<Tournament>& liveTourneys = m_tournamentTabHandler->getAvailableTournaments();
         int rewardAmount = liveTourneys[static_cast<size_t>(nextIndex)].getReward();
         Player::getInstance().modifyGold(rewardAmount); 
         
-        runner->deleteLater();
+        runnerDlg->deleteLater();
 
         // RECURSION STEP: Look for the next registered match starting at the next index position
         this->runNextRegisteredTournament(static_cast<size_t>(nextIndex + 1)); 
     });
 
     // Execute the window block modally
-    runner->exec(); 
+    runnerDlg->exec(); 
 }

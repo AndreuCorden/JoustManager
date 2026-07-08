@@ -68,16 +68,20 @@ set(SOURCES
     src/model/tournaments/Tournament.cpp
     src/model/tournaments/TournamentTabHandler.h
     src/model/tournaments/TournamentTabHandler.cpp
+    src/model/tournaments/JoustHandler.h
+    src/model/tournaments/JoustHandler.cpp
     src/view/tournaments/TournamentRunnerDialog.h
     src/view/tournaments/TournamentRunnerDialog.cpp
     src/view/tournaments/KnightSelectionDialog.h
     src/view/tournaments/KnightSelectionDialog.cpp
     src/view/tournaments/TournamentView.h
     src/view/tournaments/TournamentView.cpp
+    src/view/tournaments/JoustView.h
+    src/view/tournaments/JoustView.cpp
     src/controller/tournaments/TournamentTabController.h
     src/controller/tournaments/TournamentTabController.cpp
-    src/Tournaments/Joust/JoustView.h
-    src/Tournaments/Joust/JoustView.cpp
+    src/controller/tournaments/JoustController.h
+    src/controller/tournaments/JoustController.cpp
 )
 
 # Compile the executable using the explicit list

@@ -1,11 +1,11 @@
 #include "TournamentRunnerDialog.h"
-#include "Tournaments/Joust/JoustView.h"
 #include "Player.h"
 
 #include <iostream>
 
 TournamentRunnerDialog::TournamentRunnerDialog(Tournament &tournament, QWidget *parent)
-    : GameDialog(parent), activeTournament(tournament)
+    : GameDialog(parent)
+    , activeTournament(tournament)
 {
     this->setMinimumSize(800, 600);
     this->resize(800, 600);
@@ -71,35 +71,6 @@ void TournamentRunnerDialog::setupRewardsScreen()
     connect(actionButton, &QPushButton::clicked, this, &QDialog::accept);
 }
 
-void TournamentRunnerDialog::startNextRoundLifecycle()
-{
-    this->hide();
-
-    JoustView *joustArena = new JoustView(activeTournament.getPlayerTeam(), activeTournament.getEnemyTeam(), nullptr);
-    joustArena->setWindowFlags(Qt::FramelessWindowHint);
-    joustArena->setWindowModality(Qt::ApplicationModal);
-    joustArena->setAttribute(Qt::WA_DeleteOnClose);
-
-    QScreen *primaryScreen = QGuiApplication::primaryScreen();
-    if (primaryScreen)
-    {
-        QRect screenGeometry = primaryScreen->geometry();
-        int x = (screenGeometry.width() - joustArena->width()) / 2;
-        int y = (screenGeometry.height() - joustArena->height()) / 2;
-        joustArena->move(x, y);
-    }
-    joustArena->show();
-    joustArena->raise();
-    joustArena->activateWindow();
-
-    QObject::connect(joustArena, &QWidget::destroyed, this, [this]() mutable
-                     {
-            this->activeTournament.advanceTournamentRound(true); 
-            
-            this->runTournamentRound(); 
-            });
-}
-
 void TournamentRunnerDialog::clearCurrentLayout()
 {
     if (!mainLayout)
@@ -124,13 +95,6 @@ void TournamentRunnerDialog::clearCurrentLayout()
         mainLayout->removeWidget(actionButton);
         actionButton->deleteLater();
         actionButton = nullptr;
-    }
-
-    JoustView *oldArena = this->findChild<JoustView *>();
-    if (oldArena)
-    {
-        oldArena->deleteLater();
-        oldArena = nullptr;
     }
 }
 
@@ -177,6 +141,6 @@ void TournamentRunnerDialog::runTournamentRound()
         mainLayout->addWidget(infoLabel);
         mainLayout->addWidget(actionButton);
 
-        connect(actionButton, &QPushButton::clicked, this, &TournamentRunnerDialog::startNextRoundLifecycle);
+        connect(actionButton, &QPushButton::clicked, this, &TournamentRunnerDialog::emit nextRoundRequested);
     }
 }

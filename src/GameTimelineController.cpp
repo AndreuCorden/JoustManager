@@ -6,7 +6,6 @@
 #include <vector>
 #include <string>
 #include "GameTimelineController.h"
-#include "Tournaments/Joust/JoustView.h"
 #include "Player.h"
 #include "model/items/Armour/GothicArmour.h"
 #include "model/items/Weapon/CourteousLance.h"

@@ -15,18 +15,20 @@ class TournamentRunnerDialog : public GameDialog
     Q_OBJECT
 
 public:
-    explicit TournamentRunnerDialog(Tournament& tournament, QWidget *parent = nullptr);
+    explicit TournamentRunnerDialog(Tournament &tournament, QWidget *parent = nullptr);
     ~TournamentRunnerDialog() override = default;
+
+    void runTournamentRound();
+
+signals:
+    void nextRoundRequested();
 
 private:
     void setupIntroScreen();
     void setupRewardsScreen();
-    void startNextRoundLifecycle();
     void clearCurrentLayout();
 
-    void runTournamentRound();
-
-    Tournament& activeTournament;
+    Tournament &activeTournament;
 
     // Persistent pointers to easily clear states
     QLabel *titleLabel{nullptr};
