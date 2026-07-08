@@ -5,6 +5,7 @@
 # 1. Main Project Build Output Directory
 # This stops Git from tracking your massive compiled object files and binaries
 /build/
+/build_debug/
 
 # 2. CMake Generated Artifacts (Safety backup if run outside of /build)
 CMakeCache.txt

@@ -1,13 +1,7 @@
 #include "ManagerInterface.h"
 
-ManagerInterface::ManagerInterface(QWidget *parent) 
-: QWidget(parent)
-, m_gameTimelineController(new GameTimelineController())
-, m_tabWidget(new QTabWidget(this))
-, m_knightRosterTab(new KnightRosterTab(this))
-, m_knightRecruitmentTab(new KnightRecruitmentTab(this))
-, m_shopTabController(new ShopTabController(this))
-, m_tournamentTab(new TournamentTab((*m_gameTimelineController),this))
+ManagerInterface::ManagerInterface(QWidget *parent)
+    : QWidget(parent), m_gameTimelineController(new GameTimelineController()), m_tabWidget(new QTabWidget(this)), m_knightRosterTabController(new KnightRosterTabController(this)), m_knightRecruitmentTabController(new KnightRecruitmentTabController(this)), m_shopTabController(new ShopTabController(this)), m_tournamentTabController(new TournamentTabController(this, m_gameTimelineController->getTodaysTournaments()))
 {
     // Main structural layout for this view
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -19,11 +13,10 @@ ManagerInterface::ManagerInterface(QWidget *parent)
     // Create the Tab Container
     m_tabWidget->setStyleSheet("QTabBar::tab { font-size: 16px; padding: 10px 20px; }");
 
-
-    m_tabWidget->addTab(m_knightRosterTab, "Knights Roster");
-    m_tabWidget->addTab(m_knightRecruitmentTab, "Knight Recruitment");
+    m_tabWidget->addTab(m_knightRosterTabController->getTab(), "Knights Roster");
+    m_tabWidget->addTab(m_knightRecruitmentTabController->getTab(), "Knight Recruitment");
     m_tabWidget->addTab(m_shopTabController->getTab(), "Blacksmith Shop");
-    m_tabWidget->addTab(m_tournamentTab, "Tournament Arena");
+    m_tabWidget->addTab(m_tournamentTabController->getTab(), "Tournament Arena");
 
     mainLayout->addWidget(m_tabWidget);
     setLayout(mainLayout);
@@ -32,27 +25,34 @@ ManagerInterface::ManagerInterface(QWidget *parent)
             {
         // Since "Knights Roster" was added first, its index is 0
         if (index == 0) {
-            m_knightRosterTab->populateRoster();
+            m_knightRosterTabController->startDay();
         } });
 
     QPushButton *nextDayButton = new QPushButton("Next Day", this);
     nextDayButton->setStyleSheet("padding: 10px 20px; background-color: #D4AF37; color: black; font-weight: bold;");
     mainLayout->addWidget(nextDayButton);
 
-    connect(nextDayButton, &QPushButton::clicked, 
-        m_gameTimelineController, &GameTimelineController::triggerNextDay);
+    connect(nextDayButton, &QPushButton::clicked,
+            m_gameTimelineController, &GameTimelineController::triggerNextDay);
 
-    connect(m_gameTimelineController, &GameTimelineController::dayAdvanced, 
-            this, &ManagerInterface::refreshDashboardUI);
+    connect(m_gameTimelineController, &GameTimelineController::dayAdvanced,
+            this, &ManagerInterface::runJousts);
+
+    connect(m_tournamentTabController,&TournamentTabController::endOfJousting,
+            this, &ManagerInterface::startNextDay);
 }
 
-void ManagerInterface::refreshDashboardUI()
+void ManagerInterface::runJousts()
 {
-    // 🌟 Update visual day text using the singleton instance
+    m_tournamentTabController->runTournaments();
+}
+
+void ManagerInterface::startNextDay()
+{
     // dayLabel->setText(QString("CURRENT DAY: %1").arg(m_gameTimelineController->getCurrentDay()));
 
-    m_knightRosterTab->populateRoster();
-    m_knightRecruitmentTab->startDay();
+    m_knightRosterTabController->startDay();
+    m_knightRecruitmentTabController->startDay();
     m_shopTabController->startDay();
-    m_tournamentTab->populateRoster(); 
+    m_tournamentTabController->setDailyTournaments(m_gameTimelineController->getTodaysTournaments());
 }

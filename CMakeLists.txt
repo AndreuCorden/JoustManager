@@ -5,6 +5,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
+# 1. Set a default build type (Release) if none is explicitly provided.
+# This is useful for single-configuration generators like MinGW Makefiles or Ninja.
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    message(STATUS "No build type specified. Defaulting to 'Release'.")
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
 # Points to your Qt binaries
 set(CMAKE_PREFIX_PATH "C:/Qt/6.11.1/mingw_64") 
 
@@ -26,38 +34,54 @@ set(SOURCES
     src/MainMenu.cpp
     src/ManagerInterface.h
     src/ManagerInterface.cpp
-    src/Knights/KnightRosterTab.h
-    src/Knights/KnightRosterTab.cpp
-    src/Knights/Knight.h
-    src/Knights/Knight.cpp
-    src/Knights/KnightDetailDialog.h
-    src/Knights/KnightDetailDialog.cpp
-    src/Knights/KnightRecruitmentTab.h
-    src/Knights/KnightRecruitmentTab.cpp
-    src/Items/Item.h
-    src/Items/Item.cpp
-    src/Items/ShopTabController.h
-    src/Items/ShopTabController.cpp
-    src/Items/ShopTabHandler.h
-    src/Items/ShopTabHandler.cpp
-    src/Items/ShopView.h
-    src/Items/ShopView.cpp
-    src/Items/ItemDetailDialog.h
-    src/Items/ItemDetailDialog.cpp
-    src/Items/Armour/GothicArmour.h
-    src/Items/Armour/GothicArmour.cpp
-    src/Items/Weapon/CourteousLance.h
-    src/Items/Weapon/CourteousLance.cpp
-    src/Tournaments/TournamentTab.h
-    src/Tournaments/TournamentTab.cpp
-    src/Tournaments/Tournament.h
-    src/Tournaments/Tournament.cpp
-    src/Tournaments/TournamentRunnerDialog.h
-    src/Tournaments/TournamentRunnerDialog.cpp
-    src/Tournaments/KnightSelectionDialog.h
-    src/Tournaments/KnightSelectionDialog.cpp
-    src/Tournaments/Joust/JoustView.h
-    src/Tournaments/Joust/JoustView.cpp
+    src/model/knights/Knight.h
+    src/model/knights/Knight.cpp
+    src/model/knights/KnightRosterTabHandler.h
+    src/model/knights/KnightRosterTabHandler.cpp
+    src/model/knights/KnightRecruitmentTabHandler.h
+    src/model/knights/KnightRecruitmentTabHandler.cpp
+    src/view/knights/KnightDetailDialog.h
+    src/view/knights/KnightDetailDialog.cpp
+    src/view/knights/KnightRosterView.h
+    src/view/knights/KnightRosterView.cpp
+    src/view/knights/KnightRecruitmentView.h
+    src/view/knights/KnightRecruitmentView.cpp
+    src/controller/knights/KnightRosterTabController.h
+    src/controller/knights/KnightRosterTabController.cpp
+    src/controller/knights/KnightRecruitmentTabController.h
+    src/controller/knights/KnightRecruitmentTabController.cpp
+    src/model/items/Item.h
+    src/model/items/Item.cpp
+    src/model/items/ShopTabHandler.h
+    src/model/items/ShopTabHandler.cpp
+    src/model/items/Armour/GothicArmour.h
+    src/model/items/Armour/GothicArmour.cpp
+    src/model/items/Weapon/CourteousLance.h
+    src/model/items/Weapon/CourteousLance.cpp
+    src/view/items/ShopView.h
+    src/view/items/ShopView.cpp
+    src/view/items/ItemDetailDialog.h
+    src/view/items/ItemDetailDialog.cpp
+    src/controller/items/ShopTabController.h
+    src/controller/items/ShopTabController.cpp
+    src/model/tournaments/Tournament.h
+    src/model/tournaments/Tournament.cpp
+    src/model/tournaments/TournamentTabHandler.h
+    src/model/tournaments/TournamentTabHandler.cpp
+    src/model/tournaments/JoustHandler.h
+    src/model/tournaments/JoustHandler.cpp
+    src/view/tournaments/TournamentRunnerDialog.h
+    src/view/tournaments/TournamentRunnerDialog.cpp
+    src/view/tournaments/KnightSelectionDialog.h
+    src/view/tournaments/KnightSelectionDialog.cpp
+    src/view/tournaments/TournamentView.h
+    src/view/tournaments/TournamentView.cpp
+    src/view/tournaments/JoustView.h
+    src/view/tournaments/JoustView.cpp
+    src/controller/tournaments/TournamentTabController.h
+    src/controller/tournaments/TournamentTabController.cpp
+    src/controller/tournaments/JoustController.h
+    src/controller/tournaments/JoustController.cpp
 )
 
 # Compile the executable using the explicit list

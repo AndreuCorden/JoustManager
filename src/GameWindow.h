@@ -1,8 +1,6 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
-#include "ManagerInterface.h"
-
 #pragma once
 
 #include <QMainWindow>
