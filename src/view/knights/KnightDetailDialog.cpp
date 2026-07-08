@@ -134,9 +134,6 @@ KnightDetailDialog::KnightDetailDialog(const Knight &knight, KnightRecruitmentVi
     buyButton->setStyleSheet("padding: 10px; font-weight: bold;");
     connect(buyButton, &QPushButton::clicked, this, [this, &knight]()
     {
-        Player::getInstance().addKnight(knight);
-        Player::getInstance().modifyGold(-knight.getCost());
-
         this->accept();
     });
     mainLayout->addWidget(buyButton);

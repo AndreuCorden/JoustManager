@@ -20,10 +20,6 @@ public:
     Player(const Player&) = delete;
     void operator=(const Player&) = delete;
 
-    // Gold Management
-    int getGold() const { return gold; }
-    void modifyGold(int amount) { gold += amount; }
-
     // Roster Management
     std::list<Knight>& getRoster() { return knightsInRoster; }
     void addKnight(const Knight& knight) { knightsInRoster.push_back(knight); }
@@ -36,9 +32,8 @@ public:
     void addArmour(const Item& a) { armorInventory.push_back(a); }
 
 private:
-    Player(); // Constructor is now PRIVATE
+    Player();
 
-    int gold;
     std::list<Knight> knightsInRoster;
     std::vector<Item> weaponInventory;
     std::vector<Item> armorInventory;

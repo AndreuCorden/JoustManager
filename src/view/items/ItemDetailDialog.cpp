@@ -27,17 +27,6 @@ ItemDetailDialog::ItemDetailDialog(const Item &item, ShopView *parent) : GameDia
     buyButton->setStyleSheet("padding: 10px; font-weight: bold;");
     connect(buyButton, &QPushButton::clicked, this, [this, &item]()
     {
-        if(item.getItemType() == Item::ItemType::Armour)
-        {
-            Player::getInstance().addArmour(item);
-        }
-        else
-        {
-            Player::getInstance().addWeapon(item);
-        }
-        
-        Player::getInstance().modifyGold(-item.getCost());
-
         this->accept();
     });
     mainLayout->addWidget(buyButton);

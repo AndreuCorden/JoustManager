@@ -1,4 +1,5 @@
 #include "controller/knights/KnightRecruitmentTabController.h"
+#include "Player.h"
 
 KnightRecruitmentTabController::KnightRecruitmentTabController(QWidget *parent)
 : m_KnightRecruitmentTabHandler(new KnightRecruitmentTabHandler())
@@ -11,6 +12,18 @@ KnightRecruitmentTabController::KnightRecruitmentTabController(QWidget *parent)
 
 void KnightRecruitmentTabController::handleKnightRecruitment(const Knight &knight)
 {
+    int cost = knight.getCost(); 
+    bool approved = false;
+
+    emit requestPayment(cost, approved);
+
+    if (!approved) {
+        // Optional: Trigger a UI toast message or error dialog here
+        return;
+    }
+
+    Player::getInstance().addKnight(knight);
+
     // 1. Remove the item from your backend handler state
     m_KnightRecruitmentTabHandler->sellKnight(knight);
 

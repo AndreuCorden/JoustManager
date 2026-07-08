@@ -14,8 +14,10 @@
 #include "controller/items/ShopTabController.h"
 #include "controller/tournaments/TournamentTabController.h"
 #include "GameTimelineController.h"
+#include "Purse.h"
 
-class ManagerInterface : public QWidget {
+class ManagerInterface : public QWidget
+{
     Q_OBJECT
 
 public:
@@ -25,16 +27,26 @@ public:
 
 private slots:
     void startNextDay();
+    void claimReward(unsigned reward);
+    void processPayment(int amount, bool &approved);
 
 private:
-    GameTimelineController* m_gameTimelineController;
+    void updateHeaderDisplays();
+
+    GameTimelineController *m_gameTimelineController;
+
+    QLabel *m_dayLabel;
+    QLabel *m_goldLabel;
 
     QTabWidget *m_tabWidget;
 
     // Helper functions to keep our panel generation modular
-    KnightRosterTabController* m_knightRosterTabController;
-    KnightRecruitmentTabController* m_knightRecruitmentTabController;
-    ShopTabController* m_shopTabController;
-    TournamentTabController* m_tournamentTabController;
+    KnightRosterTabController *m_knightRosterTabController;
+    KnightRecruitmentTabController *m_knightRecruitmentTabController;
+    ShopTabController *m_shopTabController;
+    TournamentTabController *m_tournamentTabController;
+
+    Purse m_purse;
 };
+
 #endif

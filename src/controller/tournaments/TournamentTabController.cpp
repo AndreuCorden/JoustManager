@@ -103,7 +103,7 @@ void TournamentTabController::runNextRegisteredTournament(size_t currentIndex)
         // Apply reward states using backend controllers/singletons
         std::vector<Tournament>& liveTourneys = m_tournamentTabHandler->getAvailableTournaments();
         int rewardAmount = liveTourneys[static_cast<size_t>(nextIndex)].getReward();
-        Player::getInstance().modifyGold(rewardAmount); 
+        emit giveReward(rewardAmount);
         
         runnerDlg->deleteLater();
 

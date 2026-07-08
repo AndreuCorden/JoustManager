@@ -22,6 +22,9 @@ public:
 signals:
     void endOfJousting();
 
+    void giveReward(unsigned reward);
+
+
 private slots:
     void handleRegistration(size_t index, const std::vector<Knight> &knights);
     void handleCancellation(size_t index);

@@ -19,6 +19,9 @@ public:
 
     void startDay();
 
+signals:
+    void requestPayment(int amount, bool &approved);
+
 private slots:
     void handleKnightRecruitment(const Knight &knight);
 
