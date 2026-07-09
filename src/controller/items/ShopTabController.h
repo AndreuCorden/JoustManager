@@ -1,0 +1,36 @@
+#ifndef SHOPTABCONTROLLER_H
+#define SHOPTABCONTROLLER_H
+
+#pragma once
+
+#include <QObject>
+#include <QWidget>
+
+#include "model/items/ShopTabHandler.h"
+#include "view/items/ShopView.h"
+#include "Player.h"
+
+class ShopTabController : public QObject
+{
+    Q_OBJECT
+public:
+    ShopTabController(Player &player, QWidget *parent = nullptr);
+
+    ShopView* getTab() { return m_shopView; }
+
+    void startDay();
+
+signals:
+    void requestPayment(int amount, bool &approved);
+
+private slots:
+    void handleItemPurchase(const Item &item);
+
+private:
+    ShopView *m_shopView;
+    ShopTabHandler *m_shopTabHandler;
+
+    Player &m_player;
+};
+
+#endif

@@ -3,9 +3,17 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**",
+                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/src",
                 "C:/Qt/6.11.1/mingw_64/include/**"
             ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}/src",
+                    "C:/Qt/6.11.1/mingw_64/include"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            },
             "defines": [
                 "_DEBUG",
                 "UNICODE",

@@ -1,0 +1,48 @@
+# ====================================================================
+# JoustManager Git Ignore Profile
+# ====================================================================
+
+# 1. Main Project Build Output Directory
+# This stops Git from tracking your massive compiled object files and binaries
+/build/
+/build_debug/
+
+# 2. CMake Generated Artifacts (Safety backup if run outside of /build)
+CMakeCache.txt
+CMakeFiles/
+CMakeUserPresets.json
+cmake_install.cmake
+install_manifest.txt
+Makefile
+Makefile.Debug
+Makefile.Release
+
+# 3. Qt Automation Engine Artifacts (Generated automatically by AUTOMOC)
+*_autogen/
+*.moc
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+
+# 4. Compiled Binary Objects & Code Framework Files
+*.o
+*.obj
+*.d
+*.a
+*.lib
+
+# 5. Native Executables & Linked Libraries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 6. IDE Settings (VS Code)
+# Ignored because your c_cpp_properties.json contains hardcoded C:\Qt paths 
+# that are unique to your local machine and shouldn't be pushed to GitHub.
+.vscode/
+
+# 7. Operating System System Files
+Thumbs.db
+Desktop.ini
+.DS_Store

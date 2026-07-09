@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 3.16)
+project(JoustManager LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+# 1. Set a default build type (Release) if none is explicitly provided.
+# This is useful for single-configuration generators like MinGW Makefiles or Ninja.
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    message(STATUS "No build type specified. Defaulting to 'Release'.")
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Choose the type of build." FORCE)
+    set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
+# Points to your Qt binaries
+set(CMAKE_PREFIX_PATH "C:/Qt/6.11.1/mingw_64") 
+
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
+
+# Explicitly mapping out every single file so CMake cannot skip them
+set(SOURCES
+    main.cpp
+)
+
+# Compile the executable using the explicit list
+add_executable(JoustManager ${SOURCES})
+
+# 2. Add a 'd' suffix to the executable name when compiling in Debug mode 
+# (e.g., JoustManagerd.exe vs JoustManager.exe). This prevents overwriting builds.
+set_target_properties(JoustManager PROPERTIES DEBUG_POSTFIX "d")
+
+target_link_libraries(JoustManager PRIVATE Qt6::Core Qt6::Gui Qt6::Widgets)
+target_include_directories(JoustManager PRIVATE src)

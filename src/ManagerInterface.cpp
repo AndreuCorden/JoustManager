@@ -1,75 +1,112 @@
 #include "ManagerInterface.h"
 
-ManagerInterface::ManagerInterface(QWidget *parent) : QWidget(parent) {
+ManagerInterface::ManagerInterface(QWidget *parent)
+    : QWidget(parent)
+    , m_player(Player())
+    , m_purse(1000)
+    , m_gameTimelineController(new GameTimelineController())
+    , m_tabWidget(new QTabWidget(this))
+    , m_knightRosterTabController(new KnightRosterTabController(m_player, this))
+    , m_knightRecruitmentTabController(new KnightRecruitmentTabController(m_player, this))
+    , m_shopTabController(new ShopTabController(m_player, this))
+    , m_tournamentTabController(new TournamentTabController(this, m_player, m_gameTimelineController->getTodaysTournaments()))
+{
     // Main structural layout for this view
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
+    QHBoxLayout *headerLayout = new QHBoxLayout();
+    headerLayout->setContentsMargins(10, 5, 10, 15);
+
+    m_dayLabel = new QLabel(this);
+    m_dayLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #E2E8F0;");
+
+    m_goldLabel = new QLabel(this);
+    m_goldLabel->setStyleSheet("font-size: 18px; font-weight: bold; color: #D4AF37;");
+
+    headerLayout->addWidget(m_dayLabel);
+    headerLayout->addStretch(); // Pushes the gold display completely to the right edge
+    headerLayout->addWidget(m_goldLabel);
+
+    mainLayout->addLayout(headerLayout);
+
     // Create the Tab Container
-    tabWidget = new QTabWidget(this);
-    tabWidget->setStyleSheet("QTabBar::tab { font-size: 16px; padding: 10px 20px; }");
+    m_tabWidget->setStyleSheet("QTabBar::tab { font-size: 16px; padding: 10px 20px; }");
 
-    // Generate our sub-panels and plug them into the tabs
-    tabWidget->addTab(createKnightsTab(), "Knights Roster");
-    tabWidget->addTab(createShopTab(), "Blacksmith Shop");
-    tabWidget->addTab(createTournamentTab(), "Tournament Arena");
+    m_tabWidget->addTab(m_knightRosterTabController->getTab(), "Knights Roster");
+    m_tabWidget->addTab(m_knightRecruitmentTabController->getTab(), "Knight Recruitment");
+    m_tabWidget->addTab(m_shopTabController->getTab(), "Blacksmith Shop");
+    m_tabWidget->addTab(m_tournamentTabController->getTab(), "Tournament Arena");
 
-    mainLayout->addWidget(tabWidget);
+    mainLayout->addWidget(m_tabWidget);
     setLayout(mainLayout);
+
+    connect(m_knightRecruitmentTabController, &KnightRecruitmentTabController::requestPayment,
+            this, &ManagerInterface::processPayment);
+
+    connect(m_shopTabController, &ShopTabController::requestPayment,
+            this, &ManagerInterface::processPayment);
+
+    connect(m_tournamentTabController, &TournamentTabController::giveReward,
+            this, &ManagerInterface::claimReward);
+
+    connect(m_tabWidget, &QTabWidget::currentChanged, this, [this](int index)
+            {
+        // Since "Knights Roster" was added first, its index is 0
+        if (index == 0) {
+            m_knightRosterTabController->startDay();
+        } });
+
+    QPushButton *nextDayButton = new QPushButton("Next Day", this);
+    nextDayButton->setStyleSheet("padding: 10px 20px; background-color: #D4AF37; color: black; font-weight: bold;");
+    mainLayout->addWidget(nextDayButton);
+
+    connect(nextDayButton, &QPushButton::clicked,
+            m_gameTimelineController, &GameTimelineController::triggerNextDay);
+
+    connect(m_gameTimelineController, &GameTimelineController::dayAdvanced,
+            this, &ManagerInterface::runJousts);
+
+    connect(m_tournamentTabController, &TournamentTabController::endOfJousting,
+            this, &ManagerInterface::startNextDay);
+
+    updateHeaderDisplays();
 }
 
-QWidget* ManagerInterface::createKnightsTab() {
-    QWidget *tab = new QWidget();
-    QVBoxLayout *layout = new QVBoxLayout(tab);
-
-    QLabel *label = new QLabel("YOUR KNIGHTS ROSTER", tab);
-    label->setStyleSheet("font-size: 20px; font-weight: bold; color: #4A5568;");
-    
-    QPushButton *knightButton = new QPushButton("Sir Lancelot (Manage Stats & Gear)", tab);
-    knightButton->setStyleSheet("padding: 12px; font-size: 14px;");
-
-    layout->addWidget(label);
-    layout->addWidget(knightButton);
-    layout->addStretch(); // Keeps everything neatly pushed to the top
-    
-    tab->setLayout(layout);
-    return tab;
+void ManagerInterface::runJousts()
+{
+    m_tournamentTabController->runTournaments();
 }
 
-QWidget* ManagerInterface::createShopTab() {
-    QWidget *tab = new QWidget();
-    QVBoxLayout *layout = new QVBoxLayout(tab);
+void ManagerInterface::startNextDay()
+{
+    m_knightRosterTabController->startDay();
+    m_knightRecruitmentTabController->startDay();
+    m_shopTabController->startDay();
+    m_tournamentTabController->setDailyTournaments(m_gameTimelineController->getTodaysTournaments());
 
-    QLabel *label = new QLabel("ARMOURY & BLACKSMITH", tab);
-    label->setStyleSheet("font-size: 20px; font-weight: bold; color: #4A5568;");
-    
-    QPushButton *buyWeapon = new QPushButton("Buy Steel Lance - 50 Gold", tab);
-    QPushButton *buyArmor = new QPushButton("Buy Plate Armour - 120 Gold", tab);
-    buyWeapon->setStyleSheet("padding: 10px; margin: 5px;");
-    buyArmor->setStyleSheet("padding: 10px; margin: 5px;");
-
-    layout->addWidget(label);
-    layout->addWidget(buyWeapon);
-    layout->addWidget(buyArmor);
-    layout->addStretch();
-
-    tab->setLayout(layout);
-    return tab;
+    updateHeaderDisplays();
 }
 
-QWidget* ManagerInterface::createTournamentTab() {
-    QWidget *tab = new QWidget();
-    QVBoxLayout *layout = new QVBoxLayout(tab);
+void ManagerInterface::processPayment(int amount, bool &approved)
+{
+    approved = m_purse.buy(amount);
+    if (approved) {
+        updateHeaderDisplays(); 
+    }
+}
 
-    QLabel *label = new QLabel("UPCOMING JOUSTS", tab);
-    label->setStyleSheet("font-size: 20px; font-weight: bold; color: #4A5568;");
-    
-    QPushButton *enterTourney = new QPushButton("Enter the King's Grand Tournament", tab);
-    enterTourney->setStyleSheet("padding: 15px; background-color: #D4AF37; color: black; font-weight: bold;");
+void ManagerInterface::claimReward(unsigned reward)
+{
+    m_purse += reward;
+    updateHeaderDisplays();
+}
 
-    layout->addWidget(label);
-    layout->addWidget(enterTourney);
-    layout->addStretch();
+void ManagerInterface::updateHeaderDisplays()
+{
+    // Grab the data values straight from your tracking model configurations
+    int currentDay = m_gameTimelineController->getCurrentDay();
+    unsigned int currentGold = m_purse.get();
 
-    tab->setLayout(layout);
-    return tab;
+    m_dayLabel->setText(QString("📅  DAY: %1").arg(currentDay));
+    m_goldLabel->setText(QString("🪙  GOLD: %1g").arg(currentGold));
 }
