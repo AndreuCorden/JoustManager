@@ -10,13 +10,14 @@
 
 #include "GameDialog.h"
 #include "model/tournaments/Tournament.h"
+#include "Player.h"
 
 class KnightSelectionDialog : public GameDialog
 {
     Q_OBJECT
 
 public:
-    explicit KnightSelectionDialog(const Tournament &tournament, QWidget *parent = nullptr);
+    explicit KnightSelectionDialog(Player &player, const Tournament &tournament, QWidget *parent = nullptr);
 
     std::vector<Knight> getSelectedKnights() const { return m_selectedKnights; }
 

@@ -4,7 +4,7 @@
 #include <QLabel>
 #include <QPushButton>
 
-KnightSelectionDialog::KnightSelectionDialog(const Tournament &tournament, QWidget *parent) 
+KnightSelectionDialog::KnightSelectionDialog(Player &player, const Tournament &tournament, QWidget *parent) 
     : GameDialog(parent)
     , m_requiredTeammates(tournament.getRequiredTeammates()) 
 {
@@ -21,7 +21,7 @@ KnightSelectionDialog::KnightSelectionDialog(const Tournament &tournament, QWidg
     mainLayout->addWidget(ruleLabel);
 
     // Loop through player's available combatants
-    auto& roster = Player::getInstance().getRoster();
+    auto& roster = player.getRoster();
     if (roster.empty()) {
         QLabel *emptyLabel = new QLabel("You have no knights in your roster! Recruit some first.", this);
         emptyLabel->setWordWrap(true);

@@ -1,9 +1,9 @@
 #include "controller/knights/KnightRosterTabController.h"
 
-KnightRosterTabController::KnightRosterTabController(QWidget *parent)
+KnightRosterTabController::KnightRosterTabController(Player &player, QWidget *parent)
 //: m_knightRosterTabHandler(new KnightRosterTabHandler())
 {
-    m_knightRosterView = new KnightRosterView(parent);
+    m_knightRosterView = new KnightRosterView(player, parent);
 }
 
 void KnightRosterTabController::startDay()

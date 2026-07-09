@@ -5,6 +5,7 @@
 
 #include "model/tournaments/TournamentTabHandler.h"
 #include "view/tournaments/TournamentView.h"
+#include "Player.h"
 
 #include <vector>
 
@@ -12,7 +13,7 @@ class TournamentTabController : public QObject
 {
     Q_OBJECT
 public:
-    explicit TournamentTabController(QWidget *parent, std::vector<Tournament> todaysTournaments);
+    explicit TournamentTabController(QWidget *parent, Player &player, std::vector<Tournament> todaysTournaments);
     TournamentView *getTab() { return m_tournamentView; };
 
     void setDailyTournaments(std::vector<Tournament> todaysTournaments);

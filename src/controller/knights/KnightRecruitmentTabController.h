@@ -8,12 +8,13 @@
 
 #include "model/knights/KnightRecruitmentTabHandler.h"
 #include "view/knights/KnightRecruitmentView.h"
+#include "Player.h"
 
 class KnightRecruitmentTabController : public QObject
 {
     Q_OBJECT
 public:
-    KnightRecruitmentTabController(QWidget *parent = nullptr);
+    KnightRecruitmentTabController(Player &player, QWidget *parent = nullptr);
 
     KnightRecruitmentView* getTab() { return m_KnightRecruitmentView; }
 
@@ -28,6 +29,8 @@ private slots:
 private:
     KnightRecruitmentView *m_KnightRecruitmentView;
     KnightRecruitmentTabHandler* m_KnightRecruitmentTabHandler;
+
+    Player &m_player;
 };
 
 #endif

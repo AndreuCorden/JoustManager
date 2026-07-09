@@ -1,12 +1,11 @@
 #include "controller/tournaments/TournamentTabController.h"
 #include "controller/tournaments/JoustController.h"
 #include "view/tournaments/TournamentRunnerDialog.h"
-#include "Player.h"
 
-TournamentTabController::TournamentTabController(QWidget *parent, std::vector<Tournament> todaysTournaments)
+TournamentTabController::TournamentTabController(QWidget *parent, Player &player, std::vector<Tournament> todaysTournaments)
     : m_tournamentTabHandler(new TournamentTabHandler(todaysTournaments))
 {
-    m_tournamentView = new TournamentView(parent);
+    m_tournamentView = new TournamentView(player, parent);
 
     // 🌟 Establish our MVC communication pipes via QObject namespaces
     QObject::connect(m_tournamentView, &TournamentView::registrationRequested, 

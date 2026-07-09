@@ -41,10 +41,10 @@ QWidget *KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemType 
         // Return item back to the armory vault safely
         if (oldItem.getName() != "None") { 
             if (type == Item::ItemType::Weapon) {
-                Player::getInstance().addWeapon(oldItem);
+                m_player.addWeapon(oldItem);
                 knight.equipRightHandWeapon(Item()); // Equips a blank/default item constructor
             } else {
-                Player::getInstance().addArmour(oldItem);
+                m_player.addArmour(oldItem);
                 knight.equipArmour(Item()); // Equips a blank/default item constructor
             }
         }
@@ -58,8 +58,8 @@ QWidget *KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemType 
     connect(field, &QPushButton::clicked, this, [this, &knight, field, unequipBtn, type, labelPrefix, activeRedStyle]()
             {
         std::vector<Item>& availableItems = (type == Item::ItemType::Weapon) 
-            ? Player::getInstance().getWeapons() 
-            : Player::getInstance().getArmour();
+            ? m_player.getWeapons() 
+            : m_player.getArmour();
 
         QStringList options;
         for (const Item& item : availableItems) {
@@ -95,9 +95,9 @@ QWidget *KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemType 
                         Item oldItem = (type == Item::ItemType::Weapon) ? knight.getRightHandWeapon() : knight.getArmour();
                         if (oldItem.getName() != "None") { 
                             if (type == Item::ItemType::Weapon) {
-                                Player::getInstance().addWeapon(oldItem);
+                                m_player.addWeapon(oldItem);
                             } else {
-                                Player::getInstance().addArmour(oldItem); 
+                                m_player.addArmour(oldItem); 
                             }
                         }
                         
@@ -127,7 +127,9 @@ QWidget *KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemType 
     return rowContainer;
 }
 
-KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRosterView *parent) : GameDialog(parent)
+KnightDetailDialog::KnightDetailDialog(Player &player, Knight &knight, KnightRosterView *parent)
+: GameDialog(parent)
+, m_player(player)
 {
     // Set up window properties
     setWindowTitle(QString("%1's Profile").arg(QString::fromStdString(knight.getName())));
@@ -159,7 +161,9 @@ KnightDetailDialog::KnightDetailDialog(Knight &knight, KnightRosterView *parent)
     mainLayout->addWidget(closeButton);
 }
 
-KnightDetailDialog::KnightDetailDialog(const Knight &knight, KnightRecruitmentView *parent) : GameDialog(parent)
+KnightDetailDialog::KnightDetailDialog(Player &player, const Knight &knight, KnightRecruitmentView *parent) 
+: GameDialog(parent)
+, m_player(player)
 {
     // Set up window properties
     setWindowTitle(QString("%1's Profile").arg(QString::fromStdString(knight.getName())));

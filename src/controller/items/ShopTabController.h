@@ -8,12 +8,13 @@
 
 #include "model/items/ShopTabHandler.h"
 #include "view/items/ShopView.h"
+#include "Player.h"
 
 class ShopTabController : public QObject
 {
     Q_OBJECT
 public:
-    ShopTabController(QWidget *parent = nullptr);
+    ShopTabController(Player &player, QWidget *parent = nullptr);
 
     ShopView* getTab() { return m_shopView; }
 
@@ -28,6 +29,8 @@ private slots:
 private:
     ShopView *m_shopView;
     ShopTabHandler *m_shopTabHandler;
+
+    Player &m_player;
 };
 
 #endif

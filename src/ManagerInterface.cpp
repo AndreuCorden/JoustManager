@@ -2,13 +2,14 @@
 
 ManagerInterface::ManagerInterface(QWidget *parent)
     : QWidget(parent)
+    , m_player(Player())
+    , m_purse(1000)
     , m_gameTimelineController(new GameTimelineController())
     , m_tabWidget(new QTabWidget(this))
-    , m_knightRosterTabController(new KnightRosterTabController(this))
-    , m_knightRecruitmentTabController(new KnightRecruitmentTabController(this))
-    , m_shopTabController(new ShopTabController(this))
-    , m_tournamentTabController(new TournamentTabController(this, m_gameTimelineController->getTodaysTournaments()))
-    , m_purse(1000)
+    , m_knightRosterTabController(new KnightRosterTabController(m_player, this))
+    , m_knightRecruitmentTabController(new KnightRecruitmentTabController(m_player, this))
+    , m_shopTabController(new ShopTabController(m_player, this))
+    , m_tournamentTabController(new TournamentTabController(this, m_player, m_gameTimelineController->getTodaysTournaments()))
 {
     // Main structural layout for this view
     QVBoxLayout *mainLayout = new QVBoxLayout(this);

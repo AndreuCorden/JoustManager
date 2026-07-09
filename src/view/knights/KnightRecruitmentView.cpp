@@ -2,7 +2,10 @@
 #include "model/knights/Knight.h"
 #include "view/knights/KnightDetailDialog.h"
 
-KnightRecruitmentView::KnightRecruitmentView(QWidget *parent) : QWidget(parent)
+
+KnightRecruitmentView::KnightRecruitmentView(Player &player, QWidget *parent)
+    : QWidget(parent)
+    , m_player(player)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
@@ -20,15 +23,16 @@ KnightRecruitmentView::KnightRecruitmentView(QWidget *parent) : QWidget(parent)
 void KnightRecruitmentView::populateList(const std::list<Knight> &recruitableKnights)
 {
     QLayoutItem *child;
-    while ((child = listLayout->takeAt(0)) != nullptr) {
-        if (child->widget()) {
+    while ((child = listLayout->takeAt(0)) != nullptr)
+    {
+        if (child->widget())
+        {
             child->widget()->deleteLater();
         }
         delete child;
     }
 
     // 2. REBUILD ROWS using iterators instead of indices
-    // We use a regular loop but keep tracking the live iterator 'it'    
     for (const Knight &k : recruitableKnights)
     {
         QString buttonText = QString("%1 (See Stats)").arg(QString::fromStdString(k.getName()));
@@ -36,20 +40,19 @@ void KnightRecruitmentView::populateList(const std::list<Knight> &recruitableKni
         knightButton->setStyleSheet("padding: 12px; font-size: 14px;");
         listLayout->addWidget(knightButton);
 
-        // 3. CAPTURE THE ITERATOR BY VALUE: 
+        // 3. CAPTURE THE ITERATOR BY VALUE:
         // This gives each individual button a direct handle to its exact node in the list
-        connect(knightButton, &QPushButton::clicked, this, [this, k]() {
+        connect(knightButton, &QPushButton::clicked, this, [this, k]()
+                {
             
             // Hand the exact knight node over to the profile dialog
-            KnightDetailDialog dialog(k, this);
+            KnightDetailDialog dialog(m_player, k, this);
             
             // 4. INTERCEPT DIALOG ACCEPTANCE
             if (dialog.exec() == QDialog::Accepted) {
                 
                 emit knightRecruited(k);
                 
-
-            }
-        });
+            } });
     }
 }

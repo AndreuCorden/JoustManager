@@ -1,10 +1,11 @@
 #include "controller/knights/KnightRecruitmentTabController.h"
 #include "Player.h"
 
-KnightRecruitmentTabController::KnightRecruitmentTabController(QWidget *parent)
-: m_KnightRecruitmentTabHandler(new KnightRecruitmentTabHandler())
+KnightRecruitmentTabController::KnightRecruitmentTabController(Player &player, QWidget *parent)
+: m_player(player)
+, m_KnightRecruitmentTabHandler(new KnightRecruitmentTabHandler())
 {
-    m_KnightRecruitmentView = new KnightRecruitmentView(parent);
+    m_KnightRecruitmentView = new KnightRecruitmentView(m_player, parent);
     m_KnightRecruitmentView->populateList(m_KnightRecruitmentTabHandler->getBuyableKnight());
     
     connect(m_KnightRecruitmentView, &KnightRecruitmentView::knightRecruited, this, &KnightRecruitmentTabController::handleKnightRecruitment);
@@ -22,7 +23,7 @@ void KnightRecruitmentTabController::handleKnightRecruitment(const Knight &knigh
         return;
     }
 
-    Player::getInstance().addKnight(knight);
+    m_player.addKnight(knight);
 
     // 1. Remove the item from your backend handler state
     m_KnightRecruitmentTabHandler->sellKnight(knight);

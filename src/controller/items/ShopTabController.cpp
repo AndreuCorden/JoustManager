@@ -1,8 +1,9 @@
 #include "controller/items/ShopTabController.h"
 #include "Player.h"
 
-ShopTabController::ShopTabController(QWidget *parent)
-    : m_shopTabHandler(new ShopTabHandler())
+ShopTabController::ShopTabController(Player &player, QWidget *parent)
+    : m_player(player)
+    , m_shopTabHandler(new ShopTabHandler())
 {
     m_shopView = new ShopView(parent);
     m_shopView->populateList(m_shopTabHandler->getBuyableItems());
@@ -25,11 +26,11 @@ void ShopTabController::handleItemPurchase(const Item &item)
 
     if (item.getItemType() == Item::ItemType::Armour)
     {
-        Player::getInstance().addArmour(item);
+        m_player.addArmour(item);
     }
     else
     {
-        Player::getInstance().addWeapon(item);
+        m_player.addWeapon(item);
     }
 
     // 1. Remove the item from your backend handler state

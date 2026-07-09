@@ -15,6 +15,7 @@
 #include "controller/tournaments/TournamentTabController.h"
 #include "GameTimelineController.h"
 #include "Purse.h"
+#include "Player.h"
 
 class ManagerInterface : public QWidget
 {
@@ -33,6 +34,9 @@ private slots:
 private:
     void updateHeaderDisplays();
 
+    Player m_player;
+    Purse m_purse;
+    
     GameTimelineController *m_gameTimelineController;
 
     QLabel *m_dayLabel;
@@ -45,8 +49,6 @@ private:
     KnightRecruitmentTabController *m_knightRecruitmentTabController;
     ShopTabController *m_shopTabController;
     TournamentTabController *m_tournamentTabController;
-
-    Purse m_purse;
 };
 
 #endif

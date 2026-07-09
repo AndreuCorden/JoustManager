@@ -3,7 +3,9 @@
 #include "Player.h"
 
 // Explicitly forward structural attachment rules down to QWidget base constructor
-KnightRosterView::KnightRosterView(QWidget *parent) : QWidget(parent)
+KnightRosterView::KnightRosterView(Player &player, QWidget *parent)
+    : QWidget(parent)
+    , m_player(player)
 {
     // Apply layout logic directly to THIS object instance!
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -24,30 +26,32 @@ void KnightRosterView::populateRoster()
 {
     // 1. CLEANUP FLUSH: Wipe out any old buttons/widgets currently on screen
     QLayoutItem *child;
-    while ((child = rosterListLayout->takeAt(0)) != nullptr) {
-        if (child->widget()) {
+    while ((child = rosterListLayout->takeAt(0)) != nullptr)
+    {
+        if (child->widget())
+        {
             child->widget()->deleteLater(); // Safely schedule visual deletion
         }
         delete child;
     }
 
     // 2. REBUILD ROWS: Query the global player data registry
-    for (Knight &k : Player::getInstance().getRoster())
+    for (Knight &k : m_player.getRoster())
     {
-        Knight* knightPtr = &k;
-        
+        Knight *knightPtr = &k;
+
         QString buttonText = QString("%1 (Manage Stats & Gear)").arg(QString::fromStdString(k.getName()));
         QPushButton *knightButton = new QPushButton(buttonText, this);
         knightButton->setStyleSheet("padding: 12px; font-size: 14px;");
         rosterListLayout->addWidget(knightButton);
 
-        connect(knightButton, &QPushButton::clicked, this, [this, knightPtr]() {
-            KnightDetailDialog dialog(*knightPtr, this);
+        connect(knightButton, &QPushButton::clicked, this, [this, knightPtr]()
+                {
+            KnightDetailDialog dialog(m_player, *knightPtr, this);
             dialog.exec();
             
             // Optional optimization: If managing equipment can change name layouts,
             // refresh this tab right after the dialog closes:
-            this->populateRoster();
-        });
+            this->populateRoster(); });
     }
 }

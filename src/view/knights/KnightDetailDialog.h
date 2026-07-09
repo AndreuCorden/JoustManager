@@ -10,6 +10,7 @@
 #include "view/knights/KnightRosterView.h"
 #include "view/knights/KnightRecruitmentView.h"
 #include "GameDialog.h"
+#include "Player.h"
 
 
 class KnightDetailDialog : public GameDialog {
@@ -17,12 +18,14 @@ class KnightDetailDialog : public GameDialog {
 
 public:
     // Pass the knight by reference so modifications (like changing gear) save back to the roster
-    KnightDetailDialog(Knight &knight, KnightRosterView *parent = nullptr);
+    KnightDetailDialog(Player &player, Knight &knight, KnightRosterView *parent = nullptr);
 
-    KnightDetailDialog(const Knight &knight, KnightRecruitmentView *parent = nullptr);
+    KnightDetailDialog(Player &player, const Knight &knight, KnightRecruitmentView *parent = nullptr);
 
 private:
     QWidget *createEquipmentSlot(Knight &knight, Item::ItemType type);
+
+    Player& m_player;
 };
 
 #endif
