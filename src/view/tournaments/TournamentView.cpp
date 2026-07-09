@@ -1,8 +1,9 @@
 #include "view/tournaments/TournamentView.h"
 #include "view/tournaments/KnightSelectionDialog.h"
 
-TournamentView::TournamentView(QWidget *parent)
+TournamentView::TournamentView(Player &player, QWidget *parent)
     : QWidget(parent)
+    , m_player(player)
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
@@ -47,7 +48,7 @@ void TournamentView::populateRoster(std::vector<Tournament> const &todaysTournam
 
             connect(enterBtn, &QPushButton::clicked, this, [this, i, t]()
                     {
-            KnightSelectionDialog selectDialog(t, this);
+            KnightSelectionDialog selectDialog(m_player, t, this);
             if (selectDialog.exec() == QDialog::Accepted) {
                 std::vector<Knight> squad = selectDialog.getSelectedKnights();
                 emit registrationRequested(i, squad);

@@ -8,12 +8,13 @@
 
 #include "model/knights/KnightRosterTabHandler.h"
 #include "view/knights/KnightRosterView.h"
+#include "Player.h"
 
 class KnightRosterTabController : public QObject
 {
     Q_OBJECT
 public:
-    KnightRosterTabController(QWidget *parent = nullptr);
+    KnightRosterTabController(Player &player, QWidget *parent = nullptr);
 
     KnightRosterView* getTab() { return m_knightRosterView; }
 

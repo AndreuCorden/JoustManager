@@ -21,7 +21,7 @@ public:
     };
 
     Item()
-        : name("Blank Item"), bonus(0), cost(0), heldIn(Body), typeOfItem(Armour)
+        : name("None"), bonus(0), cost(0), heldIn(Body), typeOfItem(Armour)
     {
     }
 

@@ -10,6 +10,7 @@
 #include <QPushButton>
 
 #include "model/knights/Knight.h"
+#include "Player.h"
 
 #include <list>
 
@@ -17,7 +18,7 @@ class KnightRecruitmentView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit KnightRecruitmentView(QWidget *parent = nullptr);
+    explicit KnightRecruitmentView(Player& player, QWidget *parent = nullptr);
 
     void populateList(const std::list<Knight> &recruitableKnights);
 
@@ -26,6 +27,8 @@ signals:
 
 private:
     QVBoxLayout *listLayout;
+
+    Player& m_player;
 };
 
 #endif
