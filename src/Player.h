@@ -11,7 +11,7 @@
 class Player
 {
 public:
-    Player();
+    Player() {}
 
     // Delete copy constructor and assignment operator so nobody accidentally copies the player
     Player(const Player &) = delete;
