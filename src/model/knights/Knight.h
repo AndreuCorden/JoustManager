@@ -9,8 +9,24 @@ class Knight
 {
 public:
     // Regular constructor used by our generator
-    Knight(std::string n, std::string o, std::string t, int h, int w, int c)
-        : m_name(n), m_origin(o), m_title(t), m_height(h), m_weight(w), m_level(1), m_cost(c){}
+    Knight(std::string n, std::string o, std::string t, int h, int w, int l, int c,
+           int hm, int lp, int ps, int sp, int fw, int vg, int ms, int fc)
+        : m_name(n)
+        , m_origin(o)
+        , m_title(t)
+        , m_height(h)
+        , m_weight(w)
+        , m_level(l)
+        , m_cost(c)
+        , m_horsemanship(hm)
+        , m_lancePrecision(lp)
+        , m_poise(ps)
+        , m_swordplay(sp)
+        , m_footwork(fw)
+        , m_vigor(vg)
+        , m_marksmanship(ms)
+        , m_focus(fc)
+        {}
 
     // Getters so your UI can display the stats
     std::string getName() const { return m_name; }

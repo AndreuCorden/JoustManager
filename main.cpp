@@ -46,6 +46,17 @@ int main(int argc, char *argv[])
         "   padding: 12px 30px; border-radius: 6px; border: none;"
         "}"
         "QPushButton:hover { background-color: #38A169; }"*/
+
+        "QProgressBar {"
+        "    background-color: #2D3748;"
+        "    border: 1px solid #4A5568;"
+        "    border-radius: 4px;"
+        "    text-align: center;"
+        "    color: #FFFFFF;"
+        "    font-weight: bold;"
+        "    height: 24px;" /* 🌟 Increased from 18px to give the font vertical breathing room */
+        "    font-size: 11px;"
+        "}"
     );
 
     GameWindow window;

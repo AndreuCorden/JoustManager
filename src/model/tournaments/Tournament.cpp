@@ -21,7 +21,8 @@ void Tournament::initializeTournament()
         std::vector<Knight> botTeam;
         for (int t = 0; t < teammates; ++t)
         {
-            botTeam.push_back(Knight("Sir Placeholder", "Camelot", "Title", 180, 95, 200));
+            botTeam.push_back(Knight("Sir Placeholder", "Camelot", "Title", 180, 95, 1, 200
+                                     , 0, 0, 0, 0, 0, 0, 0, 0));
         }
         activeTeams.push_back(botTeam);
     }
@@ -31,7 +32,8 @@ std::vector<Knight> Tournament::getEnemyTeam() const
 {
     if (activeTeams.empty())
     {
-        return {Knight("Sir Placeholder", "Camelot", "Title", 180, 95, 200)};
+        return {Knight("Sir Placeholder", "Camelot", "Title", 180, 95, 1, 200
+        , 0, 0, 0, 0, 0, 0, 0, 0)};
     }
 
     auto *rand = QRandomGenerator::global();

@@ -6,29 +6,37 @@
 #include <QTabWidget>
 #include <QFormLayout>
 #include <QProgressBar>
+#include <QGridLayout>
 
-// Helper function to build clean, stylized skill readouts
+// Helper function to build clean, stylized skill progress rows
 QWidget* createStatRow(const QString &statName, int value) {
     QWidget *container = new QWidget();
     QHBoxLayout *layout = new QHBoxLayout(container);
-    layout->setContentsMargins(10, 5, 10, 5);
+    layout->setContentsMargins(5, 4, 5, 4);
 
     QLabel *label = new QLabel(statName, container);
-    label->setStyleSheet("font-weight: bold; color: #CBD5E1;");
+    label->setStyleSheet("font-weight: bold; color: #CBD5E1; font-size: 13px;");
     
     QProgressBar *bar = new QProgressBar(container);
     bar->setRange(0, 100);
     bar->setValue(value);
     bar->setTextVisible(true);
-    bar->setFormat("%v / 100");
+    bar->setFormat("%v/100");
     bar->setStyleSheet(
-        "QProgressBar { background-color: #374151; border: 1px solid #4B5563; border-radius: 4px; text-align: center; color: white; font-weight: bold; height: 20px; }"
-        "QProgressBar::chunk { background-color: #D4AF37; border-radius: 3px; }"
+        "QProgressBar { background-color: #2D3748; border: 1px solid #4A5568; border-radius: 4px; text-align: center; color: white; font-weight: bold; height: 18px; font-size: 11px; }"
+        "QProgressBar::chunk { background-color: #D4AF37; border-radius: 2px; }"
     );
 
     layout->addWidget(label, 2);
     layout->addWidget(bar, 3);
     return container;
+}
+
+// Helper to build section headers inside the combined combat tab
+QWidget* createSectionHeader(const QString &title, const QString &icon) {
+    QLabel *header = new QLabel(QString("%1  %2").arg(icon, title));
+    header->setStyleSheet("font-family: 'Georgia', serif; font-size: 14px; font-weight: bold; color: #D4AF37; margin-top: 5px; border-bottom: 1px solid #4A5568; padding-bottom: 3px;");
+    return header;
 }
 
 QWidget *KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemType type)
@@ -40,19 +48,18 @@ QWidget *KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemType 
 
     std::string labelPrefix = "Body";
     if (type == Item::ItemType::Weapon) labelPrefix = "Right Hand";
-    // Add additional handling here if you expand your ItemType enum for Left Hand/Shields later!
 
     Item currentItem = (type == Item::ItemType::Weapon) ? knight.getRightHandWeapon() : knight.getArmour();
     QString currentItemName = QString::fromStdString(currentItem.getName());
 
     QPushButton *field = new QPushButton(QString::fromStdString(labelPrefix) + ": " + currentItemName, rowContainer);
-    field->setStyleSheet("padding: 15px; text-align: left; font-size: 14px; background: #1E293B; color: white; border: 1px solid #475569; border-radius: 4px;");
+    field->setStyleSheet("padding: 12px; text-align: left; font-size: 13px; background: #2D3748; color: white; border: 1px solid #4A5568; border-radius: 4px;");
 
     QPushButton *unequipBtn = new QPushButton("❌", rowContainer);
-    unequipBtn->setFixedWidth(45);
+    unequipBtn->setFixedWidth(40);
 
-    QString activeRedStyle = "padding: 15px; font-size: 14px; background: #991B1B; color: white; font-weight: bold; border-radius: 4px;";
-    QString disabledGrayStyle = "padding: 15px; font-size: 14px; background: #334155; color: #64748B; border-radius: 4px;";
+    QString activeRedStyle = "padding: 12px; font-size: 13px; background: #991B1B; color: white; font-weight: bold; border-radius: 4px;";
+    QString disabledGrayStyle = "padding: 12px; font-size: 13px; background: #1A202C; color: #4A5568; border: 1px solid #2D3748; border-radius: 4px;";
 
     bool hasItemEquipped = (currentItemName != "None" && !currentItemName.isEmpty());
     unequipBtn->setEnabled(hasItemEquipped);
@@ -127,76 +134,145 @@ QWidget *KnightDetailDialog::createEquipmentSlot(Knight &knight, Item::ItemType 
     return rowContainer;
 }
 
+// Helper to create a dynamic profile view card layout
+QWidget* createDynamicProfileCard(const Knight &knight) {
+    QWidget *container = new QWidget();
+    QVBoxLayout *layout = new QVBoxLayout(container);
+    layout->setContentsMargins(10, 10, 10, 10);
+    layout->setSpacing(15);
+
+    // 1. TOP HERO CARD ROW
+    QHBoxLayout *topCardLayout = new QHBoxLayout();
+    topCardLayout->setSpacing(15);
+
+    // Left Column: Level/Crest Badge
+    QLabel *crestBadge = new QLabel(QString("LVL\n%1").arg(knight.getLevel()));
+    crestBadge->setAlignment(Qt::AlignCenter);
+    crestBadge->setStyleSheet(
+        "background-color: #2D3748; color: #D4AF37; font-family: 'Georgia', serif; "
+        "font-weight: bold; font-size: 18px; border: 2px solid #D4AF37; "
+        "border-radius: 6px; min-width: 65px; max-width: 65px; min-height: 65px; max-height: 65px;"
+    );
+
+    // Right Column: Identity Metadata
+    QVBoxLayout *metaLayout = new QVBoxLayout();
+    metaLayout->setSpacing(4);
+    
+    QLabel *titleLabel = new QLabel(QString("✨ %1").arg(QString::fromStdString(knight.getTitle())));
+    titleLabel->setStyleSheet("font-size: 14px; font-style: italic; color: #CBD5E1; font-weight: bold;");
+    
+    QLabel *originLabel = new QLabel(QString("🚩 Allegiance: %1").arg(QString::fromStdString(knight.getOrigin())));
+    originLabel->setStyleSheet("font-size: 13px; color: #A0AEC0;");
+
+    metaLayout->addWidget(titleLabel);
+    metaLayout->addWidget(originLabel);
+    metaLayout->addStretch();
+
+    topCardLayout->addWidget(crestBadge);
+    topCardLayout->addLayout(metaLayout, 1);
+    layout->addLayout(topCardLayout);
+
+    // 2. BOTTOM VITALS GRID
+    QGridLayout *vitalsGrid = new QGridLayout();
+    vitalsGrid->setSpacing(10);
+
+    auto createVitalsBox = [](const QString &metricTitle, const QString &metricValue) {
+        QWidget *box = new QWidget();
+        box->setStyleSheet("background-color: #2D3748; border: 1px solid #4A5568; border-radius: 4px;");
+        QVBoxLayout *boxLayout = new QVBoxLayout(box);
+        boxLayout->setContentsMargins(10, 8, 10, 8);
+        boxLayout->setSpacing(2);
+
+        QLabel *tLabel = new QLabel(metricTitle);
+        tLabel->setStyleSheet("font-size: 11px; color: #A0AEC0; font-weight: bold; text-transform: uppercase;");
+        QLabel *vLabel = new QLabel(metricValue);
+        vLabel->setStyleSheet("font-size: 15px; color: white; font-weight: bold;");
+
+        boxLayout->addWidget(tLabel);
+        boxLayout->addWidget(vLabel);
+        return box;
+    };
+
+    vitalsGrid->addWidget(createVitalsBox("Height", QString("%1 cm").arg(knight.getHeight())), 0, 0);
+    vitalsGrid->addWidget(createVitalsBox("Weight", QString("%1 kg").arg(knight.getWeight())), 0, 1);
+    
+    layout->addLayout(vitalsGrid);
+    layout->addStretch();
+    return container;
+}
+
+// Helper to assemble unified skill layout sheets 
+QWidget* createUnifiedCombatSkillsPanel(const Knight &knight) {
+    QWidget *container = new QWidget();
+    QVBoxLayout *layout = new QVBoxLayout(container);
+    layout->setContentsMargins(10, 5, 10, 5);
+    layout->setSpacing(4);
+
+    // Group 1: Jousting
+    layout->addWidget(createSectionHeader("Jousting Records", "🏇"));
+    layout->addWidget(createStatRow("Horsemanship", knight.getHorsemanship()));
+    layout->addWidget(createStatRow("Lance Precision", knight.getLancePrecision()));
+    layout->addWidget(createStatRow("Bracing Poise", knight.getPosie()));
+
+    // Group 2: Ground Melee
+    layout->addWidget(createSectionHeader("Ground Melee Combat", "⚔️"));
+    layout->addWidget(createStatRow("Weapon Mastery", knight.getSwordplay()));
+    layout->addWidget(createStatRow("Combat Footwork", knight.getFootwork()));
+    layout->addWidget(createStatRow("Physical Vigor", knight.getVigor()));
+
+    // Group 3: Archery
+    layout->addWidget(createSectionHeader("Archery & Range Focus", "🎯"));
+    layout->addWidget(createStatRow("Marksmanship", knight.getMarksmanship()));
+    layout->addWidget(createStatRow("Mental Composure", knight.getFocus()));
+
+    layout->addStretch();
+    return container;
+}
+
 // ============================================================================
 // 1. ROSTER VIEW CONSTRUCTOR (EDITABLE EQUIPMENT)
 // ============================================================================
 KnightDetailDialog::KnightDetailDialog(Player &player, Knight &knight, KnightRosterView *parent)
 : GameDialog(parent), m_player(player)
 {
-    setMinimumSize(500, 550);
+    setMinimumSize(600, 550);
     setModal(true);
 
     QLabel *nameLabel = new QLabel(QString::fromStdString(knight.getName()), this);
-    nameLabel->setStyleSheet("font-size: 26px; font-weight: bold; color: #D4AF37; margin-bottom: 10px;");
+    nameLabel->setStyleSheet("font-family: 'Georgia', serif; font-size: 26px; font-weight: bold; color: #D4AF37; margin-bottom: 5px;");
     mainLayout->addWidget(nameLabel);
 
     QTabWidget *tabs = new QTabWidget(this);
 
-    // --- TAB 1: PROFILE ---
-    QWidget *profileTab = new QWidget();
-    QFormLayout *profileLayout = new QFormLayout(profileTab);
-    profileLayout->addRow("Title:", new QLabel(QString::fromStdString(knight.getTitle())));
-    profileLayout->addRow("Origin:", new QLabel(QString::fromStdString(knight.getOrigin())));
-    profileLayout->addRow("Level:", new QLabel(QString::number(knight.getLevel())));
-    profileLayout->addRow("Height:", new QLabel(QString("%1 cm").arg(knight.getHeight())));
-    profileLayout->addRow("Weight:", new QLabel(QString("%1 kg").arg(knight.getWeight())));
-    tabs->addTab(profileTab, "📋 Profile");
+    // --- TAB 1: CARD PROFILE ---
+    tabs->addTab(createDynamicProfileCard(knight), "📋 Profile");
 
     // --- TAB 2: EQUIPMENT (INTERACTIVE) ---
     QWidget *equipTab = new QWidget();
     QVBoxLayout *equipLayout = new QVBoxLayout(equipTab);
+    equipLayout->setContentsMargins(10, 10, 10, 10);
     equipLayout->setSpacing(12);
-    equipLayout->addWidget(new QLabel("<b>Equipped Gear:</b>"));
+    
+    QLabel *eqHeader = new QLabel("Equipped Tourney Armaments:");
+    eqHeader->setStyleSheet("font-weight: bold; color: #D4AF37; font-size: 14px;");
+    equipLayout->addWidget(eqHeader);
+    
     equipLayout->addWidget(createEquipmentSlot(knight, Item::ItemType::Armour));   // Body
     equipLayout->addWidget(createEquipmentSlot(knight, Item::ItemType::Weapon));   // Right Hand
     
-    // Left Hand Placeholder (until you add Shield types, showing read-only empty slot)
-    QLabel *leftHandLabel = new QLabel("Left Hand: Empty (Shield Slot)", this);
-    leftHandLabel->setStyleSheet("padding: 15px; background: #111827; border-radius: 4px; color: #64748B;");
+    QLabel *leftHandLabel = new QLabel("Left Hand: Empty (Shield Slot Requirement)", this);
+    leftHandLabel->setStyleSheet("padding: 12px; background: #1A202C; border: 1px dashed #4A5568; border-radius: 4px; color: #718096; font-size: 13px;");
     equipLayout->addWidget(leftHandLabel);
     equipLayout->addStretch();
     tabs->addTab(equipTab, "🛡️ Equipment");
 
-    // --- TAB 3: JOUSTING ---
-    QWidget *joustTab = new QWidget();
-    QVBoxLayout *joustLayout = new QVBoxLayout(joustTab);
-    joustLayout->addWidget(createStatRow("Horsemanship", knight.getHorsemanship()));
-    joustLayout->addWidget(createStatRow("Lance Precision", knight.getLancePrecision()));
-    joustLayout->addWidget(createStatRow("Bracing", knight.getPosie()));
-    joustLayout->addStretch();
-    tabs->addTab(joustTab, "🏇 Jousting");
-
-    // --- TAB 4: SWORDFIGHTING ---
-    QWidget *swordTab = new QWidget();
-    QVBoxLayout *swordLayout = new QVBoxLayout(swordTab);
-    swordLayout->addWidget(createStatRow("Weapon Mastery", knight.getSwordplay()));
-    swordLayout->addWidget(createStatRow("Footwork", knight.getFootwork()));
-    swordLayout->addWidget(createStatRow("Vigor", knight.getVigor()));
-    swordLayout->addStretch();
-    tabs->addTab(swordTab, "⚔️ Melee");
-
-    // --- TAB 5: ARCHERY ---
-    QWidget *archeryTab = new QWidget();
-    QVBoxLayout *archeryLayout = new QVBoxLayout(archeryTab);
-    archeryLayout->addWidget(createStatRow("Marksmanship", knight.getMarksmanship()));
-    archeryLayout->addWidget(createStatRow("Composure", knight.getFocus()));
-    archeryLayout->addStretch();
-    tabs->addTab(archeryTab, "🎯 Archery");
+    // --- TAB 3: COMBAT MASTERY SHIELD ---
+    tabs->addTab(createUnifiedCombatSkillsPanel(knight), "⚔️ Combat Training");
 
     mainLayout->addWidget(tabs);
 
-    QPushButton *closeButton = new QPushButton("Back to Roster", this);
-    closeButton->setStyleSheet("padding: 12px; font-weight: bold; background-color: #374151; color: white; border-radius: 4px; margin-top: 10px;");
+    QPushButton *closeButton = new QPushButton("Return to Roster", this);
+    closeButton->setStyleSheet("padding: 12px; font-size: 14px; font-weight: bold; background-color: #2D3748; color: white; border: 1px solid #4A5568; border-radius: 4px; margin-top: 5px;");
     connect(closeButton, &QPushButton::clicked, this, &QDialog::accept);
     mainLayout->addWidget(closeButton);
 }
@@ -207,84 +283,59 @@ KnightDetailDialog::KnightDetailDialog(Player &player, Knight &knight, KnightRos
 KnightDetailDialog::KnightDetailDialog(Player &player, const Knight &knight, KnightRecruitmentView *parent) 
 : GameDialog(parent), m_player(player)
 {
-    setMinimumSize(500, 550);
+    setMinimumSize(600, 550);
     setModal(true);
 
     QLabel *nameLabel = new QLabel(QString::fromStdString(knight.getName()), this);
-    nameLabel->setStyleSheet("font-size: 26px; font-weight: bold; color: #D4AF37; margin-bottom: 10px;");
+    nameLabel->setStyleSheet("font-family: 'Georgia', serif; font-size: 26px; font-weight: bold; color: #D4AF37; margin-bottom: 5px;");
     mainLayout->addWidget(nameLabel);
 
     QTabWidget *tabs = new QTabWidget(this);
 
-    // --- TAB 1: PROFILE ---
-    QWidget *profileTab = new QWidget();
-    QFormLayout *profileLayout = new QFormLayout(profileTab);
-    profileLayout->addRow("Title:", new QLabel(QString::fromStdString(knight.getTitle())));
-    profileLayout->addRow("Origin:", new QLabel(QString::fromStdString(knight.getOrigin())));
-    profileLayout->addRow("Level:", new QLabel(QString::number(knight.getLevel())));
-    profileLayout->addRow("Height:", new QLabel(QString("%1 cm").arg(knight.getHeight())));
-    profileLayout->addRow("Weight:", new QLabel(QString("%1 kg").arg(knight.getWeight())));
-    tabs->addTab(profileTab, "📋 Profile");
+    // --- TAB 1: CARD PROFILE ---
+    tabs->addTab(createDynamicProfileCard(knight), "📋 Profile");
 
-    // --- TAB 2: EQUIPMENT (READ ONLY FOR LUCK SELLING) ---
+    // --- TAB 2: EQUIPMENT (READ ONLY) ---
     QWidget *equipTab = new QWidget();
     QVBoxLayout *equipLayout = new QVBoxLayout(equipTab);
+    equipLayout->setContentsMargins(10, 10, 10, 10);
     equipLayout->setSpacing(8);
-    equipLayout->addWidget(new QLabel("<span style='color: #FBBF24;'>Hire this knight to change their equipment:</span>"));
     
-    QString bodyGear = QString("Body: %1").arg(QString::fromStdString(knight.getArmour().getName()));
-    QString weaponGear = QString("Right Hand: %1").arg(QString::fromStdString(knight.getRightHandWeapon().getName()));
+    QLabel *infoNotice = new QLabel("⚠️ Hire this mercenary to manage armaments:");
+    infoNotice->setStyleSheet("color: #FBBF24; font-weight: bold; font-size: 13px; margin-bottom: 5px;");
+    equipLayout->addWidget(infoNotice);
+    
+    QString bodyGear = QString("👕 Torso Plate: %1").arg(QString::fromStdString(knight.getArmour().getName()));
+    QString weaponGear = QString("⚔️ Main Weapon: %1").arg(QString::fromStdString(knight.getRightHandWeapon().getName()));
 
     QLabel *bodyLabel = new QLabel(bodyGear, this);
-    bodyLabel->setStyleSheet("padding: 12px; background: #1E293B; border-radius: 4px; border-left: 4px solid #64748B;");
+    bodyLabel->setStyleSheet("padding: 12px; background: #2D3748; border-radius: 4px; border-left: 4px solid #D4AF37; font-size: 13px; color: white;");
     QLabel *weaponLabel = new QLabel(weaponGear, this);
-    weaponLabel->setStyleSheet("padding: 12px; background: #1E293B; border-radius: 4px; border-left: 4px solid #64748B;");
-    QLabel *leftLabel = new QLabel("Left Hand: None", this);
-    leftLabel->setStyleSheet("padding: 12px; background: #1E293B; border-radius: 4px; border-left: 4px solid #64748B; color: #64748B;");
+    weaponLabel->setStyleSheet("padding: 12px; background: #2D3748; border-radius: 4px; border-left: 4px solid #D4AF37; font-size: 13px; color: white;");
+    QLabel *leftLabel = new QLabel("🛡️ Offhand Slot: Unassigned", this);
+    leftLabel->setStyleSheet("padding: 12px; background: #2D3748; border-radius: 4px; border-left: 4px solid #4A5568; font-size: 13px; color: #A0AEC0;");
 
     equipLayout->addWidget(bodyLabel);
     equipLayout->addWidget(weaponLabel);
     equipLayout->addWidget(leftLabel);
     equipLayout->addStretch();
-    tabs->addTab(equipTab, "🛡️ Equipment");
+    tabs->addTab(equipTab, "🛡️ armaments");
 
-    // --- TAB 3: JOUSTING ---
-    QWidget *joustTab = new QWidget();
-    QVBoxLayout *joustLayout = new QVBoxLayout(joustTab);
-    joustLayout->addWidget(createStatRow("Horsemanship", knight.getHorsemanship()));
-    joustLayout->addWidget(createStatRow("Lance Precision", knight.getLancePrecision()));
-    joustLayout->addWidget(createStatRow("Bracing", knight.getPosie()));
-    joustLayout->addStretch();
-    tabs->addTab(joustTab, "🏇 Jousting");
-
-    // --- TAB 4: SWORDFIGHTING ---
-    QWidget *swordTab = new QWidget();
-    QVBoxLayout *swordLayout = new QVBoxLayout(swordTab);
-    swordLayout->addWidget(createStatRow("Weapon Mastery", knight.getSwordplay()));
-    swordLayout->addWidget(createStatRow("Footwork", knight.getFootwork()));
-    swordLayout->addWidget(createStatRow("Vigor", knight.getVigor()));
-    swordLayout->addStretch();
-    tabs->addTab(swordTab, "⚔️ Melee");
-
-    // --- TAB 5: ARCHERY ---
-    QWidget *archeryTab = new QWidget();
-    QVBoxLayout *archeryLayout = new QVBoxLayout(archeryTab);
-    archeryLayout->addWidget(createStatRow("Marksmanship", knight.getMarksmanship()));
-    archeryLayout->addWidget(createStatRow("Composure", knight.getFocus()));
-    archeryLayout->addStretch();
-    tabs->addTab(archeryTab, "🎯 Archery");
+    // --- TAB 3: COMBAT MASTERY SHIELD ---
+    tabs->addTab(createUnifiedCombatSkillsPanel(knight), "⚔️ Combat Training");
 
     mainLayout->addWidget(tabs);
 
-    // Bottom Actions
+    // Bottom Actions Panel Setup
     QHBoxLayout *actionsLayout = new QHBoxLayout();
+    actionsLayout->setSpacing(10);
     
-    QPushButton *buyButton = new QPushButton("⚔️ Hire Knight", this);
-    buyButton->setStyleSheet("padding: 12px; font-weight: bold; background-color: #059669; color: white; border-radius: 4px;");
+    QPushButton *buyButton = new QPushButton(QString("📜 Sign Contract for: %1").arg(knight.getCost()), this);
+    buyButton->setStyleSheet("padding: 12px; font-size: 14px; font-weight: bold; background-color: #059669; color: white; border-radius: 4px;");
     connect(buyButton, &QPushButton::clicked, this, [this]() { this->accept(); });
     
-    QPushButton *closeButton = new QPushButton("Cancel", this);
-    closeButton->setStyleSheet("padding: 12px; font-weight: bold; background-color: #4B5563; color: white; border-radius: 4px;");
+    QPushButton *closeButton = new QPushButton("Dismiss", this);
+    closeButton->setStyleSheet("padding: 12px; font-size: 14px; font-weight: bold; background-color: #4B5563; color: white; border-radius: 4px;");
     connect(closeButton, &QPushButton::clicked, this, &QDialog::reject);
     
     actionsLayout->addWidget(buyButton, 2);
