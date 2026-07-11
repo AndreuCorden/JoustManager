@@ -24,7 +24,7 @@ public:
     void populateRoster(std::vector<Tournament> const &todaysTournaments);
 
 signals:
-    void registrationRequested(size_t index, std::vector<Knight> const & registeredKnights);
+    void registrationRequested(size_t index, std::vector<Knight*> const & registeredKnights);
 
     void cancellationRequested(size_t index);
 

@@ -50,7 +50,7 @@ void TournamentView::populateRoster(std::vector<Tournament> const &todaysTournam
                     {
             KnightSelectionDialog selectDialog(m_player, t, this);
             if (selectDialog.exec() == QDialog::Accepted) {
-                std::vector<Knight> squad = selectDialog.getSelectedKnights();
+                std::vector<Knight*> squad = selectDialog.getSelectedKnights();
                 emit registrationRequested(i, squad);
             } });
         }

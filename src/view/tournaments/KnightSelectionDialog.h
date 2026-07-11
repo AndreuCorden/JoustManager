@@ -19,12 +19,12 @@ class KnightSelectionDialog : public GameDialog
 public:
     explicit KnightSelectionDialog(Player &player, const Tournament &tournament, QWidget *parent = nullptr);
 
-    std::vector<Knight> getSelectedKnights() const { return m_selectedKnights; }
+    std::vector<Knight*> getSelectedKnights() const { return m_selectedKnights; }
 
 private:
     int m_requiredTeammates;
     std::vector<std::pair<Knight *, QCheckBox *>> checkboxRegistry;
-    std::vector<Knight> m_selectedKnights;
+    std::vector<Knight*> m_selectedKnights;
 };
 
 #endif

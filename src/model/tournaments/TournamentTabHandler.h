@@ -21,7 +21,7 @@ public:
         m_todaysTournaments = std::move(todaysTournaments);
     }
 
-    void registerSquadForTournament(size_t index, const std::vector<Knight> &squad)
+    void registerSquadForTournament(size_t index, const std::vector<Knight*> &squad)
     {
         if (index < m_todaysTournaments.size())
         {

@@ -27,7 +27,7 @@ signals:
 
 
 private slots:
-    void handleRegistration(size_t index, const std::vector<Knight> &knights);
+    void handleRegistration(size_t index, const std::vector<Knight*> &knights);
     void handleCancellation(size_t index);
 
 private:

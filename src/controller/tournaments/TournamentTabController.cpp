@@ -20,7 +20,7 @@ TournamentTabController::TournamentTabController(QWidget *parent, Player &player
     m_tournamentView->populateRoster(m_tournamentTabHandler->getAvailableTournaments());
 }
 
-void TournamentTabController::handleRegistration(size_t index, const std::vector<Knight>& knights)
+void TournamentTabController::handleRegistration(size_t index, const std::vector<Knight*>& knights)
 {
     // 1. Process mutations exclusively through Model bounds
     m_tournamentTabHandler->registerSquadForTournament(index, knights);

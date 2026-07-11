@@ -55,7 +55,7 @@ KnightSelectionDialog::KnightSelectionDialog(Player &player, const Tournament &t
         
         for (auto &pair : checkboxRegistry) {
             if (pair.second->isChecked()) {
-                m_selectedKnights.push_back(*(pair.first));
+                m_selectedKnights.push_back(pair.first);
             }
         }
 

@@ -30,11 +30,11 @@ public:
     int getReward() const { return m_reward; }
     std::string getHost() const { return m_hosterName; }
     int getExpPerRound() const { return m_expPerRound; }
-    std::vector<Knight> getPlayerTeam() const { return m_playerTeam; }
+    std::vector<Knight*> getPlayerTeam() const { return m_playerTeam; }
     std::vector<Knight> getEnemyTeam() const;
 
     // Roster configuration
-    void registerPlayerTeam(const std::vector<Knight>& team) { 
+    void registerPlayerTeam(const std::vector<Knight*>& team) { 
         m_playerTeam = team; 
         initializeTournament();
     }
@@ -49,7 +49,7 @@ public:
     // Bracket Match Engine Functions
     void advanceTournamentRound(const bool won);
 
-    void endTournament(const bool won);
+    void endTournament();
 
 private:
     void initializeTournament();
@@ -64,7 +64,7 @@ private:
     int m_currentRound; // Tracks 1, 2, or 3
     bool m_playerParticipating;
 
-    std::vector<Knight> m_playerTeam;
+    std::vector<Knight*> m_playerTeam;
     std::vector<std::vector<Knight>> m_activeTeams; // All remaining fighting squads left in brackets
 };
 

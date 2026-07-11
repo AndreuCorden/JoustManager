@@ -104,12 +104,12 @@ void TournamentRunnerDialog::runTournamentRound()
     this->show();
     if (!activeTournament.isPlayerParticipating())
     {
-        activeTournament.endTournament(false);
+        activeTournament.endTournament();
     }
     else if (activeTournament.getCurrentRound() > activeTournament.getMaxRounds())
     {
         // Player wins
-        activeTournament.endTournament(true);
+        activeTournament.endTournament();
         setupRewardsScreen();
     }
     else

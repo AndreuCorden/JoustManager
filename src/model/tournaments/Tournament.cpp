@@ -10,7 +10,12 @@ void Tournament::initializeTournament()
     m_playerParticipating = true;
 
     // 1. Add player squad first
-    m_activeTeams.push_back(m_playerTeam);
+    std::vector<Knight> playerMatchSnapshot;
+    for (Knight* kPtr : m_playerTeam)
+    {
+        playerMatchSnapshot.push_back(*kPtr); 
+    }
+    m_activeTeams.push_back(playerMatchSnapshot);
 
     // 2. Compute total participants using your math formula: 2^maxRounds
     int totalTeamsNeeded = std::pow(2, m_maxRounds);
@@ -55,16 +60,10 @@ void Tournament::advanceTournamentRound(const bool won)
     }
 }
 
-void Tournament::endTournament(const bool won)
+void Tournament::endTournament()
 {
-    int num_rounds = m_currentRound;
-    if(!won)
+    for(Knight* k : m_playerTeam)
     {
-        --m_currentRound;
-    }
-
-    for(auto k : m_playerTeam)
-    {
-        k.gainXP(m_expPerRound * num_rounds);
+        k->gainXP(m_expPerRound * (m_currentRound - 1));
     }
 }
