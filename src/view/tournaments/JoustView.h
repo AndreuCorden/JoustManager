@@ -44,8 +44,6 @@ private:
     QGraphicsPixmapItem *playerKnightSprite;
     QGraphicsPixmapItem *enemyKnightSprite;
     QGraphicsPixmapItem *tiltBarrier;
-    QGraphicsTextItem *qteDisplayItem;
-    QGraphicsTextItem *announcerText;
 
     QLabel *scoutingTextLabel;
     QWidget *strategyContainer;

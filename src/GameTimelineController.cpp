@@ -23,8 +23,8 @@ GameTimelineController::GameTimelineController(QObject *parent)
 void GameTimelineController::generateDailyPools()
 {
     // 3. Generate 2 Random Tournament Tiers
-    Tournament localTourney = {"The King's Grand Tournament", 2, 3, 500, "King Arthur"};
-    Tournament grandTourney = {"Squire's Melee Brawl", 1, 2, 120, "Lord Cenric"};
+    Tournament localTourney = {"The King's Grand Tournament", 2, 3, 500, "King Arthur", 50};
+    Tournament grandTourney = {"Squire's Melee Brawl", 1, 2, 120, "Lord Cenric", 1000};
 
     std::vector<Tournament> todaysTournaments;
 

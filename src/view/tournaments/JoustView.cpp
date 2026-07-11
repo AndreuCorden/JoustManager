@@ -111,16 +111,6 @@ JoustView::JoustView(QWidget *parent) : QWidget(parent)
     QPixmap bgPixmap(":/assets/Backgroundjoust.png");
     graphicsView->setBackgroundBrush(bgPixmap.isNull() ? QBrush(QColor("#4A5568")) : QBrush(bgPixmap.scaled(SCENE_WIDTH, SCENE_HEIGHT)));
 
-    announcerText = scene->addText("", QFont("Arial", 16, QFont::Bold));
-    announcerText->setDefaultTextColor(Qt::white);
-    announcerText->setPos(SCENE_WIDTH / 2 - 180, 20);
-    announcerText->setZValue(10);
-
-    qteDisplayItem = scene->addText("", QFont("Arial", 36, QFont::Bold));
-    qteDisplayItem->setDefaultTextColor(QColor("#E53E3E"));
-    qteDisplayItem->setPos(SCENE_WIDTH / 2 - 25, 70);
-    qteDisplayItem->setZValue(10);
-
     horseSheets[0].load(":/assets/BrownHorse_Run.png");
     horseSheets[1].load(":/assets/WhiteHorse_Run.png");
     horseSheets[2].load(":/assets/BlackHorse_Run.png");
@@ -156,9 +146,6 @@ void JoustView::setScoutingReport(const QString &opponentName, const QString &tr
 void JoustView::updateRenderState(double pX, double eX, int charge, int frameIndex,
                                   JoustState state, const QString &announcer, const QString &qte)
 {
-    announcerText->setPlainText(announcer);
-    qteDisplayItem->setPlainText(qte);
-
     // Toggle interactive UI state vs cinematic presentation state
     if (state == JoustState::WaitingToStart)
     {

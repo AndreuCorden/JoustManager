@@ -35,6 +35,8 @@ public:
     int getHeight() const { return m_height; }
     int getWeight() const { return m_weight; }
     int getLevel() const { return m_level; }
+    int getChivalry() const { return m_chivalry; }
+    int getFortitude() const { return m_fortitude; }
 
     Item getArmour() const { return m_armour; }
     
@@ -55,6 +57,15 @@ public:
     int getVigor() const { return m_vigor; }
     int getMarksmanship() const { return m_marksmanship; }
     int getFocus() const { return m_focus; }
+
+    enum class Skill { Horsemanship, LancePrecision, Poise, Swordplay, Footwork, Vigor, Marksmanship, Focus };
+
+    void gainXP(int amount);
+    int getXP() const { return m_xp; }
+    int getXPThreshold() const { return m_level * 100; }
+    int getPendingSkillPoints() const { return m_pendingSkillPoints; }
+    
+    bool upgradeSkill(Skill skill);
 
 private:
     std::string m_name;
@@ -80,7 +91,10 @@ private:
 
     // Other
     int m_chivalry; // Love and fame for this knight
-    int m_fortitude; // psychological strength 
+    int m_fortitude; // psychological strength
+
+    int m_xp = 0;
+    int m_pendingSkillPoints = 0;
 };
 
 #endif

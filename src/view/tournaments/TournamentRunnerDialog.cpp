@@ -47,7 +47,6 @@ void TournamentRunnerDialog::setupIntroScreen()
     connect(actionButton, &QPushButton::clicked, this, &TournamentRunnerDialog::runTournamentRound);
 }
 
-// 🌟 NEW METHOD: Displayed once all bracket levels are cleared out!
 void TournamentRunnerDialog::setupRewardsScreen()
 {
     titleLabel = new QLabel("TOURNAMENT COMPLETE!", this);
@@ -76,7 +75,6 @@ void TournamentRunnerDialog::clearCurrentLayout()
     if (!mainLayout)
         return;
 
-    // 🌟 FIX 1: Explicitly remove widgets from the layout container before deleting them.
     // This stops empty layout wrappers from piling up and breaking window geometry over multiple rounds!
     if (titleLabel)
     {
@@ -106,11 +104,12 @@ void TournamentRunnerDialog::runTournamentRound()
     this->show();
     if (!activeTournament.isPlayerParticipating())
     {
-        // Player lost and is no longer participatin, open lose screen
+        activeTournament.endTournament(false);
     }
     else if (activeTournament.getCurrentRound() > activeTournament.getMaxRounds())
     {
         // Player wins
+        activeTournament.endTournament(true);
         setupRewardsScreen();
     }
     else
